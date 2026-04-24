@@ -19,6 +19,7 @@ if (typeof CanvasRenderingContext2D.prototype.roundRect !== "function") {
 }
 
 const IMAGE_CACHE = {};
+const MEMORY_RESPONSE_KEYS = ["s", "d", "f", "j", "k", "l"];
 
 async function initTask(jsPsych, subject_id) {
     const timeline = [];
@@ -145,26 +146,29 @@ async function initTask(jsPsych, subject_id) {
     });
 
     timeline.push({
-        type: jsPsychHtmlButtonResponse,
+        type: jsPsychHtmlKeyboardResponse,
         stimulus: `<div class="instruction-container">
             <h2>Memory Test</h2>
-            <p>You are now beginning the memory test. For each card, put the slider on the value the card was worth before.</p>
+            <p>You are now beginning the memory test. Place your first 3 fingers of each hand on the keys: 's', 'd', 'f' and 'j', 'k', 'l'.</p>
+            <p>For each card, press the key indicating its value.</p>
             <p>Your bonus will be based on how many you get correct!</p>
+            <p><strong>Press any key to begin.</strong></p>
         </div>`,
-        choices: ["Begin"]
+        choices: "ALL_KEYS"
+    });
+
+    timeline.push({
+        type: jsPsychHtmlKeyboardResponse,
+        stimulus: "",
+        choices: "NO_KEYS",
+        trial_duration: params.memory_iti
     });
 
     memoryTrials.forEach((trial, memoryIndex) => {
         timeline.push({
-            type: jsPsychHtmlSliderResponse,
+            type: jsPsychHtmlKeyboardResponse,
             stimulus: buildMemoryStimulus(trial, memoryIndex),
-            labels: params.possible_values.map(formatValue),
-            min: 0,
-            max: params.possible_values.length - 1,
-            slider_start: Math.floor((params.possible_values.length - 1) / 2),
-            step: 1,
-            require_movement: true,
-            button_label: "Submit",
+            choices: MEMORY_RESPONSE_KEYS,
             data: {
                 phase: "memory",
                 is_memory_trial: true,
@@ -184,35 +188,48 @@ async function initTask(jsPsych, subject_id) {
                 true_value_label: trial.value_label,
             },
             on_finish: function (data) {
-                const responseIndex = Number(data.response);
-                const chosenValue = params.possible_values[responseIndex];
+                const responseKey = (data.response || "").toLowerCase();
+                const responseIndex = MEMORY_RESPONSE_KEYS.indexOf(responseKey);
+                const chosenValue = responseIndex >= 0 ? params.possible_values[responseIndex] : null;
+                data.response_key = responseKey;
                 data.response_index = responseIndex;
                 data.reported_value = chosenValue;
-                data.reported_value_label = formatValue(chosenValue);
+                data.reported_value_label = chosenValue === null ? null : formatValue(chosenValue);
                 data.chosen_value = chosenValue;
-                data.chosen_value_label = formatValue(chosenValue);
+                data.chosen_value_label = chosenValue === null ? null : formatValue(chosenValue);
                 data.correct = chosenValue === trial.value;
-                data.abs_error = Number(Math.abs(chosenValue - trial.value).toFixed(2));
+                data.abs_error = chosenValue === null ? null : Number(Math.abs(chosenValue - trial.value).toFixed(2));
                 data.timestamp = new Date().toISOString();
             }
         });
 
+        if (memoryIndex < memoryTrials.length - 1) {
+            timeline.push({
+                type: jsPsychHtmlKeyboardResponse,
+                stimulus: "",
+                choices: "NO_KEYS",
+                trial_duration: params.memory_iti
+            });
+        }
+
         if (attentionIndices.includes(memoryIndex)) {
+            const targetKey = jsPsych.randomization.sampleWithoutReplacement(MEMORY_RESPONSE_KEYS, 1)[0];
             timeline.push({
                 type: jsPsychHtmlKeyboardResponse,
                 stimulus: `<div class="attention-check">
                     <h2 style="font-family: Inter, sans-serif; margin-top: 0;">Attention Check</h2>
-                    <p style="font-size: 1.15rem;">Press the <strong>UP arrow key</strong> to continue.</p>
+                    <p style="font-size: 1.15rem;">Press the <strong>${targetKey.toUpperCase()}</strong> key to continue.</p>
                 </div>`,
                 choices: "ALL_KEYS",
                 trial_duration: 5000,
                 data: {
                     phase: "memory",
                     is_attention_check: true,
-                    correct_key: "arrowup",
+                    correct_key: targetKey,
                 },
                 on_finish: function (data) {
-                    data.success = (data.response || "").toLowerCase() === "arrowup";
+                    data.response_key = (data.response || "").toLowerCase();
+                    data.success = data.response_key === targetKey;
                 }
             });
         }
@@ -364,12 +381,17 @@ function drawRevealedCard(ctx, x, y, width, height, image, valueLabel, hScale = 
 }
 
 function buildMemoryStimulus(trial, memoryIndex) {
+    const valueRow = params.possible_values.map((value) => `<span>${formatValue(value)}</span>`).join("");
+    const keyRow = MEMORY_RESPONSE_KEYS.map((key) => `<span>(${key})</span>`).join("");
+
     return `<div class="memory-panel">
         <div class="memory-card-shell">
             <div class="memory-card">
                 <img src="${trial.image_path}" alt="Card image ${memoryIndex + 1}">
             </div>
         </div>
+        <div class="memory-keyboard-values">${valueRow}</div>
+        <div class="memory-keyboard-keys">${keyRow}</div>
     </div>`;
 }
 

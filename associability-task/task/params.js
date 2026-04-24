@@ -9,6 +9,7 @@ const params = {
     flip_duration: 500,
     revealed_duration: 1500,
     iti: 1000,
+    memory_iti: 500,
 
     background_color: "#ececec",
     text_color: "#333333",
@@ -21,9 +22,9 @@ const params = {
     data_pipe_id: "PLACEHOLDER",
     prolific_completion_code: "PLACEHOLDER",
 
-    consent_pdf: "../csiyer.github.io/files/online_consent_form.pdf",
-    stimuli_dir: "stimuli",
-    stimuli_metadata_path: "stimuli/stimuli_metadata.csv",
+    consent_pdf: "https://csiyer.github.io/files/online_consent_form.pdf",
+    stimuli_dir: "../../stimuli",
+    stimuli_metadata_path: "../../stimuli/_stimuli_metadata.js",
 };
 
 params.instruction_pages = [
@@ -31,6 +32,7 @@ params.instruction_pages = [
         <h2>Welcome</h2>
         <p>This study takes about <strong>${params.completion_time} minutes</strong>.</p>
         <p>You will earn a base payment of <strong>$${params.base_pay}</strong>, plus a bonus of up to <strong>$${params.max_bonus}</strong> based on your performance.</p>
+        <p>Please note that you are participating in a scientific study. Your responses will be a huge help for our research, so we ask you give the study your best effort and attention. Thank you!</p>
     </div>`,
     `<div class="instruction-container" style="max-width: 920px;">
         <h2>Consent Form</h2>
@@ -52,16 +54,13 @@ params.instruction_pages = [
         <p>After the learning phase, you will do a memory test for the value of each card.</p>
         <div class="memory-mini-demo">
             <div class="mini-card"></div>
-            <div class="jspsych-html-slider-response-container" style="width: 100%;">
-                <input type="range" min="0" max="5" step="1" value="2" aria-label="Example value slider">
-                <div class="jspsych-html-slider-response-labels" style="position: relative; width: 100%;">
-                    <span style="display: inline-block; position: absolute; left: 0%; text-align: center; transform: translateX(-50%);">0¢</span>
-                    <span style="display: inline-block; position: absolute; left: 20%; text-align: center; transform: translateX(-50%);">20¢</span>
-                    <span style="display: inline-block; position: absolute; left: 40%; text-align: center; transform: translateX(-50%);">40¢</span>
-                    <span style="display: inline-block; position: absolute; left: 60%; text-align: center; transform: translateX(-50%);">60¢</span>
-                    <span style="display: inline-block; position: absolute; left: 80%; text-align: center; transform: translateX(-50%);">80¢</span>
-                    <span style="display: inline-block; position: absolute; left: 100%; text-align: center; transform: translateX(-50%);">$1</span>
-                </div>
+            <div class="memory-instruction-values">
+                <span>0¢</span>
+                <span>20¢</span>
+                <span>40¢</span>
+                <span>60¢</span>
+                <span>80¢</span>
+                <span>$1</span>
             </div>
         </div>
         <p>Your bonus depends on how many exact values you remember correctly.</p>
