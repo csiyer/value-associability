@@ -1,0 +1,46 @@
+---
+title: "associability_analysis"
+output: pdf_document
+---
+
+```{r}
+library(tidyverse)
+library(lme4)
+library(broom.mixed)
+```
+
+Run `associability_models.R` first.
+
+```{r}
+m1 <- readRDS("m1.RDS")
+m2 <- readRDS("m2.RDS")
+m3 <- readRDS("m3.RDS")
+
+anova(m1, m2, m3)
+```
+
+m2 is the preferred model. This includes object random effects, suggesting that there is a significant value associability effect. Here we can visualize how big this effect is by looking at the change from a low assiciability to a high associability object image.
+
+```{r}
+coefs <- tidy(m2) |>
+  filter_out(str_detect(group, "sub_factor")) |> 
+  select(term, estimate) |>
+  deframe()
+
+ggplot() +
+  xlim(-.5, .5) +
+  geom_function(aes(color = "Average Object"), 
+                fun = \(x) plogis(coefs["(Intercept)"] + coefs["old_value_centered"] * x)) +
+  geom_function(aes(color = "+2 SD Object"), 
+                fun = \(x) plogis(coefs["(Intercept)"] + 
+                                    (coefs["old_value_centered"] * x) +
+                                    (2 * coefs["sd__old_value_centered"] * x))) +
+  geom_function(aes(color = "-2 SD Object"), 
+                fun = \(x) plogis(coefs["(Intercept)"] + 
+                                    (coefs["old_value_centered"] * x) -
+                                    (2 * coefs["sd__old_value_centered"] * x))) +
+  annotate("text", x = .3, y = c(.68, .65, .62), 
+           label = c("+2 SD Object", "Average Object", "-2 SD Object")) +
+  theme_classic() +
+  theme(legend.position = "none")
+```
