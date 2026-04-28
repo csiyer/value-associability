@@ -23,7 +23,7 @@ const params = {
     prolific_completion_code: "PLACEHOLDER",
 
     consent_pdf: "https://csiyer.github.io/files/online_consent_form.pdf",
-    stimuli_dir: "../../stimuli",
+    stimuli_dir: "../../stimuli/images",
     stimuli_metadata_path: "../../stimuli/_stimuli_metadata.js",
 };
 

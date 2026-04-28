@@ -399,13 +399,13 @@ function loadStimulusMetadata() {
     const rows = window.STIMULI_METADATA;
     if (!Array.isArray(rows) || rows.length === 0) {
         throw new Error(
-            "Stimulus metadata is missing. Make sure stimuli_metadata.js is present and loaded before task.js."
+            "Stimulus metadata is missing. Make sure _stimuli_metadata.js is present and loaded before task.js."
         );
     }
 
     return rows.map((row) => ({
         image_name: row.image_name,
-        image_path: `${params.stimuli_dir}/${row.image_name}`,
+        image_path: row.image_path || `${params.stimuli_dir}/${row.image_name}`,
         things_file_path: row.things_file_path,
         things_memorability: Number(row.things_memorability),
         things_category: row.things_category,
