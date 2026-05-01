@@ -85,6 +85,9 @@ m0 <- glmer(choice_optimal ~ 1 + (1 | subj_id), family = binomial, data = model_
 m1 <- glmer(choice_optimal ~ 1 + (1 | subj_id) + (1 | old_item), family = binomial, data = model_df)
 anova(m0, m1)
 
-m0 <- glmer(choice_optimal ~ old_optimal_c + (old_optimal_c | subj_id), family = binomial, data = model_df)
-m1 <- glmer(choice_optimal ~ old_optimal_c + (old_optimal_c | subj_id) + (old_optimal_c | old_item), family = binomial, data = model_df)
-anova(m0, m1)
+m0a <- glmer(choice_optimal ~ old_optimal_c + (old_optimal_c || subj_id), family = binomial, data = model_df)
+m0b <- glmer(choice_optimal ~ old_optimal_c + (old_optimal_c | subj_id), family = binomial, data = model_df)
+m1a <- glmer(choice_optimal ~ old_optimal_c + (old_optimal_c | subj_id) + (1 | old_item), family = binomial, data = model_df)
+m1b <- glmer(choice_optimal ~ old_optimal_c + (old_optimal_c | subj_id) + (old_optimal_c || old_item), family = binomial, data = model_df)
+m1c <- glmer(choice_optimal ~ old_optimal_c + (old_optimal_c | subj_id) + (old_optimal_c | old_item), family = binomial, data = model_df)
+anova(m0a, m0b, m1a, m1b, m1c)
