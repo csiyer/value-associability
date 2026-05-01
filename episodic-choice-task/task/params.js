@@ -1,9 +1,9 @@
 const params = {
     experiment_id: "episodic_choice_v2",
 
-    n_trials: 18, //312,
+    n_trials: 312, // 18
     n_blocks: 3,
-    block_sizes: [6, 6, 6], // [105, 105, 102],
+    block_sizes: [105, 105, 102], // [6, 6, 6]
     n_attention_checks: 3,
 
     old_trial_pct: 0.5,

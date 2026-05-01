@@ -7,4 +7,4 @@ This repo contains the following:
 - `pilot/pilot-mem-choice`: task code and pilot data for a task asking if simply pairing memorable images with high values biases choices and inferences of deck value.
 - `pilot/pilot-mem-inc-ep`: task code and pilot data for an incremental-episodic task using (1) high- and low-memorability object images, and (2) distinctive vs. non-distinctive objects to modulate episodic memory strength.
 - `pilot/stimuli` contains the stimuli used in these pilot experiments.
-- `stimuli` contains stimuli sampled from the THINGS dataset with high, medium, and low image memorability. Rebuild this folder with `selectstimuli.py`.
+- `stimuli` contains stimuli sampled from the THINGS dataset with high, medium, and low image memorability. Rebuild this folder with `select_stimuli.py`.

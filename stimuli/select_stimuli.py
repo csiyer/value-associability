@@ -37,9 +37,9 @@ THINGS_DIR = Path("/Users/chrisiyer/_Current/lab/code/vision-memory/memory_datas
 OBJECT_IMAGES_DIR = THINGS_DIR / "object_images"
 SCRIPT_DIR = Path(__file__).resolve().parent
 IMAGE_OUTPUT_DIR = SCRIPT_DIR / "images"
-OUTPUT_METADATA_JS = SCRIPT_DIR / "stimulimetadata.js"
-OUTPUT_SELECTION_CSV = SCRIPT_DIR / "stimulimetadata.csv"
-MERGED_METADATA_CSV = SCRIPT_DIR / "mergedthingsmetadata.csv"
+OUTPUT_METADATA_JS = SCRIPT_DIR / "stimuli_metadata.js"
+OUTPUT_SELECTION_CSV = SCRIPT_DIR / "stimuli_metadata.csv"
+MERGED_METADATA_CSV = SCRIPT_DIR / "merged_things_metadata.csv"
 
 CATEGORY27_COLUMNS = [
     "animal",
@@ -309,9 +309,9 @@ def remove_previous_selected_files() -> None:
 
     for child in SCRIPT_DIR.iterdir():
         if child.name in {
-            "mergethingsmetadata.py",
-            "mergedthingsmetadata.csv",
-            "selectstimuli.py",
+            "merge_things_metadata.py",
+            "merged_things_metadata.csv",
+            "select_stimuli.py",
             "images",
         }:
             continue

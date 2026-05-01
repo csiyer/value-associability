@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Merge THINGS image-, concept-, and category-level metadata.
 
-Outputs one row per image to `mergedthingsmetadata.csv` in the same folder
+Outputs one row per image to `merged_things_metadata.csv` in the same folder
 as this script.
 """
 
@@ -14,7 +14,7 @@ import pandas as pd
 
 THINGS_DIR = Path("/Users/chrisiyer/_Current/lab/code/vision-memory/memory_datasets/THINGS")
 SCRIPT_DIR = Path(__file__).resolve().parent
-OUTPUT_CSV = SCRIPT_DIR / "mergedthingsmetadata.csv"
+OUTPUT_CSV = SCRIPT_DIR / "merged_things_metadata.csv"
 
 CATEGORY27_COLUMNS = [
     "animal",
