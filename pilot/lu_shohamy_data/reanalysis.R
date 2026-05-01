@@ -46,17 +46,26 @@ train_data <- train_data |>
   mutate(
     old_trial_id = lag(trial_id),
     delay = trial_id - old_trial_id
-  ) |> ungroup()
+  ) |> group_by(subj_id) |>
+  mutate(
+    lag_delay = lag(delay),
+    lag_enc = delay - lag_delay - 1
+  ) |>
+  ungroup()
 
 model_df <- train_data |> 
   filter(!(subj_id %in% bad_subs), trial_type_str == "old-new") |>
   mutate(
     old_value = if_else(is_old_l == 1, value_l, value_r),
     old_optimal = old_value == 100,
-    old_optimal_c = if_else(old_optimal, .5, -.5)
+    old_optimal_c = if_else(old_optimal, .5, -.5),
+    choice_optimal_c = if_else(choice_optimal, .5, -.5)
   )
 
-# delay effect
+
+# Delay effect ------------------------------------------------------------
+
+
 sub_delay_df <- model_df |>
   filter(delay >= 9, delay <= 18) |>
   group_by(subj_id, delay) |>
@@ -81,6 +90,61 @@ sub_value_delay_df |>
   labs(x = "Delay", y = "P(Optimal Choice)", color = "Old Item Value") +
   theme_classic()
 
+sub_delay_df <- model_df |>
+  filter(delay >= 9, delay <= 18) |>
+  group_by(subj_id, delay, choice_optimal) |>
+  summarize(
+    rt = mean(item_trial.rt, na.rm = TRUE)
+  )
+sub_delay_df |>
+  ggplot(aes(x = delay, y = rt, color = choice_optimal, group = choice_optimal)) +
+  stat_summary() +
+  stat_summary(geom = "line") +
+  labs(x = "Delay", y = "P(Optimal Choice)") +
+  theme_classic()
+sub_value_delay_df <- model_df |>
+  filter(delay >= 9, delay <= 18) |>
+  group_by(subj_id, delay, old_value, choice_optimal) |>
+  summarize(
+    rt = mean(item_trial.rt, na.rm = TRUE)
+  )
+sub_value_delay_df |>
+  ggplot(aes(x = delay, y = rt, color = factor(old_value), linetype = choice_optimal, group = interaction(old_value, choice_optimal))) +
+  stat_summary() +
+  stat_summary(geom = "line") +
+  labs(x = "Delay", y = "P(Optimal Choice)", color = "Old Item Value") +
+  theme_classic()
+
+
+# Lag-CRP (for fun) -------------------------------------------------------
+
+sub_lag_enc_df <- model_df |>
+  filter(delay >= 9, delay <= 18, lag_delay >= 9, lag_delay <= 18, lag_enc >= -3, lag_enc <= 3) |>
+  group_by(subj_id, lag_enc) |>
+  summarize(
+    p_choice_optimal = mean(choice_optimal, na.rm = TRUE)
+  )
+sub_lag_enc_df |>
+  ggplot(aes(x = lag_enc, y = p_choice_optimal)) +
+  stat_summary() +
+  stat_summary(geom = "line") +
+  theme_classic()
+
+sub_lag_enc_df <- model_df |>
+  filter(delay >= 9, delay <= 18, lag_delay >= 9, lag_delay <= 18, lag_enc >= -3, lag_enc <= 3) |>
+  group_by(subj_id, lag_enc, choice_optimal) |>
+  summarize(
+    rt = mean(item_trial.rt, na.rm = TRUE)
+  )
+sub_lag_enc_df |>
+  ggplot(aes(x = lag_enc, y = rt, color = choice_optimal)) +
+  stat_summary() +
+  stat_summary(geom = "line") +
+  theme_classic()
+
+
+# Choice models -----------------------------------------------------------
+
 m0 <- glmer(choice_optimal ~ 1 + (1 | subj_id), family = binomial, data = model_df)
 m1 <- glmer(choice_optimal ~ 1 + (1 | subj_id) + (1 | old_item), family = binomial, data = model_df)
 anova(m0, m1)
@@ -91,3 +155,19 @@ m1a <- glmer(choice_optimal ~ old_optimal_c + (old_optimal_c | subj_id) + (1 | o
 m1b <- glmer(choice_optimal ~ old_optimal_c + (old_optimal_c | subj_id) + (old_optimal_c || old_item), family = binomial, data = model_df)
 m1c <- glmer(choice_optimal ~ old_optimal_c + (old_optimal_c | subj_id) + (old_optimal_c | old_item), family = binomial, data = model_df)
 anova(m0a, m0b, m1a, m1b, m1c)
+
+# RT models ---------------------------------------------------------------
+
+m0_rt <- lmer(item_trial.rt ~ choice_optimal * old_optimal_c + (choice_optimal_c * old_optimal_c | subj_id), data = model_df)
+m0_rt_ns1 <- lmer(item_trial.rt ~ choice_optimal * old_optimal_c + (choice_optimal_c * old_optimal_c || subj_id), data = model_df)
+m1_rt_ns1 <- lmer(item_trial.rt ~ choice_optimal * old_optimal_c + (choice_optimal_c * old_optimal_c || subj_id) + (choice_optimal_c * old_optimal_c || old_item), data = model_df)
+m1_rt_ns2 <- lmer(item_trial.rt ~ choice_optimal * old_optimal_c + (choice_optimal_c * old_optimal_c || subj_id) + (choice_optimal_c + old_optimal_c || old_item), data = model_df)
+m1_rt_ns3 <- lmer(item_trial.rt ~ choice_optimal * old_optimal_c + (choice_optimal_c * old_optimal_c || subj_id) + (choice_optimal_c || old_item), data = model_df)
+anova(m0_rt_ns1, m1_rt_ns3)
+
+m0_rt_ns2 <- lmer(item_trial.rt ~ choice_optimal * old_optimal_c + (choice_optimal_c + choice_optimal_c:old_optimal_c | subj_id) + (0 + old_optimal_c | subj_id), data = model_df)
+m1a_rt_ns1 <- lmer(item_trial.rt ~ choice_optimal * old_optimal_c + (choice_optimal_c + choice_optimal_c:old_optimal_c | subj_id) + (0 + old_optimal_c | subj_id) + (choice_optimal_c * old_optimal_c || old_item), data = model_df)
+m1a_rt_ns2 <- lmer(item_trial.rt ~ choice_optimal * old_optimal_c + (choice_optimal_c + choice_optimal_c:old_optimal_c | subj_id) + (0 + old_optimal_c | subj_id) + (choice_optimal_c + choice_optimal_c:old_optimal_c || old_item), data = model_df)
+m1a_rt_ns3 <- lmer(item_trial.rt ~ choice_optimal * old_optimal_c + (choice_optimal_c + choice_optimal_c:old_optimal_c | subj_id) + (0 + old_optimal_c | subj_id) + (choice_optimal_c || old_item), data = model_df)
+m1a_rt_ns4 <- lmer(item_trial.rt ~ choice_optimal * old_optimal_c + (choice_optimal_c + choice_optimal_c:old_optimal_c | subj_id) + (0 + old_optimal_c | subj_id) + (choice_optimal_c | old_item), data = model_df)
+anova(m0_rt_ns2, m1a_rt_ns3)
