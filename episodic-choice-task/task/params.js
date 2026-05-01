@@ -1,28 +1,33 @@
 const params = {
-    experiment_id: "episodic_choice_v1",
+    experiment_id: "episodic_choice_v2",
 
-    n_trials: 60,
-    old_trial_pct: 0.6,
-    min_trials_ago: 9,
-    max_trials_ago: 30,
-    possible_values: [0, 0.2, 0.4, 0.6, 0.8, 1.0],
+    n_trials: 18, //312,
+    n_blocks: 3,
+    block_sizes: [6, 6, 6], // [105, 105, 102],
+    n_attention_checks: 3,
 
-    choice_duration: 2000,
-    highlight_duration: 500,
-    flip_duration: 500,
-    revealed_duration: 1000,
-    too_slow_duration: 1200,
-    iti: 800,
+    old_trial_pct: 0.5,
+    min_delay: 7,
+    max_delay: 15,
+    possible_values: [0, 0.1, 0.2, 0.3, 0.4, 0.5],
+
+    stimulus_time: 1500,
+    feedback_time: 1500,
+    iti: 500,
+    break_duration: 20000,
 
     background_color: "#ececec",
     text_color: "#333333",
     card_color: "#8c9299",
     highlight_color: "#cfd4da",
 
-    completion_time: 6,
-    base_pay: 2,
-    max_bonus: 2,
-    data_pipe_id: "PLACEHOLDER",
+    completion_time: 20,
+    base_pay: 4,
+    max_bonus: 1,
+    bonus_sample_n: 10,
+    data_pipe_id: "0eMBjYEVa3qX",
+    osf_project_id: "2cm34",
+    osf_component_id: "8d2cb",
     prolific_completion_code: "PLACEHOLDER",
 
     consent_pdf: "https://csiyer.github.io/files/online_consent_form.pdf",
@@ -38,21 +43,24 @@ params.instruction_pages = [
     </div>`,
     `<div class="instruction-container">
         <h2>How To Play</h2>
-        <p>On each trial, you will see two cards. These cards are paired with random rewards between $0 and $1.</p>
+        <p>On each trial, you will see two cards and choose one with the <strong>left</strong> or <strong>right</strong> arrow key.</p>
         <div class="instruction-card-row">
             <div class="mini-card"></div>
             <div class="mini-card"></div>
         </div>
-        <p>Pick a card with the <strong>left and right arrow keys</strong>. When you pick a card it will flip over to reveal its value. Your goal is to maximize your total rewards.</p>
+        <p>You have ${params.stimulus_time / 1000} seconds to make your decision, or we'll choose randomly for you.</p>
+        <p>After you choose, the selected card will flip over and reveal its value.</p>
+        <p><strong>All rewards are either 0¢, 10¢, 20¢, 30¢, 40¢, or 50¢.</strong></p>
+        <p>Your goal is to maximize your rewards!</p>
     </div>`,
     `<div class="instruction-container">
         <h2>Repeated Cards</h2>
-        <p>On some trials, you will see a card you have seen before. <strong>Cards will always be worth the same amount they were before.</strong> So, on these trials, you can use your memory to decide if the card is worth picking or not.</p>
+        <p>On some trials, one card will be a card you <strong>previously chose</strong>. That old card will <strong>always be worth the same amount it was worth the first time you chose it</strong>.</p>
         <div class="repeat-demo">
             <div class="repeat-demo-block">
                 <div class="repeat-demo-label">Earlier</div>
                 <div class="mini-card revealed"></div>
-                <div class="repeat-demo-value">80¢</div>
+                <div class="repeat-demo-value">30¢</div>
             </div>
             <div class="instruction-arrow">...</div>
             <div class="repeat-demo-block">
@@ -61,14 +69,23 @@ params.instruction_pages = [
                 <div class="repeat-demo-value">same value</div>
             </div>
         </div>
+        <p>Use your memory on those trials to help you decide whether the old card is worth taking!</p>
+        <p>Specifically, because rewards are between 0-50¢, <strong>the best strategy is to choose an old card if it's worth more than 25¢ and avoid it otherwise.</strong></p>
+    </div>`,
+    `<div class="instruction-container">
+        <h2>Bonus</h2>
+        <p>At the end of the experiment, we will randomly sample <strong>${params.bonus_sample_n} trials</strong> where you saw an old card and give you a bonus proportional to the amount you got on those trials.</p>
+        <p>This means you have to use your memory well on every trial to maximize your potential bonus!</p>
     </div>`,
     `<div class="instruction-container">
         <h2>Summary</h2>
         <ul>
-            <li>Pick cards with the left and right arrow keys to receive rewards.</li>
-            <li>Remember the value of cards so that if they appear again, you can decide to pick them if they have high values.</li>
+            <li>Choose cards with the left and right arrow keys.</li>
+            <li>Some trials contain an old card you already know the value of.</li>
+            <li>Use your memory to choose high-value old cards, and avoid low-value ones.</li>
+            <li>Your bonus depends on randomly sampled old-card trials at the end.</li>
         </ul>
-        <p>Press "Next" to begin the experiment!</p>
+        <p>Press "Next" to begin the experiment.</p>
     </div>`
 ];
 

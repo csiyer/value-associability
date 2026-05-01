@@ -20,38 +20,43 @@ if (typeof CanvasRenderingContext2D.prototype.roundRect !== "function") {
 
 const IMAGE_CACHE = {};
 const TASK_STATE = {
-    availableStimuli: [],
-    chosenHistory: [],
-    imageValueMap: new Map(),
-    currentTrial: null
+    plan: null,
+    currentTrial: null,
+    sourceChoiceByTrial: new Map(),
+    bonusSummary: null,
 };
 
 function initTask(jsPsych, subject_id) {
     const timeline = [];
-    const stimulusPool = jsPsych.randomization.shuffle(loadStimulusMetadata());
+    const stimulusRows = loadStimulusMetadata();
+    const plan = EpisodicChoiceSequence.buildSequencePlan(params, stimulusRows);
+    const summary = EpisodicChoiceSequence.summarizePlan(plan);
 
-    if (stimulusPool.length < params.n_trials) {
-        throw new Error(`Need at least ${params.n_trials} available stimuli.`);
-    }
-
-    TASK_STATE.availableStimuli = [...stimulusPool];
-    const preloadImages = stimulusPool.map((stimulus) => `${params.stimuli_dir}/${stimulus.image_name}`);
+    TASK_STATE.plan = plan;
 
     jsPsych.data.addProperties({
         experiment_id: params.experiment_id,
         subject_id: subject_id,
+        participant_id: subject_id,
         possible_values: JSON.stringify(params.possible_values),
         old_trial_pct: params.old_trial_pct,
-        min_trials_ago: params.min_trials_ago,
-        max_trials_ago: params.max_trials_ago
+        min_delay: params.min_delay,
+        max_delay: params.max_delay,
+        planned_trials: params.n_trials,
+        planned_blocks: JSON.stringify(params.block_sizes),
+        sequence_summary: JSON.stringify(summary),
+        data_pipe_id: params.data_pipe_id,
+        osf_project_id: params.osf_project_id,
+        osf_component_id: params.osf_component_id,
+        task_params: JSON.stringify(params),
     });
 
     timeline.push({
         type: jsPsychPreload,
-        images: preloadImages,
+        images: plan.preload_images,
         message: "Loading card images...",
         on_finish: function () {
-            preloadImages.forEach((path) => {
+            plan.preload_images.forEach((path) => {
                 const img = new Image();
                 img.src = path;
                 IMAGE_CACHE[path] = img;
@@ -65,7 +70,7 @@ function initTask(jsPsych, subject_id) {
         message: `<div class="instruction-container">
             <h2>Welcome</h2>
             <p>This study takes about <strong>${params.completion_time} minutes</strong>.</p>
-            <p>You will earn a base payment of <strong>$${params.base_pay}</strong>, plus a bonus of up to <strong>$${params.max_bonus}</strong> based on your performance.</p>
+            <p>You will earn a base payment of <strong>$${params.base_pay}</strong>, plus a bonus of up to <strong>$${params.max_bonus}</strong>.</p>
             <p>Please note that you are participating in a scientific study. Your responses will be a huge help for our research, so we ask you give the study your best effort and attention. Thank you!</p>
         </div>`,
         button_label: "Enter fullscreen & begin"
@@ -81,138 +86,42 @@ function initTask(jsPsych, subject_id) {
 
     timeline.push(buildBlankCanvasTrial(params.iti));
 
-    for (let trialIndex = 0; trialIndex < params.n_trials; trialIndex++) {
-        timeline.push({
-            type: jsPsychHtmlKeyboardResponse,
-            stimulus: "",
-            choices: "NO_KEYS",
-            trial_duration: 0,
-            on_start: function () {
-                TASK_STATE.currentTrial = generateTrialSpec(jsPsych, trialIndex + 1);
-            }
-        });
-
-        timeline.push({
-            type: jsPsychCanvasKeyboardResponse,
-            canvas_size: [850, 1200],
-            choices: ["arrowleft", "arrowright"],
-            trial_duration: params.choice_duration,
-            data: {
-                phase: "choice",
-                is_choice_trial: true,
-            },
-            stimulus: function (canvas) {
-                const ctx = canvas.getContext("2d");
-                drawChoiceDisplay(ctx, TASK_STATE.currentTrial);
-            },
-            on_finish: function (data) {
-                const trial = TASK_STATE.currentTrial;
-                const responseKey = (data.response || "").toLowerCase();
-                Object.assign(data, {
-                    trial_number: trial.trial_number,
-                    is_repeat_trial: trial.is_repeat_trial,
-                    repeat_side: trial.repeat_side,
-                    repeated_card_value: trial.repeated_card ? trial.repeated_card.value : null,
-                    repeated_card_image_name: trial.repeated_card ? trial.repeated_card.image_name : null,
-                    repeated_card_original_trial: trial.repeated_card ? trial.repeated_card.origin_trial_number : null,
-                    left_image_name: trial.left.image_name,
-                    left_image_path: trial.left.image_path,
-                    left_image_memorability: trial.left.things_memorability,
-                    left_value: trial.left.value,
-                    left_is_repeat: trial.left.is_repeat,
-                    right_image_name: trial.right.image_name,
-                    right_image_path: trial.right.image_path,
-                    right_image_memorability: trial.right.things_memorability,
-                    right_value: trial.right.value,
-                    right_is_repeat: trial.right.is_repeat
-                });
-                data.timestamp = new Date().toISOString();
-
-                if (!responseKey) {
-                    data.chosen_side = null;
-                    data.chosen_value = null;
-                    data.reward = 0;
-                    data.did_choose_repeat = false;
-                    data.optimal_repeat_choice = null;
-                    return;
-                }
-
-                const chosenSide = responseKey === "arrowleft" ? "left" : "right";
-                const unchosenSide = chosenSide === "left" ? "right" : "left";
-                const chosenCard = trial[chosenSide];
-                const repeatedCard = trial.repeated_card;
-
-                data.chosen_side = chosenSide;
-                data.unchosen_side = unchosenSide;
-                data.chosen_image_name = chosenCard.image_name;
-                data.chosen_image_path = chosenCard.image_path;
-                data.chosen_image_memorability = chosenCard.things_memorability;
-                data.chosen_value = chosenCard.value;
-                data.reward = chosenCard.value;
-                data.did_choose_repeat = trial.is_repeat_trial && chosenCard.is_repeat;
-
-                TASK_STATE.chosenHistory.push({
-                    image_name: chosenCard.image_name,
-                    image_path: chosenCard.image_path,
-                    things_file_path: chosenCard.things_file_path,
-                    things_memorability: chosenCard.things_memorability,
-                    things_category: chosenCard.things_category,
-                    memorability_percentile: chosenCard.memorability_percentile,
-                    value: chosenCard.value,
-                    origin_trial_number: chosenCard.origin_trial_number,
-                    chosen_trial_number: trial.trial_number,
-                    has_repeated: false
-                });
-
-                if (trial.is_repeat_trial && repeatedCard) {
-                    const shouldChooseRepeat = repeatedCard.value > 0.5;
-                    data.optimal_repeat_choice =
-                        (shouldChooseRepeat && data.did_choose_repeat) ||
-                        (!shouldChooseRepeat && !data.did_choose_repeat);
-                } else {
-                    data.optimal_repeat_choice = null;
-                }
-            }
-        });
-
-        timeline.push({
-            type: jsPsychCanvasKeyboardResponse,
-            canvas_size: [850, 1200],
-            choices: "NO_KEYS",
-            trial_duration: function () {
-                const lastData = jsPsych.data.get().last(1).values()[0];
-                return lastData.response ? params.highlight_duration + params.flip_duration + params.revealed_duration : params.too_slow_duration;
-            },
-            stimulus: function (canvas) {
-                const ctx = canvas.getContext("2d");
-                const lastData = jsPsych.data.get().last(1).values()[0];
-                drawFeedbackDisplay(ctx, TASK_STATE.currentTrial, lastData);
-            }
-        });
-
+    plan.trials.forEach((trialSpec) => {
+        timeline.push(buildChoiceTrial(jsPsych, trialSpec));
+        timeline.push(buildFeedbackTrial(jsPsych));
         timeline.push(buildBlankCanvasTrial(params.iti));
-    }
+
+        const attentionCheck = plan.attention_checks.find((check) => check.after_trial_number === trialSpec.trial_number);
+        if (attentionCheck) {
+            timeline.push(buildAttentionCheckTrial(attentionCheck));
+        }
+
+        if (trialSpec.trial_number === params.block_sizes[0] || trialSpec.trial_number === params.block_sizes[0] + params.block_sizes[1]) {
+            timeline.push(buildBreakTrial());
+        }
+    });
 
     timeline.push({
         type: jsPsychHtmlButtonResponse,
         stimulus: function () {
-            const summary = getRepeatSummary(jsPsych);
+            const bonusSummary = getBonusSummary(jsPsych);
             return `<div class="instruction-container">
                 <h2>Finished!</h2>
-                <p>You made optimal choices on <strong>${(summary.optimalRate * 100).toFixed(1)}%</strong> of repeated-card trials.</p>
-                <p>Your bonus is <strong>$${summary.bonus.toFixed(2)}</strong>.</p>
-                <p>Your final pay is <strong>$${(params.base_pay + summary.bonus).toFixed(2)}</strong>.</p>
+                <p>We sampled <strong>${bonusSummary.sampledTrials.length}</strong> old-card trials for your bonus.</p>
+                <p>Your sampled total was <strong>${formatCurrency(bonusSummary.sampledReward)}</strong>.</p>
+                <p>Your bonus will be <strong>$${bonusSummary.bonus.toFixed(2)}</strong>.</p>
+                <p>Your final pay will be <strong>$${(params.base_pay + bonusSummary.bonus).toFixed(2)}</strong>.</p>
                 <p>Thank you for your participation!</p>
             </div>`;
         },
         choices: ["Submit data & end experiment"],
         on_finish: function (data) {
-            const summary = getRepeatSummary(jsPsych);
+            const bonusSummary = getBonusSummary(jsPsych);
             data.is_summary = true;
-            data.optimal_repeat_rate = summary.optimalRate;
-            data.repeated_card_trials = summary.nRepeatTrials;
-            data.optimal_repeat_trials = summary.nOptimal;
-            data.final_bonus = summary.bonus.toFixed(2);
+            data.sampled_old_trial_numbers = JSON.stringify(bonusSummary.sampledTrialNumbers);
+            data.sampled_old_rewards = JSON.stringify(bonusSummary.sampledRewards);
+            data.sampled_old_total = bonusSummary.sampledReward.toFixed(2);
+            data.final_bonus = bonusSummary.bonus.toFixed(2);
         }
     });
 
@@ -232,92 +141,215 @@ function initTask(jsPsych, subject_id) {
     jsPsych.run(timeline);
 }
 
-function generateTrialSpec(jsPsych, trialNumber) {
-    const eligibleRepeats = TASK_STATE.chosenHistory.filter((entry) => {
-        const lag = trialNumber - entry.chosen_trial_number;
-        return lag >= params.min_trials_ago && lag <= params.max_trials_ago && !entry.has_repeated;
-    });
-
-    const useRepeat = eligibleRepeats.length > 0 && Math.random() < params.old_trial_pct;
-    const repeatEntry = useRepeat
-        ? jsPsych.randomization.sampleWithoutReplacement(eligibleRepeats, 1)[0]
-        : null;
-    const repeatSide = repeatEntry
-        ? jsPsych.randomization.sampleWithoutReplacement(["left", "right"], 1)[0]
-        : null;
-
-    if (repeatEntry) {
-        repeatEntry.has_repeated = true;
-    }
-
-    const leftCard = repeatSide === "left"
-        ? materializeRepeatedCard(repeatEntry)
-        : materializeNewCard(jsPsych, trialNumber);
-    const rightCard = repeatSide === "right"
-        ? materializeRepeatedCard(repeatEntry)
-        : materializeNewCard(jsPsych, trialNumber);
-
+function buildChoiceTrial(jsPsych, trialSpec) {
     return {
-        trial_number: trialNumber,
-        is_repeat_trial: Boolean(repeatEntry),
-        repeat_side: repeatSide,
-        repeated_card: repeatEntry,
-        left: leftCard,
-        right: rightCard
+        type: jsPsychCanvasKeyboardResponse,
+        canvas_size: [850, 1200],
+        choices: ["arrowleft", "arrowright"],
+        trial_duration: params.stimulus_time,
+        data: {
+            phase: "choice",
+            is_choice_trial: true,
+        },
+        on_start: function () {
+            TASK_STATE.currentTrial = materializeRuntimeTrial(trialSpec);
+        },
+        stimulus: function (canvas) {
+            const ctx = canvas.getContext("2d");
+            drawChoiceDisplay(ctx, TASK_STATE.currentTrial);
+        },
+        on_finish: function (data) {
+            const trial = TASK_STATE.currentTrial;
+            const responseKey = (data.response || "").toLowerCase();
+            data.response_key = responseKey || null;
+
+            Object.assign(data, {
+                trial_number: trial.trial_number,
+                block_index: trial.block_index,
+                triplet_index: trial.triplet_index,
+                trial_type: trial.trial_type,
+                old_trial: trial.trial_type === "old" ? 1 : 0,
+                memorability_bin: trial.memorability_bin,
+                encoding_trial: trial.source_trial_number,
+                delay: trial.delay,
+                old_side: trial.old_side,
+                old_value: trial.trial_type === "old" ? (trial.old_side === "left" ? trial.left.value : trial.right.value) : null,
+                repeat_source_was_chosen: trial.repeat_source_was_chosen,
+                repeat_source_fallback_side: trial.repeat_source_fallback_side,
+                left_image_name: trial.left.image_name,
+                left_image_path: trial.left.image_path,
+                left_memorability: trial.left.things_memorability,
+                left_value: trial.left.value,
+                left_is_old: trial.left.is_old,
+                right_image_name: trial.right.image_name,
+                right_image_path: trial.right.image_path,
+                right_memorability: trial.right.things_memorability,
+                right_value: trial.right.value,
+                right_is_old: trial.right.is_old,
+                timestamp: new Date().toISOString(),
+            });
+
+            if (!responseKey) {
+                const autoChosenSide = jsPsych.randomization.sampleWithoutReplacement(["left", "right"], 1)[0];
+                const autoChosenCard = trial[autoChosenSide];
+
+                data.chosen_side = autoChosenSide;
+                data.chosen_image_name = autoChosenCard.image_name;
+                data.chosen_image_path = autoChosenCard.image_path;
+                data.chosen_value = autoChosenCard.value;
+                data.reward = autoChosenCard.value;
+                data.response = autoChosenSide;
+                data.old_chosen = trial.trial_type === "old" ? Number(autoChosenCard.is_old) : null;
+                data.did_choose_old = trial.trial_type === "old" ? Number(autoChosenCard.is_old) : null;
+                data.choice_missed = true;
+                data.auto_chosen = true;
+                data.outcome = autoChosenCard.value;
+                data.optimal_choice = computeOptimalChoice(trial, autoChosenSide);
+
+                if (trial.trial_type === "new") {
+                    TASK_STATE.sourceChoiceByTrial.set(trial.trial_number, {
+                        chosen_side: autoChosenSide,
+                        card: autoChosenCard,
+                    });
+                }
+                return;
+            }
+
+            const chosenSide = responseKey === "arrowleft" ? "left" : "right";
+            const chosenCard = trial[chosenSide];
+
+            data.chosen_side = chosenSide;
+            data.chosen_image_name = chosenCard.image_name;
+            data.chosen_image_path = chosenCard.image_path;
+            data.chosen_value = chosenCard.value;
+            data.reward = chosenCard.value;
+            data.response = chosenSide;
+            data.choice_missed = false;
+            data.auto_chosen = false;
+            data.old_chosen = trial.trial_type === "old" ? Number(chosenCard.is_old) : null;
+            data.did_choose_old = trial.trial_type === "old" ? Number(chosenCard.is_old) : null;
+            data.outcome = chosenCard.value;
+            data.optimal_choice = computeOptimalChoice(trial, chosenSide);
+
+            if (trial.trial_type === "new") {
+                TASK_STATE.sourceChoiceByTrial.set(trial.trial_number, {
+                    chosen_side: chosenSide,
+                    card: chosenCard,
+                });
+            }
+        }
     };
 }
 
-function materializeCard(stimulus, isRepeat) {
+function buildFeedbackTrial(jsPsych) {
+    return {
+        type: jsPsychCanvasKeyboardResponse,
+        canvas_size: [850, 1200],
+        choices: "NO_KEYS",
+        trial_duration: params.feedback_time,
+        stimulus: function (canvas) {
+            const ctx = canvas.getContext("2d");
+            const lastData = jsPsych.data.get().last(1).values()[0];
+            drawFeedbackDisplay(ctx, TASK_STATE.currentTrial, lastData);
+        }
+    };
+}
+
+function buildAttentionCheckTrial(attentionCheck) {
+    const label = attentionCheck.correct_key === "arrowup" ? "UP" : "DOWN";
+    return {
+        type: jsPsychHtmlKeyboardResponse,
+        stimulus: `<div class="instruction-container" style="text-align: center;">
+            <h2>ATTENTION CHECK</h2>
+            <p>Press the <strong>${label}</strong> key.</p>
+        </div>`,
+        choices: ["arrowup", "arrowdown"],
+        data: {
+            is_attention_check: true,
+            correct_key: attentionCheck.correct_key,
+            after_trial_number: attentionCheck.after_trial_number,
+        },
+        on_finish: function (data) {
+            data.response_key = (data.response || "").toLowerCase();
+            data.success = data.response_key === attentionCheck.correct_key;
+        }
+    };
+}
+
+function buildBreakTrial() {
+    return {
+        type: jsPsychHtmlKeyboardResponse,
+        stimulus: `<div class="instruction-container" style="text-align: center;">
+            <h2>Break</h2>
+            <p>Click space bar to continue, or it will continue automatically in 20 seconds.</p>
+        </div>`,
+        choices: [" "],
+        trial_duration: params.break_duration,
+    };
+}
+
+function materializeRuntimeTrial(trialSpec) {
+    if (trialSpec.trial_type === "new") {
+        return {
+            trial_number: trialSpec.trial_number,
+            block_index: trialSpec.block_index,
+            triplet_index: trialSpec.triplet_index,
+            trial_type: "new",
+            memorability_bin: trialSpec.memorability_bin,
+            source_trial_number: null,
+            delay: null,
+            old_side: null,
+            repeat_source_was_chosen: null,
+            repeat_source_fallback_side: null,
+            left: buildCardFromStimulus(trialSpec.left_stimulus, trialSpec.shared_value, false),
+            right: buildCardFromStimulus(trialSpec.right_stimulus, trialSpec.shared_value, false),
+        };
+    }
+
+    const sourceTrialSpec = TASK_STATE.plan.trials.find((trial) => trial.trial_number === trialSpec.source_trial_number);
+    const recordedChoice = TASK_STATE.sourceChoiceByTrial.get(trialSpec.source_trial_number);
+    const fallbackSide = trialSpec.repeat_source_fallback_side || trialSpec.fallback_side;
+    const repeatedCard = recordedChoice
+        ? recordedChoice.card
+        : buildCardFromStimulus(
+            fallbackSide === "left" ? sourceTrialSpec.left_stimulus : sourceTrialSpec.right_stimulus,
+            sourceTrialSpec.shared_value,
+            true
+        );
+
+    const repeatedCardCopy = Object.assign({}, repeatedCard, { is_old: true });
+    const lureCard = buildCardFromStimulus(trialSpec.lure_stimulus, trialSpec.lure_value, false);
+    const left = trialSpec.old_side === "left" ? repeatedCardCopy : lureCard;
+    const right = trialSpec.old_side === "right" ? repeatedCardCopy : lureCard;
+
+    return {
+        trial_number: trialSpec.trial_number,
+        block_index: trialSpec.block_index,
+        triplet_index: trialSpec.triplet_index,
+        trial_type: "old",
+        memorability_bin: trialSpec.memorability_bin,
+        source_trial_number: trialSpec.source_trial_number,
+        delay: trialSpec.delay,
+        old_side: trialSpec.old_side,
+        repeat_source_was_chosen: Boolean(recordedChoice),
+        repeat_source_fallback_side: recordedChoice ? null : fallbackSide,
+        left: left,
+        right: right,
+    };
+}
+
+function buildCardFromStimulus(stimulus, value, isOld) {
     return {
         image_name: stimulus.image_name,
-        image_path: `${params.stimuli_dir}/${stimulus.image_name}`,
+        image_path: stimulus.image_path,
         things_file_path: stimulus.things_file_path,
         things_memorability: Number(stimulus.things_memorability),
         things_category: stimulus.things_category,
         memorability_percentile: Number(stimulus.memorability_percentile),
-        value: null,
-        value_label: null,
-        is_repeat: isRepeat,
-        origin_trial_number: null
+        value: value,
+        value_label: formatValue(value),
+        is_old: isOld,
     };
-}
-
-function materializeNewCard(jsPsych, trialNumber) {
-    const stimulus = TASK_STATE.availableStimuli.shift();
-    if (!stimulus) {
-        throw new Error("Ran out of new stimuli while building episodic choice trials.");
-    }
-
-    const card = materializeCard(stimulus, false);
-    card.value = assignValue(card.image_name, jsPsych);
-    card.value_label = formatValue(card.value);
-    card.origin_trial_number = trialNumber;
-    return card;
-}
-
-function materializeRepeatedCard(repeatEntry) {
-    const stimulus = {
-        image_name: repeatEntry.image_name,
-        things_file_path: repeatEntry.things_file_path || "",
-        things_memorability: repeatEntry.things_memorability,
-        things_category: repeatEntry.things_category || "",
-        memorability_percentile: repeatEntry.memorability_percentile || null
-    };
-    const card = materializeCard(stimulus, true);
-    card.image_path = repeatEntry.image_path;
-    card.value = repeatEntry.value;
-    card.value_label = formatValue(card.value);
-    card.origin_trial_number = repeatEntry.origin_trial_number;
-    return card;
-}
-
-function assignValue(imageName, jsPsych) {
-    if (TASK_STATE.imageValueMap.has(imageName)) {
-        return TASK_STATE.imageValueMap.get(imageName);
-    }
-    const value = jsPsych.randomization.sampleWithoutReplacement(params.possible_values, 1)[0];
-    TASK_STATE.imageValueMap.set(imageName, value);
-    return value;
 }
 
 function buildBlankCanvasTrial(duration) {
@@ -342,56 +374,34 @@ function drawChoiceDisplay(ctx, trial) {
 
 function drawFeedbackDisplay(ctx, trial, lastData) {
     const dims = getCardLayout(ctx.canvas);
-    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-
-    if (!lastData.response) {
-        ctx.fillStyle = "#c93b32";
-        ctx.font = "bold 48px Inter";
-        ctx.textAlign = "center";
-        ctx.textBaseline = "middle";
-        ctx.fillText("Too Slow!", ctx.canvas.width / 2, ctx.canvas.height / 2);
-        return;
-    }
-
+    const total = params.feedback_time;
+    const highlightDuration = Math.floor(total * 0.4);
+    const flipDuration = Math.floor(total * 0.3);
+    const revealDuration = total - highlightDuration - flipDuration;
     const chosenSide = lastData.chosen_side;
-    const chosenCard = trial[chosenSide];
-    const unchosenSide = chosenSide === "left" ? "right" : "left";
-    const unchosenCard = trial[unchosenSide];
-    const chosenX = chosenSide === "left" ? dims.leftX : dims.rightX;
-    const unchosenX = chosenSide === "left" ? dims.rightX : dims.leftX;
 
+    const chosenCard = trial[chosenSide];
+    const chosenX = chosenSide === "left" ? dims.leftX : dims.rightX;
     const startTime = performance.now();
 
     function animate(now) {
         const elapsed = now - startTime;
         ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 
-        drawCard(ctx, unchosenX, dims.cardY, dims.cardWidth, dims.cardHeight, IMAGE_CACHE[unchosenCard.image_path], null, false, 1, 0.45);
-
-        if (elapsed < params.highlight_duration) {
+        if (elapsed < highlightDuration) {
             drawCard(ctx, chosenX, dims.cardY, dims.cardWidth, dims.cardHeight, IMAGE_CACHE[chosenCard.image_path], null, true);
-        } else {
-            const flipElapsed = elapsed - params.highlight_duration;
-            const progress = Math.min(flipElapsed / params.flip_duration, 1);
-
+        } else if (elapsed < highlightDuration + flipDuration) {
+            const progress = (elapsed - highlightDuration) / flipDuration;
             if (progress < 0.5) {
                 drawCard(ctx, chosenX, dims.cardY, dims.cardWidth, dims.cardHeight, IMAGE_CACHE[chosenCard.image_path], null, true, Math.max(0.02, 1 - progress * 2));
             } else {
-                drawCard(
-                    ctx,
-                    chosenX,
-                    dims.cardY,
-                    dims.cardWidth,
-                    dims.cardHeight,
-                    IMAGE_CACHE[chosenCard.image_path],
-                    chosenCard.value_label,
-                    true,
-                    Math.max(0.02, (progress - 0.5) * 2)
-                );
+                drawCard(ctx, chosenX, dims.cardY, dims.cardWidth, dims.cardHeight, IMAGE_CACHE[chosenCard.image_path], chosenCard.value_label, true, Math.max(0.02, (progress - 0.5) * 2));
             }
+        } else {
+            drawCard(ctx, chosenX, dims.cardY, dims.cardWidth, dims.cardHeight, IMAGE_CACHE[chosenCard.image_path], chosenCard.value_label, true);
         }
 
-        if (elapsed < params.highlight_duration + params.flip_duration + params.revealed_duration) {
+        if (elapsed < highlightDuration + flipDuration + revealDuration) {
             requestAnimationFrame(animate);
         }
     }
@@ -480,17 +490,58 @@ function loadStimulusMetadata() {
     return rows;
 }
 
-function getRepeatSummary(jsPsych) {
-    const repeatTrials = jsPsych.data.get().filterCustom((trial) => trial.is_choice_trial && trial.is_repeat_trial && trial.optimal_repeat_choice !== null).values();
-    const nRepeatTrials = repeatTrials.length;
-    const nOptimal = repeatTrials.filter((trial) => trial.optimal_repeat_choice).length;
-    const optimalRate = nRepeatTrials > 0 ? nOptimal / nRepeatTrials : 0;
-    return {
-        nRepeatTrials,
-        nOptimal,
-        optimalRate,
-        bonus: params.max_bonus * optimalRate
+function getBonusSummary(jsPsych) {
+    if (TASK_STATE.bonusSummary) {
+        return TASK_STATE.bonusSummary;
+    }
+
+    const oldTrials = jsPsych.data.get().filterCustom((trial) => trial.is_choice_trial && trial.trial_type === "old").values();
+    const sampleN = Math.min(params.bonus_sample_n, oldTrials.length);
+    const rng = EpisodicChoiceSequence.makeRandomHelpers();
+    const sampledTrials = sampleN > 0 ? rng.sample(oldTrials, sampleN) : [];
+
+    sampledTrials.forEach((trial) => {
+        trial.bonus_sampled = true;
+    });
+
+    const sampledRewards = sampledTrials.map((trial) => Number(trial.reward) || 0);
+    const sampledReward = sampledRewards.reduce((sum, value) => sum + value, 0);
+    const maxPossibleValue = Math.max(...params.possible_values);
+    const denominator = sampleN * maxPossibleValue;
+    const normalized = denominator > 0 ? sampledReward / denominator : 0;
+    const bonus = EpisodicChoiceSequence.clamp(normalized * params.max_bonus, 0, params.max_bonus);
+
+    TASK_STATE.bonusSummary = {
+        sampledTrials,
+        sampledTrialNumbers: sampledTrials.map((trial) => trial.trial_number),
+        sampledRewards,
+        sampledReward,
+        bonus,
     };
+    return TASK_STATE.bonusSummary;
+}
+
+function computeOptimalChoice(trial, chosenSide) {
+    if (trial.trial_type !== "old") {
+        return null;
+    }
+
+    const oldCard = trial.old_side === "left" ? trial.left : trial.right;
+    const threshold = getOldValueThreshold(params.possible_values);
+    if (oldCard.value === threshold) {
+        return null;
+    }
+
+    const shouldChooseOld = oldCard.value > threshold;
+    const didChooseOld = chosenSide === trial.old_side;
+    return Number((shouldChooseOld && didChooseOld) || (!shouldChooseOld && !didChooseOld));
+}
+
+function getOldValueThreshold(values) {
+    const sorted = values.slice().sort((a, b) => a - b);
+    const midLeft = sorted[(sorted.length / 2) - 1];
+    const midRight = sorted[sorted.length / 2];
+    return (midLeft + midRight) / 2;
 }
 
 function formatValue(value) {
@@ -498,4 +549,8 @@ function formatValue(value) {
         return "$1";
     }
     return `${Math.round(value * 100)}¢`;
+}
+
+function formatCurrency(value) {
+    return `$${Number(value).toFixed(2)}`;
 }
