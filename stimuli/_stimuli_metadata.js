@@ -12,7 +12,23 @@ window.STIMULI_METADATA = [
     "concept_name": "giraffe",
     "category27_label": "animal",
     "category27_id": 1,
-    "memorability_category": "high",
+    "memorability_bin": "high",
+    "selection_source": "milp"
+  },
+  {
+    "image_name": "gorilla_13s.jpg",
+    "image_path": "images/gorilla_13s.jpg",
+    "things_file_path": "gorilla/gorilla_13s.jpg",
+    "things_memorability": 0.974359,
+    "things_category": "animal",
+    "memorability_percentile": 99.668659,
+    "recognizability": 1.0,
+    "nameability": 0.9375,
+    "concreteness_score": 4.97,
+    "concept_name": "gorilla",
+    "category27_label": "animal",
+    "category27_id": 1,
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -28,7 +44,7 @@ window.STIMULI_METADATA = [
     "concept_name": "panther",
     "category27_label": "animal",
     "category27_id": 1,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -44,7 +60,7 @@ window.STIMULI_METADATA = [
     "concept_name": "pig",
     "category27_label": "animal",
     "category27_id": 1,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -60,23 +76,7 @@ window.STIMULI_METADATA = [
     "concept_name": "piglet",
     "category27_label": "animal",
     "category27_id": 1,
-    "memorability_category": "high",
-    "selection_source": "milp"
-  },
-  {
-    "image_name": "pug_05s.jpg",
-    "image_path": "images/pug_05s.jpg",
-    "things_file_path": "pug/pug_05s.jpg",
-    "things_memorability": 0.974359,
-    "things_category": "animal",
-    "memorability_percentile": 99.668659,
-    "recognizability": 0.461538,
-    "nameability": 0.473684,
-    "concreteness_score": 4.62,
-    "concept_name": "pug",
-    "category27_label": "animal",
-    "category27_id": 1,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -92,7 +92,7 @@ window.STIMULI_METADATA = [
     "concept_name": "tarantula",
     "category27_label": "animal",
     "category27_id": 1,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -108,7 +108,7 @@ window.STIMULI_METADATA = [
     "concept_name": "crow",
     "category27_label": "bird",
     "category27_id": 2,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -124,7 +124,7 @@ window.STIMULI_METADATA = [
     "concept_name": "peacock",
     "category27_label": "bird",
     "category27_id": 2,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -140,7 +140,7 @@ window.STIMULI_METADATA = [
     "concept_name": "puffin",
     "category27_label": "bird",
     "category27_id": 2,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -156,7 +156,7 @@ window.STIMULI_METADATA = [
     "concept_name": "rooster",
     "category27_label": "bird",
     "category27_id": 2,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -172,7 +172,7 @@ window.STIMULI_METADATA = [
     "concept_name": "swan",
     "category27_label": "bird",
     "category27_id": 2,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -188,7 +188,7 @@ window.STIMULI_METADATA = [
     "concept_name": "turkey",
     "category27_label": "bird",
     "category27_id": 2,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -204,7 +204,7 @@ window.STIMULI_METADATA = [
     "concept_name": "beard",
     "category27_label": "body part",
     "category27_id": 3,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -220,7 +220,7 @@ window.STIMULI_METADATA = [
     "concept_name": "calf2",
     "category27_label": "body part",
     "category27_id": 3,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -236,7 +236,7 @@ window.STIMULI_METADATA = [
     "concept_name": "ear",
     "category27_label": "body part",
     "category27_id": 3,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -252,7 +252,7 @@ window.STIMULI_METADATA = [
     "concept_name": "hip",
     "category27_label": "body part",
     "category27_id": 3,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -268,7 +268,7 @@ window.STIMULI_METADATA = [
     "concept_name": "mustache",
     "category27_label": "body part",
     "category27_id": 3,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -284,7 +284,7 @@ window.STIMULI_METADATA = [
     "concept_name": "torso",
     "category27_label": "body part",
     "category27_id": 3,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -300,7 +300,7 @@ window.STIMULI_METADATA = [
     "concept_name": "cape",
     "category27_label": "clothing",
     "category27_id": 4,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -316,7 +316,23 @@ window.STIMULI_METADATA = [
     "concept_name": "headscarf",
     "category27_label": "clothing",
     "category27_id": 4,
-    "memorability_category": "high",
+    "memorability_bin": "high",
+    "selection_source": "milp"
+  },
+  {
+    "image_name": "leotard_05s.jpg",
+    "image_path": "images/leotard_05s.jpg",
+    "things_file_path": "leotard/leotard_05s.jpg",
+    "things_memorability": 0.975,
+    "things_category": "clothing",
+    "memorability_percentile": 99.756761,
+    "recognizability": 0.153846,
+    "nameability": 0.411765,
+    "concreteness_score": 4.74,
+    "concept_name": "leotard",
+    "category27_label": "clothing",
+    "category27_id": 4,
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -332,23 +348,7 @@ window.STIMULI_METADATA = [
     "concept_name": "loincloth",
     "category27_label": "clothing",
     "category27_id": 4,
-    "memorability_category": "high",
-    "selection_source": "milp"
-  },
-  {
-    "image_name": "stockings_12s.jpg",
-    "image_path": "images/stockings_12s.jpg",
-    "things_file_path": "stockings/stockings_12s.jpg",
-    "things_memorability": 0.975,
-    "things_category": "clothing",
-    "memorability_percentile": 99.756761,
-    "recognizability": 0.117647,
-    "nameability": 0.105263,
-    "concreteness_score": 4.62,
-    "concept_name": "stockings",
-    "category27_label": "clothing",
-    "category27_id": 4,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -364,7 +364,7 @@ window.STIMULI_METADATA = [
     "concept_name": "swimsuit",
     "category27_label": "clothing",
     "category27_id": 4,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -380,7 +380,7 @@ window.STIMULI_METADATA = [
     "concept_name": "turban",
     "category27_label": "clothing",
     "category27_id": 4,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -396,7 +396,7 @@ window.STIMULI_METADATA = [
     "concept_name": "belt",
     "category27_label": "clothing accessory",
     "category27_id": 5,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -412,7 +412,7 @@ window.STIMULI_METADATA = [
     "concept_name": "cummerbund",
     "category27_label": "clothing accessory",
     "category27_id": 5,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -428,7 +428,7 @@ window.STIMULI_METADATA = [
     "concept_name": "headband",
     "category27_label": "clothing accessory",
     "category27_id": 5,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -444,7 +444,7 @@ window.STIMULI_METADATA = [
     "concept_name": "suspenders",
     "category27_label": "clothing accessory",
     "category27_id": 5,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -460,7 +460,7 @@ window.STIMULI_METADATA = [
     "concept_name": "tie",
     "category27_label": "clothing accessory",
     "category27_id": 5,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -476,7 +476,7 @@ window.STIMULI_METADATA = [
     "concept_name": "visor",
     "category27_label": "clothing accessory",
     "category27_id": 5,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -492,39 +492,7 @@ window.STIMULI_METADATA = [
     "concept_name": "bag",
     "category27_label": "container",
     "category27_id": 6,
-    "memorability_category": "high",
-    "selection_source": "milp"
-  },
-  {
-    "image_name": "bottle_12s.jpg",
-    "image_path": "images/bottle_12s.jpg",
-    "things_file_path": "bottle/bottle_12s.jpg",
-    "things_memorability": 0.948718,
-    "things_category": "container",
-    "memorability_percentile": 98.57121,
-    "recognizability": 0.470588,
-    "nameability": 0.888889,
-    "concreteness_score": 4.91,
-    "concept_name": "bottle",
-    "category27_label": "container",
-    "category27_id": 6,
-    "memorability_category": "high",
-    "selection_source": "milp"
-  },
-  {
-    "image_name": "filing_cabinet_06s.jpg",
-    "image_path": "images/filing_cabinet_06s.jpg",
-    "things_file_path": "filing_cabinet/filing_cabinet_06s.jpg",
-    "things_memorability": 0.948718,
-    "things_category": "container",
-    "memorability_percentile": 98.57121,
-    "recognizability": 0.470588,
-    "nameability": 0.294118,
-    "concreteness_score": 4.86,
-    "concept_name": "filing_cabinet",
-    "category27_label": "container",
-    "category27_id": 6,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -540,7 +508,23 @@ window.STIMULI_METADATA = [
     "concept_name": "footbath",
     "category27_label": "container",
     "category27_id": 6,
-    "memorability_category": "high",
+    "memorability_bin": "high",
+    "selection_source": "milp"
+  },
+  {
+    "image_name": "hot_tub_03s.jpg",
+    "image_path": "images/hot_tub_03s.jpg",
+    "things_file_path": "hot_tub/hot_tub_03s.jpg",
+    "things_memorability": 0.949359,
+    "things_category": "container",
+    "memorability_percentile": 98.709109,
+    "recognizability": 0.533333,
+    "nameability": 0.705882,
+    "concreteness_score": 4.75,
+    "concept_name": "hot_tub",
+    "category27_label": "container",
+    "category27_id": 6,
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -556,7 +540,7 @@ window.STIMULI_METADATA = [
     "concept_name": "shopping_cart",
     "category27_label": "container",
     "category27_id": 6,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -572,7 +556,23 @@ window.STIMULI_METADATA = [
     "concept_name": "test_tube",
     "category27_label": "container",
     "category27_id": 6,
-    "memorability_category": "high",
+    "memorability_bin": "high",
+    "selection_source": "milp"
+  },
+  {
+    "image_name": "wallet_08s.jpg",
+    "image_path": "images/wallet_08s.jpg",
+    "things_file_path": "wallet/wallet_08s.jpg",
+    "things_memorability": 0.948718,
+    "things_category": "container",
+    "memorability_percentile": 98.57121,
+    "recognizability": 0.875,
+    "nameability": 0.789474,
+    "concreteness_score": 4.81,
+    "concept_name": "wallet",
+    "category27_label": "container",
+    "category27_id": 6,
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -588,7 +588,7 @@ window.STIMULI_METADATA = [
     "concept_name": "caramel",
     "category27_label": "dessert",
     "category27_id": 7,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -604,7 +604,7 @@ window.STIMULI_METADATA = [
     "concept_name": "eclair",
     "category27_label": "dessert",
     "category27_id": 7,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -620,7 +620,7 @@ window.STIMULI_METADATA = [
     "concept_name": "fudge",
     "category27_label": "dessert",
     "category27_id": 7,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -636,7 +636,7 @@ window.STIMULI_METADATA = [
     "concept_name": "ice_cream",
     "category27_label": "dessert",
     "category27_id": 7,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -652,7 +652,7 @@ window.STIMULI_METADATA = [
     "concept_name": "parfait",
     "category27_label": "dessert",
     "category27_id": 7,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -668,7 +668,7 @@ window.STIMULI_METADATA = [
     "concept_name": "popsicle",
     "category27_label": "dessert",
     "category27_id": 7,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -684,23 +684,23 @@ window.STIMULI_METADATA = [
     "concept_name": "cocktail",
     "category27_label": "drink",
     "category27_id": 8,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
-    "image_name": "hot_chocolate_03s.jpg",
-    "image_path": "images/hot_chocolate_03s.jpg",
-    "things_file_path": "hot_chocolate/hot_chocolate_03s.jpg",
-    "things_memorability": 0.897436,
+    "image_name": "eggnog_11s.jpg",
+    "image_path": "images/eggnog_11s.jpg",
+    "things_file_path": "eggnog/eggnog_11s.jpg",
+    "things_memorability": 0.9,
     "things_category": "drink",
-    "memorability_percentile": 90.785643,
-    "recognizability": 0.066667,
-    "nameability": 0.411765,
-    "concreteness_score": 4.96,
-    "concept_name": "hot_chocolate",
+    "memorability_percentile": 92.133992,
+    "recognizability": 0.0,
+    "nameability": 0.75,
+    "concreteness_score": 5.0,
+    "concept_name": "eggnog",
     "category27_label": "drink",
     "category27_id": 8,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -716,7 +716,7 @@ window.STIMULI_METADATA = [
     "concept_name": "juice",
     "category27_label": "drink",
     "category27_id": 8,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -732,7 +732,7 @@ window.STIMULI_METADATA = [
     "concept_name": "latte",
     "category27_label": "drink",
     "category27_id": 8,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -748,7 +748,7 @@ window.STIMULI_METADATA = [
     "concept_name": "margarita",
     "category27_label": "drink",
     "category27_id": 8,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -764,7 +764,7 @@ window.STIMULI_METADATA = [
     "concept_name": "tea",
     "category27_label": "drink",
     "category27_id": 8,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -780,23 +780,7 @@ window.STIMULI_METADATA = [
     "concept_name": "cash_machine",
     "category27_label": "electronic device",
     "category27_id": 9,
-    "memorability_category": "high",
-    "selection_source": "milp"
-  },
-  {
-    "image_name": "centrifuge_06s.jpg",
-    "image_path": "images/centrifuge_06s.jpg",
-    "things_file_path": "centrifuge/centrifuge_06s.jpg",
-    "things_memorability": 0.928571,
-    "things_category": "electronic device",
-    "memorability_percentile": 97.918103,
-    "recognizability": 0.384615,
-    "nameability": 0.388889,
-    "concreteness_score": 4.38,
-    "concept_name": "centrifuge",
-    "category27_label": "electronic device",
-    "category27_id": 9,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -812,7 +796,23 @@ window.STIMULI_METADATA = [
     "concept_name": "chainsaw",
     "category27_label": "electronic device",
     "category27_id": 9,
-    "memorability_category": "high",
+    "memorability_bin": "high",
+    "selection_source": "milp"
+  },
+  {
+    "image_name": "incubator_11s.jpg",
+    "image_path": "images/incubator_11s.jpg",
+    "things_file_path": "incubator/incubator_11s.jpg",
+    "things_memorability": 0.928571,
+    "things_category": "electronic device",
+    "memorability_percentile": 97.918103,
+    "recognizability": 0.4,
+    "nameability": 0.473684,
+    "concreteness_score": 4.65,
+    "concept_name": "incubator",
+    "category27_label": "electronic device",
+    "category27_id": 9,
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -828,7 +828,7 @@ window.STIMULI_METADATA = [
     "concept_name": "joystick",
     "category27_label": "electronic device",
     "category27_id": 9,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -844,7 +844,7 @@ window.STIMULI_METADATA = [
     "concept_name": "metal_detector",
     "category27_label": "electronic device",
     "category27_id": 9,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -860,7 +860,7 @@ window.STIMULI_METADATA = [
     "concept_name": "water_heater",
     "category27_label": "electronic device",
     "category27_id": 9,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -876,23 +876,7 @@ window.STIMULI_METADATA = [
     "concept_name": "candy_bar",
     "category27_label": "food",
     "category27_id": 10,
-    "memorability_category": "high",
-    "selection_source": "milp"
-  },
-  {
-    "image_name": "macaroni_14s.jpg",
-    "image_path": "images/macaroni_14s.jpg",
-    "things_file_path": "macaroni/macaroni_14s.jpg",
-    "things_memorability": 0.97561,
-    "things_category": "food",
-    "memorability_percentile": 99.85827,
-    "recognizability": 0.428571,
-    "nameability": 0.789474,
-    "concreteness_score": 4.97,
-    "concept_name": "macaroni",
-    "category27_label": "food",
-    "category27_id": 10,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -908,7 +892,7 @@ window.STIMULI_METADATA = [
     "concept_name": "pancake",
     "category27_label": "food",
     "category27_id": 10,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -924,7 +908,23 @@ window.STIMULI_METADATA = [
     "concept_name": "peppermint",
     "category27_label": "food",
     "category27_id": 10,
-    "memorability_category": "high",
+    "memorability_bin": "high",
+    "selection_source": "milp"
+  },
+  {
+    "image_name": "pepperoni_08s.jpg",
+    "image_path": "images/pepperoni_08s.jpg",
+    "things_file_path": "pepperoni/pepperoni_08s.jpg",
+    "things_memorability": 0.97561,
+    "things_category": "food",
+    "memorability_percentile": 99.85827,
+    "recognizability": 0.071429,
+    "nameability": 0.611111,
+    "concreteness_score": 5.0,
+    "concept_name": "pepperoni",
+    "category27_label": "food",
+    "category27_id": 10,
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -940,7 +940,7 @@ window.STIMULI_METADATA = [
     "concept_name": "spam",
     "category27_label": "food",
     "category27_id": 10,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -956,7 +956,7 @@ window.STIMULI_METADATA = [
     "concept_name": "tamale",
     "category27_label": "food",
     "category27_id": 10,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -972,7 +972,7 @@ window.STIMULI_METADATA = [
     "concept_name": "apple",
     "category27_label": "fruit",
     "category27_id": 11,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -988,7 +988,7 @@ window.STIMULI_METADATA = [
     "concept_name": "berry",
     "category27_label": "fruit",
     "category27_id": 11,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -1004,7 +1004,7 @@ window.STIMULI_METADATA = [
     "concept_name": "cantaloupe",
     "category27_label": "fruit",
     "category27_id": 11,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -1020,7 +1020,7 @@ window.STIMULI_METADATA = [
     "concept_name": "mulberry",
     "category27_label": "fruit",
     "category27_id": 11,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -1036,7 +1036,7 @@ window.STIMULI_METADATA = [
     "concept_name": "pomegranate",
     "category27_label": "fruit",
     "category27_id": 11,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -1052,7 +1052,7 @@ window.STIMULI_METADATA = [
     "concept_name": "raspberry",
     "category27_label": "fruit",
     "category27_id": 11,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -1068,7 +1068,7 @@ window.STIMULI_METADATA = [
     "concept_name": "bench",
     "category27_label": "furniture",
     "category27_id": 12,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -1084,7 +1084,7 @@ window.STIMULI_METADATA = [
     "concept_name": "rack1",
     "category27_label": "furniture",
     "category27_id": 12,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -1100,7 +1100,7 @@ window.STIMULI_METADATA = [
     "concept_name": "shelf",
     "category27_label": "furniture",
     "category27_id": 12,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -1116,7 +1116,7 @@ window.STIMULI_METADATA = [
     "concept_name": "sofa_bed",
     "category27_label": "furniture",
     "category27_id": 12,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -1132,7 +1132,7 @@ window.STIMULI_METADATA = [
     "concept_name": "step_stool",
     "category27_label": "furniture",
     "category27_id": 12,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -1148,7 +1148,7 @@ window.STIMULI_METADATA = [
     "concept_name": "throne",
     "category27_label": "furniture",
     "category27_id": 12,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -1164,7 +1164,7 @@ window.STIMULI_METADATA = [
     "concept_name": "abacus",
     "category27_label": "home decor",
     "category27_id": 13,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -1180,7 +1180,7 @@ window.STIMULI_METADATA = [
     "concept_name": "coaster",
     "category27_label": "home decor",
     "category27_id": 13,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -1196,7 +1196,7 @@ window.STIMULI_METADATA = [
     "concept_name": "cornucopia",
     "category27_label": "home decor",
     "category27_id": 13,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -1212,7 +1212,7 @@ window.STIMULI_METADATA = [
     "concept_name": "doorknocker",
     "category27_label": "home decor",
     "category27_id": 13,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -1228,7 +1228,7 @@ window.STIMULI_METADATA = [
     "concept_name": "stained_glass",
     "category27_label": "home decor",
     "category27_id": 13,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -1244,119 +1244,23 @@ window.STIMULI_METADATA = [
     "concept_name": "tapestry",
     "category27_label": "home decor",
     "category27_id": 13,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
-    "image_name": "beetle_03s.jpg",
-    "image_path": "images/beetle_03s.jpg",
-    "things_file_path": "beetle/beetle_03s.jpg",
-    "things_memorability": 0.947368,
-    "things_category": "insect",
-    "memorability_percentile": 98.372022,
-    "recognizability": 0.45,
-    "nameability": 0.666667,
-    "concreteness_score": 4.83,
-    "concept_name": "beetle",
-    "category27_label": "insect",
-    "category27_id": 14,
-    "memorability_category": "high",
-    "selection_source": "milp"
-  },
-  {
-    "image_name": "cockroach_03s.jpg",
-    "image_path": "images/cockroach_03s.jpg",
-    "things_file_path": "cockroach/cockroach_03s.jpg",
-    "things_memorability": 0.925,
-    "things_category": "insect",
-    "memorability_percentile": 96.623382,
-    "recognizability": 1.0,
-    "nameability": 0.5625,
-    "concreteness_score": 4.96,
-    "concept_name": "cockroach",
-    "category27_label": "insect",
-    "category27_id": 14,
-    "memorability_category": "high",
-    "selection_source": "milp"
-  },
-  {
-    "image_name": "earwig_14n.jpg",
-    "image_path": "images/earwig_14n.jpg",
-    "things_file_path": "earwig/earwig_14n.jpg",
-    "things_memorability": 0.875,
-    "things_category": "insect",
-    "memorability_percentile": 84.955566,
-    "recognizability": 0.333333,
-    "nameability": 0.277778,
-    "concreteness_score": 4.78,
-    "concept_name": "earwig",
-    "category27_label": "insect",
-    "category27_id": 14,
-    "memorability_category": "high",
-    "selection_source": "milp"
-  },
-  {
-    "image_name": "fly_02s.jpg",
-    "image_path": "images/fly_02s.jpg",
-    "things_file_path": "fly/fly_02s.jpg",
-    "things_memorability": 0.923077,
-    "things_category": "insect",
-    "memorability_percentile": 95.874512,
-    "recognizability": 0.6,
-    "nameability": 0.947368,
-    "concreteness_score": 4.64,
-    "concept_name": "fly",
-    "category27_label": "insect",
-    "category27_id": 14,
-    "memorability_category": "high",
-    "selection_source": "milp"
-  },
-  {
-    "image_name": "ladybug_05s.jpg",
-    "image_path": "images/ladybug_05s.jpg",
-    "things_file_path": "ladybug/ladybug_05s.jpg",
-    "things_memorability": 0.928571,
-    "things_category": "insect",
-    "memorability_percentile": 97.918103,
-    "recognizability": 0.533333,
-    "nameability": 0.9,
-    "concreteness_score": 4.92,
-    "concept_name": "ladybug",
-    "category27_label": "insect",
-    "category27_id": 14,
-    "memorability_category": "high",
-    "selection_source": "milp"
-  },
-  {
-    "image_name": "mosquito_13n.jpg",
-    "image_path": "images/mosquito_13n.jpg",
-    "things_file_path": "mosquito/mosquito_13n.jpg",
-    "things_memorability": 0.925,
-    "things_category": "insect",
-    "memorability_percentile": 96.623382,
-    "recognizability": 1.0,
-    "nameability": 0.944444,
-    "concreteness_score": 4.88,
-    "concept_name": "mosquito",
-    "category27_label": "insect",
-    "category27_id": 14,
-    "memorability_category": "high",
-    "selection_source": "milp"
-  },
-  {
-    "image_name": "freezer_06s.jpg",
-    "image_path": "images/freezer_06s.jpg",
-    "things_file_path": "freezer/freezer_06s.jpg",
-    "things_memorability": 0.878049,
+    "image_name": "dishwasher_06s.jpg",
+    "image_path": "images/dishwasher_06s.jpg",
+    "things_file_path": "dishwasher/dishwasher_06s.jpg",
+    "things_memorability": 0.880952,
     "things_category": "kitchen appliance",
-    "memorability_percentile": 87.146633,
-    "recognizability": 0.4,
-    "nameability": 0.85,
-    "concreteness_score": 4.87,
-    "concept_name": "freezer",
+    "memorability_percentile": 88.594576,
+    "recognizability": 0.8125,
+    "nameability": 0.8,
+    "concreteness_score": 4.86,
+    "concept_name": "dishwasher",
     "category27_label": "kitchen appliance",
     "category27_id": 15,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -1372,7 +1276,7 @@ window.STIMULI_METADATA = [
     "concept_name": "microwave",
     "category27_label": "kitchen appliance",
     "category27_id": 15,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -1388,7 +1292,7 @@ window.STIMULI_METADATA = [
     "concept_name": "mixer",
     "category27_label": "kitchen appliance",
     "category27_id": 15,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -1404,7 +1308,7 @@ window.STIMULI_METADATA = [
     "concept_name": "refrigerator",
     "category27_label": "kitchen appliance",
     "category27_id": 15,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -1420,7 +1324,7 @@ window.STIMULI_METADATA = [
     "concept_name": "stove2",
     "category27_label": "kitchen appliance",
     "category27_id": 15,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -1436,7 +1340,7 @@ window.STIMULI_METADATA = [
     "concept_name": "waffle_iron",
     "category27_label": "kitchen appliance",
     "category27_id": 15,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -1452,7 +1356,7 @@ window.STIMULI_METADATA = [
     "concept_name": "grater",
     "category27_label": "kitchen tool",
     "category27_id": 16,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -1468,7 +1372,7 @@ window.STIMULI_METADATA = [
     "concept_name": "juicer1",
     "category27_label": "kitchen tool",
     "category27_id": 16,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -1484,7 +1388,7 @@ window.STIMULI_METADATA = [
     "concept_name": "peeler",
     "category27_label": "kitchen tool",
     "category27_id": 16,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -1500,7 +1404,7 @@ window.STIMULI_METADATA = [
     "concept_name": "scoop",
     "category27_label": "kitchen tool",
     "category27_id": 16,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -1516,7 +1420,7 @@ window.STIMULI_METADATA = [
     "concept_name": "tongs",
     "category27_label": "kitchen tool",
     "category27_id": 16,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -1532,7 +1436,7 @@ window.STIMULI_METADATA = [
     "concept_name": "whisk",
     "category27_label": "kitchen tool",
     "category27_id": 16,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -1548,7 +1452,7 @@ window.STIMULI_METADATA = [
     "concept_name": "brace",
     "category27_label": "medical equipment",
     "category27_id": 17,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -1564,7 +1468,7 @@ window.STIMULI_METADATA = [
     "concept_name": "eye_patch",
     "category27_label": "medical equipment",
     "category27_id": 17,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -1580,7 +1484,7 @@ window.STIMULI_METADATA = [
     "concept_name": "inhaler",
     "category27_label": "medical equipment",
     "category27_id": 17,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -1596,23 +1500,23 @@ window.STIMULI_METADATA = [
     "concept_name": "plaster_cast",
     "category27_label": "medical equipment",
     "category27_id": 17,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
-    "image_name": "sling_01b.jpg",
-    "image_path": "images/sling_01b.jpg",
-    "things_file_path": "sling/sling_01b.jpg",
+    "image_name": "swab_10s.jpg",
+    "image_path": "images/swab_10s.jpg",
+    "things_file_path": "swab/swab_10s.jpg",
     "things_memorability": 0.947368,
     "things_category": "medical equipment",
     "memorability_percentile": 98.372022,
-    "recognizability": 0.5,
-    "nameability": 0.842105,
-    "concreteness_score": 4.52,
-    "concept_name": "sling",
+    "recognizability": 0.583333,
+    "nameability": 0.266667,
+    "concreteness_score": 4.34,
+    "concept_name": "swab",
     "category27_label": "medical equipment",
     "category27_id": 17,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -1628,7 +1532,7 @@ window.STIMULI_METADATA = [
     "concept_name": "walker1",
     "category27_label": "medical equipment",
     "category27_id": 17,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -1644,7 +1548,7 @@ window.STIMULI_METADATA = [
     "concept_name": "bongo",
     "category27_label": "musical instrument",
     "category27_id": 18,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -1660,7 +1564,7 @@ window.STIMULI_METADATA = [
     "concept_name": "cello",
     "category27_label": "musical instrument",
     "category27_id": 18,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -1676,23 +1580,7 @@ window.STIMULI_METADATA = [
     "concept_name": "keyboard",
     "category27_label": "musical instrument",
     "category27_id": 18,
-    "memorability_category": "high",
-    "selection_source": "milp"
-  },
-  {
-    "image_name": "saxophone_01s.jpg",
-    "image_path": "images/saxophone_01s.jpg",
-    "things_file_path": "saxophone/saxophone_01s.jpg",
-    "things_memorability": 0.925,
-    "things_category": "musical instrument",
-    "memorability_percentile": 96.623382,
-    "recognizability": 0.5625,
-    "nameability": 0.833333,
-    "concreteness_score": 5.0,
-    "concept_name": "saxophone",
-    "category27_label": "musical instrument",
-    "category27_id": 18,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -1708,7 +1596,23 @@ window.STIMULI_METADATA = [
     "concept_name": "trumpet",
     "category27_label": "musical instrument",
     "category27_id": 18,
-    "memorability_category": "high",
+    "memorability_bin": "high",
+    "selection_source": "milp"
+  },
+  {
+    "image_name": "violin_01b.jpg",
+    "image_path": "images/violin_01b.jpg",
+    "things_file_path": "violin/violin_01b.jpg",
+    "things_memorability": 0.947368,
+    "things_category": "musical instrument",
+    "memorability_percentile": 98.372022,
+    "recognizability": 0.692308,
+    "nameability": 1.0,
+    "concreteness_score": 4.96,
+    "concept_name": "violin",
+    "category27_label": "musical instrument",
+    "category27_id": 18,
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -1724,7 +1628,23 @@ window.STIMULI_METADATA = [
     "concept_name": "xylophone",
     "category27_label": "musical instrument",
     "category27_id": 18,
-    "memorability_category": "high",
+    "memorability_bin": "high",
+    "selection_source": "milp"
+  },
+  {
+    "image_name": "binder_21s.jpg",
+    "image_path": "images/binder_21s.jpg",
+    "things_file_path": "binder/binder_21s.jpg",
+    "things_memorability": 0.974359,
+    "things_category": "office supply",
+    "memorability_percentile": 99.668659,
+    "recognizability": 0.388889,
+    "nameability": 0.894737,
+    "concreteness_score": 4.89,
+    "concept_name": "binder",
+    "category27_label": "office supply",
+    "category27_id": 19,
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -1740,7 +1660,7 @@ window.STIMULI_METADATA = [
     "concept_name": "glue",
     "category27_label": "office supply",
     "category27_id": 19,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -1756,7 +1676,7 @@ window.STIMULI_METADATA = [
     "concept_name": "highlighter",
     "category27_label": "office supply",
     "category27_id": 19,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -1772,23 +1692,7 @@ window.STIMULI_METADATA = [
     "concept_name": "notepad",
     "category27_label": "office supply",
     "category27_id": 19,
-    "memorability_category": "high",
-    "selection_source": "milp"
-  },
-  {
-    "image_name": "paperclip_08s.jpg",
-    "image_path": "images/paperclip_08s.jpg",
-    "things_file_path": "paperclip/paperclip_08s.jpg",
-    "things_memorability": 0.925,
-    "things_category": "office supply",
-    "memorability_percentile": 96.623382,
-    "recognizability": 0.6,
-    "nameability": 0.529412,
-    "concreteness_score": 4.96,
-    "concept_name": "paperclip",
-    "category27_label": "office supply",
-    "category27_id": 19,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -1804,7 +1708,7 @@ window.STIMULI_METADATA = [
     "concept_name": "rubber_band",
     "category27_label": "office supply",
     "category27_id": 19,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -1820,7 +1724,7 @@ window.STIMULI_METADATA = [
     "concept_name": "tack",
     "category27_label": "office supply",
     "category27_id": 19,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -1836,7 +1740,7 @@ window.STIMULI_METADATA = [
     "concept_name": "airbag",
     "category27_label": "part of car",
     "category27_id": 20,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -1852,7 +1756,7 @@ window.STIMULI_METADATA = [
     "concept_name": "gearshift",
     "category27_label": "part of car",
     "category27_id": 20,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -1868,7 +1772,7 @@ window.STIMULI_METADATA = [
     "concept_name": "handbrake",
     "category27_label": "part of car",
     "category27_id": 20,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -1884,7 +1788,7 @@ window.STIMULI_METADATA = [
     "concept_name": "license_plate",
     "category27_label": "part of car",
     "category27_id": 20,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -1900,7 +1804,7 @@ window.STIMULI_METADATA = [
     "concept_name": "seatbelt",
     "category27_label": "part of car",
     "category27_id": 20,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -1916,7 +1820,7 @@ window.STIMULI_METADATA = [
     "concept_name": "sunroof",
     "category27_label": "part of car",
     "category27_id": 20,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -1932,7 +1836,7 @@ window.STIMULI_METADATA = [
     "concept_name": "artichoke",
     "category27_label": "plant",
     "category27_id": 21,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -1948,7 +1852,7 @@ window.STIMULI_METADATA = [
     "concept_name": "broccoli",
     "category27_label": "plant",
     "category27_id": 21,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -1964,7 +1868,7 @@ window.STIMULI_METADATA = [
     "concept_name": "cactus",
     "category27_label": "plant",
     "category27_id": 21,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -1980,7 +1884,7 @@ window.STIMULI_METADATA = [
     "concept_name": "chive",
     "category27_label": "plant",
     "category27_id": 21,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -1996,7 +1900,7 @@ window.STIMULI_METADATA = [
     "concept_name": "grass",
     "category27_label": "plant",
     "category27_id": 21,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -2012,7 +1916,7 @@ window.STIMULI_METADATA = [
     "concept_name": "leek",
     "category27_label": "plant",
     "category27_id": 21,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -2028,7 +1932,7 @@ window.STIMULI_METADATA = [
     "concept_name": "baseball_bat",
     "category27_label": "sports equipment",
     "category27_id": 22,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -2044,7 +1948,7 @@ window.STIMULI_METADATA = [
     "concept_name": "baton3",
     "category27_label": "sports equipment",
     "category27_id": 22,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -2060,7 +1964,7 @@ window.STIMULI_METADATA = [
     "concept_name": "dumbbell",
     "category27_label": "sports equipment",
     "category27_id": 22,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -2076,7 +1980,7 @@ window.STIMULI_METADATA = [
     "concept_name": "football_helmet",
     "category27_label": "sports equipment",
     "category27_id": 22,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -2092,7 +1996,7 @@ window.STIMULI_METADATA = [
     "concept_name": "mouthpiece",
     "category27_label": "sports equipment",
     "category27_id": 22,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -2108,7 +2012,23 @@ window.STIMULI_METADATA = [
     "concept_name": "springboard",
     "category27_label": "sports equipment",
     "category27_id": 22,
-    "memorability_category": "high",
+    "memorability_bin": "high",
+    "selection_source": "milp"
+  },
+  {
+    "image_name": "backscratcher_16s.jpg",
+    "image_path": "images/backscratcher_16s.jpg",
+    "things_file_path": "backscratcher/backscratcher_16s.jpg",
+    "things_memorability": 0.95,
+    "things_category": "tool",
+    "memorability_percentile": 98.912127,
+    "recognizability": 0.533333,
+    "nameability": 0.789474,
+    "concreteness_score": 4.58,
+    "concept_name": "backscratcher",
+    "category27_label": "tool",
+    "category27_id": 23,
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -2124,23 +2044,7 @@ window.STIMULI_METADATA = [
     "concept_name": "marker",
     "category27_label": "tool",
     "category27_id": 23,
-    "memorability_category": "high",
-    "selection_source": "milp"
-  },
-  {
-    "image_name": "nail_clippers_03s.jpg",
-    "image_path": "images/nail_clippers_03s.jpg",
-    "things_file_path": "nail_clippers/nail_clippers_03s.jpg",
-    "things_memorability": 0.95,
-    "things_category": "tool",
-    "memorability_percentile": 98.912127,
-    "recognizability": 0.769231,
-    "nameability": 0.882353,
-    "concreteness_score": 4.86,
-    "concept_name": "nail_clippers",
-    "category27_label": "tool",
-    "category27_id": 23,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -2156,7 +2060,7 @@ window.STIMULI_METADATA = [
     "concept_name": "screwdriver",
     "category27_label": "tool",
     "category27_id": 23,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -2172,7 +2076,7 @@ window.STIMULI_METADATA = [
     "concept_name": "sickle",
     "category27_label": "tool",
     "category27_id": 23,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -2188,7 +2092,7 @@ window.STIMULI_METADATA = [
     "concept_name": "tool",
     "category27_label": "tool",
     "category27_id": 23,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -2204,7 +2108,7 @@ window.STIMULI_METADATA = [
     "concept_name": "wrench",
     "category27_label": "tool",
     "category27_id": 23,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -2220,7 +2124,7 @@ window.STIMULI_METADATA = [
     "concept_name": "crayon",
     "category27_label": "toy",
     "category27_id": 24,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -2236,7 +2140,7 @@ window.STIMULI_METADATA = [
     "concept_name": "doll",
     "category27_label": "toy",
     "category27_id": 24,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -2252,7 +2156,7 @@ window.STIMULI_METADATA = [
     "concept_name": "hula_hoop",
     "category27_label": "toy",
     "category27_id": 24,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -2268,7 +2172,7 @@ window.STIMULI_METADATA = [
     "concept_name": "lego",
     "category27_label": "toy",
     "category27_id": 24,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -2284,7 +2188,7 @@ window.STIMULI_METADATA = [
     "concept_name": "stilt",
     "category27_label": "toy",
     "category27_id": 24,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -2300,7 +2204,7 @@ window.STIMULI_METADATA = [
     "concept_name": "whoopee_cushion",
     "category27_label": "toy",
     "category27_id": 24,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -2316,7 +2220,7 @@ window.STIMULI_METADATA = [
     "concept_name": "celery",
     "category27_label": "vegetable",
     "category27_id": 25,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -2332,7 +2236,7 @@ window.STIMULI_METADATA = [
     "concept_name": "chickpea",
     "category27_label": "vegetable",
     "category27_id": 25,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -2348,7 +2252,7 @@ window.STIMULI_METADATA = [
     "concept_name": "garlic",
     "category27_label": "vegetable",
     "category27_id": 25,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -2364,7 +2268,7 @@ window.STIMULI_METADATA = [
     "concept_name": "potato",
     "category27_label": "vegetable",
     "category27_id": 25,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -2380,7 +2284,7 @@ window.STIMULI_METADATA = [
     "concept_name": "pumpkin",
     "category27_label": "vegetable",
     "category27_id": 25,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -2396,7 +2300,7 @@ window.STIMULI_METADATA = [
     "concept_name": "sweet_potato",
     "category27_label": "vegetable",
     "category27_id": 25,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -2412,7 +2316,7 @@ window.STIMULI_METADATA = [
     "concept_name": "airboat",
     "category27_label": "vehicle",
     "category27_id": 26,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -2428,7 +2332,7 @@ window.STIMULI_METADATA = [
     "concept_name": "hot-air_balloon",
     "category27_label": "vehicle",
     "category27_id": 26,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -2444,7 +2348,7 @@ window.STIMULI_METADATA = [
     "concept_name": "skateboard",
     "category27_label": "vehicle",
     "category27_id": 26,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -2460,7 +2364,7 @@ window.STIMULI_METADATA = [
     "concept_name": "sled",
     "category27_label": "vehicle",
     "category27_id": 26,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -2476,7 +2380,7 @@ window.STIMULI_METADATA = [
     "concept_name": "trolley",
     "category27_label": "vehicle",
     "category27_id": 26,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -2492,7 +2396,7 @@ window.STIMULI_METADATA = [
     "concept_name": "unicycle",
     "category27_label": "vehicle",
     "category27_id": 26,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -2508,7 +2412,7 @@ window.STIMULI_METADATA = [
     "concept_name": "baton2",
     "category27_label": "weapon",
     "category27_id": 27,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -2524,7 +2428,7 @@ window.STIMULI_METADATA = [
     "concept_name": "boomerang",
     "category27_label": "weapon",
     "category27_id": 27,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -2540,7 +2444,7 @@ window.STIMULI_METADATA = [
     "concept_name": "brass_knuckles",
     "category27_label": "weapon",
     "category27_id": 27,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -2556,7 +2460,7 @@ window.STIMULI_METADATA = [
     "concept_name": "bullet",
     "category27_label": "weapon",
     "category27_id": 27,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -2572,7 +2476,7 @@ window.STIMULI_METADATA = [
     "concept_name": "grenade",
     "category27_label": "weapon",
     "category27_id": 27,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -2588,7 +2492,7 @@ window.STIMULI_METADATA = [
     "concept_name": "revolver",
     "category27_label": "weapon",
     "category27_id": 27,
-    "memorability_category": "high",
+    "memorability_bin": "high",
     "selection_source": "milp"
   },
   {
@@ -2604,7 +2508,7 @@ window.STIMULI_METADATA = [
     "concept_name": "antelope",
     "category27_label": "animal",
     "category27_id": 1,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -2620,7 +2524,23 @@ window.STIMULI_METADATA = [
     "concept_name": "barnacle",
     "category27_label": "animal",
     "category27_id": 1,
-    "memorability_category": "low",
+    "memorability_bin": "low",
+    "selection_source": "milp"
+  },
+  {
+    "image_name": "bug_04s.jpg",
+    "image_path": "images/bug_04s.jpg",
+    "things_file_path": "bug/bug_04s.jpg",
+    "things_memorability": 0.55,
+    "things_category": "animal",
+    "memorability_percentile": 0.647361,
+    "recognizability": 0.416667,
+    "nameability": 0.705882,
+    "concreteness_score": 5.0,
+    "concept_name": "bug",
+    "category27_label": "animal",
+    "category27_id": 1,
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -2636,7 +2556,7 @@ window.STIMULI_METADATA = [
     "concept_name": "coral",
     "category27_label": "animal",
     "category27_id": 1,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -2652,7 +2572,7 @@ window.STIMULI_METADATA = [
     "concept_name": "groundhog",
     "category27_label": "animal",
     "category27_id": 1,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -2668,23 +2588,7 @@ window.STIMULI_METADATA = [
     "concept_name": "squid",
     "category27_label": "animal",
     "category27_id": 1,
-    "memorability_category": "low",
-    "selection_source": "milp"
-  },
-  {
-    "image_name": "yak_01b.jpg",
-    "image_path": "images/yak_01b.jpg",
-    "things_file_path": "yak/yak_01b.jpg",
-    "things_memorability": 0.560976,
-    "things_category": "animal",
-    "memorability_percentile": 0.791006,
-    "recognizability": 0.473684,
-    "nameability": 0.578947,
-    "concreteness_score": 4.65,
-    "concept_name": "yak",
-    "category27_label": "animal",
-    "category27_id": 1,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -2700,7 +2604,7 @@ window.STIMULI_METADATA = [
     "concept_name": "duck",
     "category27_label": "bird",
     "category27_id": 2,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -2716,7 +2620,7 @@ window.STIMULI_METADATA = [
     "concept_name": "goose",
     "category27_label": "bird",
     "category27_id": 2,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -2732,7 +2636,7 @@ window.STIMULI_METADATA = [
     "concept_name": "hawk",
     "category27_label": "bird",
     "category27_id": 2,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -2748,7 +2652,7 @@ window.STIMULI_METADATA = [
     "concept_name": "pheasant",
     "category27_label": "bird",
     "category27_id": 2,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -2764,7 +2668,7 @@ window.STIMULI_METADATA = [
     "concept_name": "pigeon",
     "category27_label": "bird",
     "category27_id": 2,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -2780,7 +2684,7 @@ window.STIMULI_METADATA = [
     "concept_name": "vulture",
     "category27_label": "bird",
     "category27_id": 2,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -2796,7 +2700,7 @@ window.STIMULI_METADATA = [
     "concept_name": "bone",
     "category27_label": "body part",
     "category27_id": 3,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -2812,7 +2716,7 @@ window.STIMULI_METADATA = [
     "concept_name": "hair",
     "category27_label": "body part",
     "category27_id": 3,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -2828,7 +2732,7 @@ window.STIMULI_METADATA = [
     "concept_name": "leg",
     "category27_label": "body part",
     "category27_id": 3,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -2844,7 +2748,7 @@ window.STIMULI_METADATA = [
     "concept_name": "shoulder",
     "category27_label": "body part",
     "category27_id": 3,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -2860,7 +2764,7 @@ window.STIMULI_METADATA = [
     "concept_name": "skeleton",
     "category27_label": "body part",
     "category27_id": 3,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -2876,7 +2780,7 @@ window.STIMULI_METADATA = [
     "concept_name": "toe",
     "category27_label": "body part",
     "category27_id": 3,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -2892,7 +2796,7 @@ window.STIMULI_METADATA = [
     "concept_name": "blazer",
     "category27_label": "clothing",
     "category27_id": 4,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -2908,7 +2812,7 @@ window.STIMULI_METADATA = [
     "concept_name": "coat",
     "category27_label": "clothing",
     "category27_id": 4,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -2924,7 +2828,7 @@ window.STIMULI_METADATA = [
     "concept_name": "outfit",
     "category27_label": "clothing",
     "category27_id": 4,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -2940,7 +2844,7 @@ window.STIMULI_METADATA = [
     "concept_name": "raincoat",
     "category27_label": "clothing",
     "category27_id": 4,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -2956,7 +2860,7 @@ window.STIMULI_METADATA = [
     "concept_name": "sweater",
     "category27_label": "clothing",
     "category27_id": 4,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -2972,7 +2876,7 @@ window.STIMULI_METADATA = [
     "concept_name": "vest",
     "category27_label": "clothing",
     "category27_id": 4,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -2988,7 +2892,7 @@ window.STIMULI_METADATA = [
     "concept_name": "belt_buckle",
     "category27_label": "clothing accessory",
     "category27_id": 5,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -3004,7 +2908,7 @@ window.STIMULI_METADATA = [
     "concept_name": "corsage",
     "category27_label": "clothing accessory",
     "category27_id": 5,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -3020,7 +2924,7 @@ window.STIMULI_METADATA = [
     "concept_name": "earring",
     "category27_label": "clothing accessory",
     "category27_id": 5,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -3036,7 +2940,7 @@ window.STIMULI_METADATA = [
     "concept_name": "scarf",
     "category27_label": "clothing accessory",
     "category27_id": 5,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -3052,7 +2956,7 @@ window.STIMULI_METADATA = [
     "concept_name": "sombrero",
     "category27_label": "clothing accessory",
     "category27_id": 5,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -3068,7 +2972,7 @@ window.STIMULI_METADATA = [
     "concept_name": "top_hat",
     "category27_label": "clothing accessory",
     "category27_id": 5,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -3084,7 +2988,7 @@ window.STIMULI_METADATA = [
     "concept_name": "goblet",
     "category27_label": "container",
     "category27_id": 6,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -3100,7 +3004,7 @@ window.STIMULI_METADATA = [
     "concept_name": "honeypot",
     "category27_label": "container",
     "category27_id": 6,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -3116,7 +3020,7 @@ window.STIMULI_METADATA = [
     "concept_name": "oilcan",
     "category27_label": "container",
     "category27_id": 6,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -3132,7 +3036,7 @@ window.STIMULI_METADATA = [
     "concept_name": "pot",
     "category27_label": "container",
     "category27_id": 6,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -3148,7 +3052,7 @@ window.STIMULI_METADATA = [
     "concept_name": "sarcophagus",
     "category27_label": "container",
     "category27_id": 6,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -3164,7 +3068,7 @@ window.STIMULI_METADATA = [
     "concept_name": "tank2",
     "category27_label": "container",
     "category27_id": 6,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -3180,7 +3084,7 @@ window.STIMULI_METADATA = [
     "concept_name": "cheese",
     "category27_label": "dessert",
     "category27_id": 7,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -3196,7 +3100,7 @@ window.STIMULI_METADATA = [
     "concept_name": "creme_brulee",
     "category27_label": "dessert",
     "category27_id": 7,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -3212,7 +3116,7 @@ window.STIMULI_METADATA = [
     "concept_name": "cupcake",
     "category27_label": "dessert",
     "category27_id": 7,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -3228,7 +3132,7 @@ window.STIMULI_METADATA = [
     "concept_name": "dessert",
     "category27_label": "dessert",
     "category27_id": 7,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -3244,7 +3148,7 @@ window.STIMULI_METADATA = [
     "concept_name": "souffle",
     "category27_label": "dessert",
     "category27_id": 7,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -3260,7 +3164,7 @@ window.STIMULI_METADATA = [
     "concept_name": "sundae",
     "category27_label": "dessert",
     "category27_id": 7,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -3276,7 +3180,7 @@ window.STIMULI_METADATA = [
     "concept_name": "champagne",
     "category27_label": "drink",
     "category27_id": 8,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -3292,23 +3196,23 @@ window.STIMULI_METADATA = [
     "concept_name": "coffee",
     "category27_label": "drink",
     "category27_id": 8,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
-    "image_name": "espresso_10s.jpg",
-    "image_path": "images/espresso_10s.jpg",
-    "things_file_path": "espresso/espresso_10s.jpg",
-    "things_memorability": 0.641026,
+    "image_name": "hot_chocolate_02s.jpg",
+    "image_path": "images/hot_chocolate_02s.jpg",
+    "things_file_path": "hot_chocolate/hot_chocolate_02s.jpg",
+    "things_memorability": 0.625,
     "things_category": "drink",
-    "memorability_percentile": 4.502796,
-    "recognizability": 0.214286,
-    "nameability": 0.235294,
-    "concreteness_score": 4.41,
-    "concept_name": "espresso",
+    "memorability_percentile": 3.273194,
+    "recognizability": 0.5,
+    "nameability": 0.333333,
+    "concreteness_score": 4.96,
+    "concept_name": "hot_chocolate",
     "category27_label": "drink",
     "category27_id": 8,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -3324,7 +3228,7 @@ window.STIMULI_METADATA = [
     "concept_name": "milk",
     "category27_label": "drink",
     "category27_id": 8,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -3340,7 +3244,7 @@ window.STIMULI_METADATA = [
     "concept_name": "punch1",
     "category27_label": "drink",
     "category27_id": 8,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -3356,7 +3260,7 @@ window.STIMULI_METADATA = [
     "concept_name": "wine",
     "category27_label": "drink",
     "category27_id": 8,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -3372,7 +3276,7 @@ window.STIMULI_METADATA = [
     "concept_name": "amplifier",
     "category27_label": "electronic device",
     "category27_id": 9,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -3388,7 +3292,7 @@ window.STIMULI_METADATA = [
     "concept_name": "jukebox",
     "category27_label": "electronic device",
     "category27_id": 9,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -3404,7 +3308,7 @@ window.STIMULI_METADATA = [
     "concept_name": "scanner",
     "category27_label": "electronic device",
     "category27_id": 9,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -3420,7 +3324,7 @@ window.STIMULI_METADATA = [
     "concept_name": "screen1",
     "category27_label": "electronic device",
     "category27_id": 9,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -3436,7 +3340,7 @@ window.STIMULI_METADATA = [
     "concept_name": "tablet",
     "category27_label": "electronic device",
     "category27_id": 9,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -3452,7 +3356,7 @@ window.STIMULI_METADATA = [
     "concept_name": "webcam",
     "category27_label": "electronic device",
     "category27_id": 9,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -3468,7 +3372,7 @@ window.STIMULI_METADATA = [
     "concept_name": "dough",
     "category27_label": "food",
     "category27_id": 10,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -3484,7 +3388,7 @@ window.STIMULI_METADATA = [
     "concept_name": "fondue",
     "category27_label": "food",
     "category27_id": 10,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -3500,7 +3404,7 @@ window.STIMULI_METADATA = [
     "concept_name": "nut",
     "category27_label": "food",
     "category27_id": 10,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -3516,7 +3420,7 @@ window.STIMULI_METADATA = [
     "concept_name": "poppy",
     "category27_label": "food",
     "category27_id": 10,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -3532,7 +3436,7 @@ window.STIMULI_METADATA = [
     "concept_name": "seafood",
     "category27_label": "food",
     "category27_id": 10,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -3548,7 +3452,7 @@ window.STIMULI_METADATA = [
     "concept_name": "seaweed",
     "category27_label": "food",
     "category27_id": 10,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -3564,7 +3468,7 @@ window.STIMULI_METADATA = [
     "concept_name": "cranberry",
     "category27_label": "fruit",
     "category27_id": 11,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -3580,7 +3484,7 @@ window.STIMULI_METADATA = [
     "concept_name": "grape",
     "category27_label": "fruit",
     "category27_id": 11,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -3596,7 +3500,7 @@ window.STIMULI_METADATA = [
     "concept_name": "grapefruit",
     "category27_label": "fruit",
     "category27_id": 11,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -3612,7 +3516,7 @@ window.STIMULI_METADATA = [
     "concept_name": "lemon",
     "category27_label": "fruit",
     "category27_id": 11,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -3628,7 +3532,7 @@ window.STIMULI_METADATA = [
     "concept_name": "melon",
     "category27_label": "fruit",
     "category27_id": 11,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -3644,7 +3548,7 @@ window.STIMULI_METADATA = [
     "concept_name": "orange",
     "category27_label": "fruit",
     "category27_id": 11,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -3660,7 +3564,7 @@ window.STIMULI_METADATA = [
     "concept_name": "cabinet",
     "category27_label": "furniture",
     "category27_id": 12,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -3676,7 +3580,7 @@ window.STIMULI_METADATA = [
     "concept_name": "chest2",
     "category27_label": "furniture",
     "category27_id": 12,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -3692,7 +3596,7 @@ window.STIMULI_METADATA = [
     "concept_name": "coat_rack",
     "category27_label": "furniture",
     "category27_id": 12,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -3708,7 +3612,7 @@ window.STIMULI_METADATA = [
     "concept_name": "coffee_table",
     "category27_label": "furniture",
     "category27_id": 12,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -3724,7 +3628,7 @@ window.STIMULI_METADATA = [
     "concept_name": "mattress",
     "category27_label": "furniture",
     "category27_id": 12,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -3740,7 +3644,7 @@ window.STIMULI_METADATA = [
     "concept_name": "workbench",
     "category27_label": "furniture",
     "category27_id": 12,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -3756,7 +3660,7 @@ window.STIMULI_METADATA = [
     "concept_name": "album",
     "category27_label": "home decor",
     "category27_id": 13,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -3772,7 +3676,7 @@ window.STIMULI_METADATA = [
     "concept_name": "candlestick",
     "category27_label": "home decor",
     "category27_id": 13,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -3788,7 +3692,7 @@ window.STIMULI_METADATA = [
     "concept_name": "centerpiece",
     "category27_label": "home decor",
     "category27_id": 13,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -3804,7 +3708,7 @@ window.STIMULI_METADATA = [
     "concept_name": "crystal_ball",
     "category27_label": "home decor",
     "category27_id": 13,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -3820,7 +3724,7 @@ window.STIMULI_METADATA = [
     "concept_name": "doily",
     "category27_label": "home decor",
     "category27_id": 13,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -3836,103 +3740,7 @@ window.STIMULI_METADATA = [
     "concept_name": "pillow",
     "category27_label": "home decor",
     "category27_id": 13,
-    "memorability_category": "low",
-    "selection_source": "milp"
-  },
-  {
-    "image_name": "bug_04s.jpg",
-    "image_path": "images/bug_04s.jpg",
-    "things_file_path": "bug/bug_04s.jpg",
-    "things_memorability": 0.55,
-    "things_category": "insect",
-    "memorability_percentile": 0.647361,
-    "recognizability": 0.416667,
-    "nameability": 0.705882,
-    "concreteness_score": 5.0,
-    "concept_name": "bug",
-    "category27_label": "insect",
-    "category27_id": 14,
-    "memorability_category": "low",
-    "selection_source": "milp"
-  },
-  {
-    "image_name": "butterfly_12n.jpg",
-    "image_path": "images/butterfly_12n.jpg",
-    "things_file_path": "butterfly/butterfly_12n.jpg",
-    "things_memorability": 0.605263,
-    "things_category": "insect",
-    "memorability_percentile": 2.175745,
-    "recognizability": 0.9375,
-    "nameability": 0.941176,
-    "concreteness_score": 4.93,
-    "concept_name": "butterfly",
-    "category27_label": "insect",
-    "category27_id": 14,
-    "memorability_category": "low",
-    "selection_source": "milp"
-  },
-  {
-    "image_name": "grasshopper_10s.jpg",
-    "image_path": "images/grasshopper_10s.jpg",
-    "things_file_path": "grasshopper/grasshopper_10s.jpg",
-    "things_memorability": 0.615385,
-    "things_category": "insect",
-    "memorability_percentile": 2.643071,
-    "recognizability": 0.733333,
-    "nameability": 0.764706,
-    "concreteness_score": 4.91,
-    "concept_name": "grasshopper",
-    "category27_label": "insect",
-    "category27_id": 14,
-    "memorability_category": "low",
-    "selection_source": "milp"
-  },
-  {
-    "image_name": "lightning_bug_02s.jpg",
-    "image_path": "images/lightning_bug_02s.jpg",
-    "things_file_path": "lightning_bug/lightning_bug_02s.jpg",
-    "things_memorability": 0.625,
-    "things_category": "insect",
-    "memorability_percentile": 3.273194,
-    "recognizability": 0.666667,
-    "nameability": 0.333333,
-    "concreteness_score": 4.9,
-    "concept_name": "lightning_bug",
-    "category27_label": "insect",
-    "category27_id": 14,
-    "memorability_category": "low",
-    "selection_source": "milp"
-  },
-  {
-    "image_name": "moth_03n.jpg",
-    "image_path": "images/moth_03n.jpg",
-    "things_file_path": "moth/moth_03n.jpg",
-    "things_memorability": 0.589744,
-    "things_category": "insect",
-    "memorability_percentile": 1.553283,
-    "recognizability": 0.466667,
-    "nameability": 0.789474,
-    "concreteness_score": 4.69,
-    "concept_name": "moth",
-    "category27_label": "insect",
-    "category27_id": 14,
-    "memorability_category": "low",
-    "selection_source": "milp"
-  },
-  {
-    "image_name": "coffeemaker_03s.jpg",
-    "image_path": "images/coffeemaker_03s.jpg",
-    "things_file_path": "coffeemaker/coffeemaker_03s.jpg",
-    "things_memorability": 0.615385,
-    "things_category": "kitchen appliance",
-    "memorability_percentile": 2.643071,
-    "recognizability": 0.692308,
-    "nameability": 0.944444,
-    "concreteness_score": 4.93,
-    "concept_name": "coffeemaker",
-    "category27_label": "kitchen appliance",
-    "category27_id": 15,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -3948,7 +3756,39 @@ window.STIMULI_METADATA = [
     "concept_name": "cooker",
     "category27_label": "kitchen appliance",
     "category27_id": 15,
-    "memorability_category": "low",
+    "memorability_bin": "low",
+    "selection_source": "milp"
+  },
+  {
+    "image_name": "food_processor_12s.jpg",
+    "image_path": "images/food_processor_12s.jpg",
+    "things_file_path": "food_processor/food_processor_12s.jpg",
+    "things_memorability": 0.585366,
+    "things_category": "kitchen appliance",
+    "memorability_percentile": 1.386654,
+    "recognizability": 0.142857,
+    "nameability": 0.588235,
+    "concreteness_score": 4.89,
+    "concept_name": "food_processor",
+    "category27_label": "kitchen appliance",
+    "category27_id": 15,
+    "memorability_bin": "low",
+    "selection_source": "milp"
+  },
+  {
+    "image_name": "hotplate_12s.jpg",
+    "image_path": "images/hotplate_12s.jpg",
+    "things_file_path": "hotplate/hotplate_12s.jpg",
+    "things_memorability": 0.581395,
+    "things_category": "kitchen appliance",
+    "memorability_percentile": 1.279399,
+    "recognizability": 0.181818,
+    "nameability": 0.25,
+    "concreteness_score": 4.7,
+    "concept_name": "hotplate",
+    "category27_label": "kitchen appliance",
+    "category27_id": 15,
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -3964,23 +3804,7 @@ window.STIMULI_METADATA = [
     "concept_name": "icemaker",
     "category27_label": "kitchen appliance",
     "category27_id": 15,
-    "memorability_category": "low",
-    "selection_source": "milp"
-  },
-  {
-    "image_name": "juicer2_05s.jpg",
-    "image_path": "images/juicer2_05s.jpg",
-    "things_file_path": "juicer2/juicer2_05s.jpg",
-    "things_memorability": 0.595238,
-    "things_category": "kitchen appliance",
-    "memorability_percentile": 1.716081,
-    "recognizability": 0.5,
-    "nameability": 0.894737,
-    "concreteness_score": 4.48,
-    "concept_name": "juicer2",
-    "category27_label": "kitchen appliance",
-    "category27_id": 15,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -3996,7 +3820,7 @@ window.STIMULI_METADATA = [
     "concept_name": "oven",
     "category27_label": "kitchen appliance",
     "category27_id": 15,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -4012,7 +3836,7 @@ window.STIMULI_METADATA = [
     "concept_name": "toaster_oven",
     "category27_label": "kitchen appliance",
     "category27_id": 15,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -4028,7 +3852,7 @@ window.STIMULI_METADATA = [
     "concept_name": "cleaver",
     "category27_label": "kitchen tool",
     "category27_id": 16,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -4044,7 +3868,7 @@ window.STIMULI_METADATA = [
     "concept_name": "eggbeater",
     "category27_label": "kitchen tool",
     "category27_id": 16,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -4060,7 +3884,7 @@ window.STIMULI_METADATA = [
     "concept_name": "funnel",
     "category27_label": "kitchen tool",
     "category27_id": 16,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -4076,7 +3900,7 @@ window.STIMULI_METADATA = [
     "concept_name": "grinder",
     "category27_label": "kitchen tool",
     "category27_id": 16,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -4092,7 +3916,7 @@ window.STIMULI_METADATA = [
     "concept_name": "sifter",
     "category27_label": "kitchen tool",
     "category27_id": 16,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -4108,7 +3932,7 @@ window.STIMULI_METADATA = [
     "concept_name": "timer",
     "category27_label": "kitchen tool",
     "category27_id": 16,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -4124,7 +3948,23 @@ window.STIMULI_METADATA = [
     "concept_name": "bandage",
     "category27_label": "medical equipment",
     "category27_id": 17,
-    "memorability_category": "low",
+    "memorability_bin": "low",
+    "selection_source": "milp"
+  },
+  {
+    "image_name": "cane_06n.jpg",
+    "image_path": "images/cane_06n.jpg",
+    "things_file_path": "cane/cane_06n.jpg",
+    "things_memorability": 0.634146,
+    "things_category": "medical equipment",
+    "memorability_percentile": 4.008657,
+    "recognizability": 0.375,
+    "nameability": 0.882353,
+    "concreteness_score": 4.87,
+    "concept_name": "cane",
+    "category27_label": "medical equipment",
+    "category27_id": 17,
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -4140,7 +3980,7 @@ window.STIMULI_METADATA = [
     "concept_name": "crutch",
     "category27_label": "medical equipment",
     "category27_id": 17,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -4156,7 +3996,7 @@ window.STIMULI_METADATA = [
     "concept_name": "defibrillator",
     "category27_label": "medical equipment",
     "category27_id": 17,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -4172,7 +4012,7 @@ window.STIMULI_METADATA = [
     "concept_name": "eyedropper",
     "category27_label": "medical equipment",
     "category27_id": 17,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -4188,23 +4028,7 @@ window.STIMULI_METADATA = [
     "concept_name": "gurney",
     "category27_label": "medical equipment",
     "category27_id": 17,
-    "memorability_category": "low",
-    "selection_source": "milp"
-  },
-  {
-    "image_name": "stethoscope_12s.jpg",
-    "image_path": "images/stethoscope_12s.jpg",
-    "things_file_path": "stethoscope/stethoscope_12s.jpg",
-    "things_memorability": 0.641026,
-    "things_category": "medical equipment",
-    "memorability_percentile": 4.502796,
-    "recognizability": 1.0,
-    "nameability": 0.947368,
-    "concreteness_score": 4.86,
-    "concept_name": "stethoscope",
-    "category27_label": "medical equipment",
-    "category27_id": 17,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -4220,7 +4044,7 @@ window.STIMULI_METADATA = [
     "concept_name": "banjo",
     "category27_label": "musical instrument",
     "category27_id": 18,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -4236,7 +4060,7 @@ window.STIMULI_METADATA = [
     "concept_name": "bassoon",
     "category27_label": "musical instrument",
     "category27_id": 18,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -4252,7 +4076,7 @@ window.STIMULI_METADATA = [
     "concept_name": "clarinet",
     "category27_label": "musical instrument",
     "category27_id": 18,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -4268,7 +4092,7 @@ window.STIMULI_METADATA = [
     "concept_name": "gong",
     "category27_label": "musical instrument",
     "category27_id": 18,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -4284,7 +4108,7 @@ window.STIMULI_METADATA = [
     "concept_name": "horn",
     "category27_label": "musical instrument",
     "category27_id": 18,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -4300,23 +4124,7 @@ window.STIMULI_METADATA = [
     "concept_name": "recorder",
     "category27_label": "musical instrument",
     "category27_id": 18,
-    "memorability_category": "low",
-    "selection_source": "milp"
-  },
-  {
-    "image_name": "binder_13s.jpg",
-    "image_path": "images/binder_13s.jpg",
-    "things_file_path": "binder/binder_13s.jpg",
-    "things_memorability": 0.55,
-    "things_category": "office supply",
-    "memorability_percentile": 0.647361,
-    "recognizability": 0.294118,
-    "nameability": 0.833333,
-    "concreteness_score": 4.89,
-    "concept_name": "binder",
-    "category27_label": "office supply",
-    "category27_id": 19,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -4332,7 +4140,23 @@ window.STIMULI_METADATA = [
     "concept_name": "clipboard",
     "category27_label": "office supply",
     "category27_id": 19,
-    "memorability_category": "low",
+    "memorability_bin": "low",
+    "selection_source": "milp"
+  },
+  {
+    "image_name": "fountain_pen_09s.jpg",
+    "image_path": "images/fountain_pen_09s.jpg",
+    "things_file_path": "fountain_pen/fountain_pen_09s.jpg",
+    "things_memorability": 0.589744,
+    "things_category": "office supply",
+    "memorability_percentile": 1.553283,
+    "recognizability": 0.153846,
+    "nameability": 0.117647,
+    "concreteness_score": 4.93,
+    "concept_name": "fountain_pen",
+    "category27_label": "office supply",
+    "category27_id": 19,
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -4348,7 +4172,23 @@ window.STIMULI_METADATA = [
     "concept_name": "ink",
     "category27_label": "office supply",
     "category27_id": 19,
-    "memorability_category": "low",
+    "memorability_bin": "low",
+    "selection_source": "milp"
+  },
+  {
+    "image_name": "notebook_06s.jpg",
+    "image_path": "images/notebook_06s.jpg",
+    "things_file_path": "notebook/notebook_06s.jpg",
+    "things_memorability": 0.585366,
+    "things_category": "office supply",
+    "memorability_percentile": 1.386654,
+    "recognizability": 0.642857,
+    "nameability": 0.888889,
+    "concreteness_score": 4.92,
+    "concept_name": "notebook",
+    "category27_label": "office supply",
+    "category27_id": 19,
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -4364,7 +4204,7 @@ window.STIMULI_METADATA = [
     "concept_name": "paper",
     "category27_label": "office supply",
     "category27_id": 19,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -4380,23 +4220,7 @@ window.STIMULI_METADATA = [
     "concept_name": "pencil",
     "category27_label": "office supply",
     "category27_id": 19,
-    "memorability_category": "low",
-    "selection_source": "milp"
-  },
-  {
-    "image_name": "stapler_03s.jpg",
-    "image_path": "images/stapler_03s.jpg",
-    "things_file_path": "stapler/stapler_03s.jpg",
-    "things_memorability": 0.6,
-    "things_category": "office supply",
-    "memorability_percentile": 1.921014,
-    "recognizability": 0.882353,
-    "nameability": 1.0,
-    "concreteness_score": 4.62,
-    "concept_name": "stapler",
-    "category27_label": "office supply",
-    "category27_id": 19,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -4412,7 +4236,7 @@ window.STIMULI_METADATA = [
     "concept_name": "brake",
     "category27_label": "part of car",
     "category27_id": 20,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -4428,7 +4252,7 @@ window.STIMULI_METADATA = [
     "concept_name": "bumper",
     "category27_label": "part of car",
     "category27_id": 20,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -4444,7 +4268,7 @@ window.STIMULI_METADATA = [
     "concept_name": "engine",
     "category27_label": "part of car",
     "category27_id": 20,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -4460,7 +4284,7 @@ window.STIMULI_METADATA = [
     "concept_name": "hubcap",
     "category27_label": "part of car",
     "category27_id": 20,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -4476,7 +4300,7 @@ window.STIMULI_METADATA = [
     "concept_name": "rearview_mirror",
     "category27_label": "part of car",
     "category27_id": 20,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -4492,7 +4316,7 @@ window.STIMULI_METADATA = [
     "concept_name": "windshield",
     "category27_label": "part of car",
     "category27_id": 20,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -4508,7 +4332,7 @@ window.STIMULI_METADATA = [
     "concept_name": "bush",
     "category27_label": "plant",
     "category27_id": 21,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -4524,7 +4348,7 @@ window.STIMULI_METADATA = [
     "concept_name": "orchid",
     "category27_label": "plant",
     "category27_id": 21,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -4540,7 +4364,7 @@ window.STIMULI_METADATA = [
     "concept_name": "plant",
     "category27_label": "plant",
     "category27_id": 21,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -4556,7 +4380,7 @@ window.STIMULI_METADATA = [
     "concept_name": "poinsettia",
     "category27_label": "plant",
     "category27_id": 21,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -4572,7 +4396,7 @@ window.STIMULI_METADATA = [
     "concept_name": "rose",
     "category27_label": "plant",
     "category27_id": 21,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -4588,7 +4412,7 @@ window.STIMULI_METADATA = [
     "concept_name": "weed",
     "category27_label": "plant",
     "category27_id": 21,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -4604,7 +4428,7 @@ window.STIMULI_METADATA = [
     "concept_name": "baseball",
     "category27_label": "sports equipment",
     "category27_id": 22,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -4620,7 +4444,7 @@ window.STIMULI_METADATA = [
     "concept_name": "basketball_hoop",
     "category27_label": "sports equipment",
     "category27_id": 22,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -4636,7 +4460,7 @@ window.STIMULI_METADATA = [
     "concept_name": "bobsled",
     "category27_label": "sports equipment",
     "category27_id": 22,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -4652,7 +4476,7 @@ window.STIMULI_METADATA = [
     "concept_name": "cleat",
     "category27_label": "sports equipment",
     "category27_id": 22,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -4668,7 +4492,7 @@ window.STIMULI_METADATA = [
     "concept_name": "jump_rope",
     "category27_label": "sports equipment",
     "category27_id": 22,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -4684,7 +4508,7 @@ window.STIMULI_METADATA = [
     "concept_name": "snowboard",
     "category27_label": "sports equipment",
     "category27_id": 22,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -4700,7 +4524,7 @@ window.STIMULI_METADATA = [
     "concept_name": "anvil",
     "category27_label": "tool",
     "category27_id": 23,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -4716,7 +4540,7 @@ window.STIMULI_METADATA = [
     "concept_name": "ladder",
     "category27_label": "tool",
     "category27_id": 23,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -4732,7 +4556,7 @@ window.STIMULI_METADATA = [
     "concept_name": "magnifier",
     "category27_label": "tool",
     "category27_id": 23,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -4748,7 +4572,7 @@ window.STIMULI_METADATA = [
     "concept_name": "sawhorse",
     "category27_label": "tool",
     "category27_id": 23,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -4764,7 +4588,7 @@ window.STIMULI_METADATA = [
     "concept_name": "soldering_iron",
     "category27_label": "tool",
     "category27_id": 23,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -4780,7 +4604,7 @@ window.STIMULI_METADATA = [
     "concept_name": "watering_can",
     "category27_label": "tool",
     "category27_id": 23,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -4796,7 +4620,7 @@ window.STIMULI_METADATA = [
     "concept_name": "beachball",
     "category27_label": "toy",
     "category27_id": 24,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -4812,7 +4636,7 @@ window.STIMULI_METADATA = [
     "concept_name": "music_box",
     "category27_label": "toy",
     "category27_id": 24,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -4828,7 +4652,7 @@ window.STIMULI_METADATA = [
     "concept_name": "noisemaker",
     "category27_label": "toy",
     "category27_id": 24,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -4844,7 +4668,7 @@ window.STIMULI_METADATA = [
     "concept_name": "pinwheel",
     "category27_label": "toy",
     "category27_id": 24,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -4860,7 +4684,7 @@ window.STIMULI_METADATA = [
     "concept_name": "robot",
     "category27_label": "toy",
     "category27_id": 24,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -4876,7 +4700,7 @@ window.STIMULI_METADATA = [
     "concept_name": "scooter",
     "category27_label": "toy",
     "category27_id": 24,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -4892,7 +4716,7 @@ window.STIMULI_METADATA = [
     "concept_name": "asparagus",
     "category27_label": "vegetable",
     "category27_id": 25,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -4908,7 +4732,7 @@ window.STIMULI_METADATA = [
     "concept_name": "gourd",
     "category27_label": "vegetable",
     "category27_id": 25,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -4924,7 +4748,7 @@ window.STIMULI_METADATA = [
     "concept_name": "okra",
     "category27_label": "vegetable",
     "category27_id": 25,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -4940,7 +4764,7 @@ window.STIMULI_METADATA = [
     "concept_name": "radish",
     "category27_label": "vegetable",
     "category27_id": 25,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -4956,7 +4780,7 @@ window.STIMULI_METADATA = [
     "concept_name": "tomato",
     "category27_label": "vegetable",
     "category27_id": 25,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -4972,7 +4796,7 @@ window.STIMULI_METADATA = [
     "concept_name": "vegetable",
     "category27_label": "vegetable",
     "category27_id": 25,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -4988,7 +4812,7 @@ window.STIMULI_METADATA = [
     "concept_name": "aircraft_carrier",
     "category27_label": "vehicle",
     "category27_id": 26,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -5004,7 +4828,7 @@ window.STIMULI_METADATA = [
     "concept_name": "buggy",
     "category27_label": "vehicle",
     "category27_id": 26,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -5020,7 +4844,7 @@ window.STIMULI_METADATA = [
     "concept_name": "bulldozer",
     "category27_label": "vehicle",
     "category27_id": 26,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -5036,7 +4860,7 @@ window.STIMULI_METADATA = [
     "concept_name": "chariot",
     "category27_label": "vehicle",
     "category27_id": 26,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -5052,7 +4876,7 @@ window.STIMULI_METADATA = [
     "concept_name": "sailboat",
     "category27_label": "vehicle",
     "category27_id": 26,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -5068,7 +4892,7 @@ window.STIMULI_METADATA = [
     "concept_name": "yacht",
     "category27_label": "vehicle",
     "category27_id": 26,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -5084,7 +4908,7 @@ window.STIMULI_METADATA = [
     "concept_name": "bat2",
     "category27_label": "weapon",
     "category27_id": 27,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -5100,7 +4924,7 @@ window.STIMULI_METADATA = [
     "concept_name": "catapult",
     "category27_label": "weapon",
     "category27_id": 27,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -5116,7 +4940,7 @@ window.STIMULI_METADATA = [
     "concept_name": "crowbar",
     "category27_label": "weapon",
     "category27_id": 27,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -5132,7 +4956,7 @@ window.STIMULI_METADATA = [
     "concept_name": "razor_blade",
     "category27_label": "weapon",
     "category27_id": 27,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -5148,7 +4972,7 @@ window.STIMULI_METADATA = [
     "concept_name": "sword",
     "category27_label": "weapon",
     "category27_id": 27,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
@@ -5164,23 +4988,23 @@ window.STIMULI_METADATA = [
     "concept_name": "tank1",
     "category27_label": "weapon",
     "category27_id": 27,
-    "memorability_category": "low",
+    "memorability_bin": "low",
     "selection_source": "milp"
   },
   {
-    "image_name": "bear_06n.jpg",
-    "image_path": "images/bear_06n.jpg",
-    "things_file_path": "bear/bear_06n.jpg",
-    "things_memorability": 0.794872,
+    "image_name": "ant_03s.jpg",
+    "image_path": "images/ant_03s.jpg",
+    "things_file_path": "ant/ant_03s.jpg",
+    "things_memorability": 0.795455,
     "things_category": "animal",
-    "memorability_percentile": 48.82594,
-    "recognizability": 0.916667,
+    "memorability_percentile": 49.992339,
+    "recognizability": 1.0,
     "nameability": 1.0,
-    "concreteness_score": 4.88,
-    "concept_name": "bear",
+    "concreteness_score": 4.86,
+    "concept_name": "ant",
     "category27_label": "animal",
     "category27_id": 1,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
@@ -5196,7 +5020,7 @@ window.STIMULI_METADATA = [
     "concept_name": "gazelle",
     "category27_label": "animal",
     "category27_id": 1,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
@@ -5212,23 +5036,7 @@ window.STIMULI_METADATA = [
     "concept_name": "goldfish",
     "category27_label": "animal",
     "category27_id": 1,
-    "memorability_category": "mid",
-    "selection_source": "milp"
-  },
-  {
-    "image_name": "ostrich_18s.jpg",
-    "image_path": "images/ostrich_18s.jpg",
-    "things_file_path": "ostrich/ostrich_18s.jpg",
-    "things_memorability": 0.795513,
-    "things_category": "animal",
-    "memorability_percentile": 50.095763,
-    "recognizability": 0.764706,
-    "nameability": 0.777778,
-    "concreteness_score": 4.71,
-    "concept_name": "ostrich",
-    "category27_label": "animal",
-    "category27_id": 1,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
@@ -5244,7 +5052,7 @@ window.STIMULI_METADATA = [
     "concept_name": "spider",
     "category27_label": "animal",
     "category27_id": 1,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
@@ -5260,23 +5068,23 @@ window.STIMULI_METADATA = [
     "concept_name": "whale",
     "category27_label": "animal",
     "category27_id": 1,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
-    "image_name": "bird_01b.jpg",
-    "image_path": "images/bird_01b.jpg",
-    "things_file_path": "bird/bird_01b.jpg",
+    "image_name": "yak_09s.jpg",
+    "image_path": "images/yak_09s.jpg",
+    "things_file_path": "yak/yak_09s.jpg",
     "things_memorability": 0.794872,
-    "things_category": "bird",
+    "things_category": "animal",
     "memorability_percentile": 48.82594,
-    "recognizability": 0.941176,
-    "nameability": 0.941176,
-    "concreteness_score": 5.0,
-    "concept_name": "bird",
-    "category27_label": "bird",
-    "category27_id": 2,
-    "memorability_category": "mid",
+    "recognizability": 0.2,
+    "nameability": 0.368421,
+    "concreteness_score": 4.65,
+    "concept_name": "yak",
+    "category27_label": "animal",
+    "category27_id": 1,
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
@@ -5292,7 +5100,7 @@ window.STIMULI_METADATA = [
     "concept_name": "chick",
     "category27_label": "bird",
     "category27_id": 2,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
@@ -5308,23 +5116,39 @@ window.STIMULI_METADATA = [
     "concept_name": "duckling",
     "category27_label": "bird",
     "category27_id": 2,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
-    "image_name": "owl_08s.jpg",
-    "image_path": "images/owl_08s.jpg",
-    "things_file_path": "owl/owl_08s.jpg",
+    "image_name": "flamingo_07s.jpg",
+    "image_path": "images/flamingo_07s.jpg",
+    "things_file_path": "flamingo/flamingo_07s.jpg",
     "things_memorability": 0.794872,
     "things_category": "bird",
     "memorability_percentile": 48.82594,
-    "recognizability": 1.0,
-    "nameability": 0.9375,
-    "concreteness_score": 4.93,
-    "concept_name": "owl",
+    "recognizability": 0.75,
+    "nameability": 1.0,
+    "concreteness_score": 4.81,
+    "concept_name": "flamingo",
     "category27_label": "bird",
     "category27_id": 2,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
+    "selection_source": "milp"
+  },
+  {
+    "image_name": "ostrich_18s.jpg",
+    "image_path": "images/ostrich_18s.jpg",
+    "things_file_path": "ostrich/ostrich_18s.jpg",
+    "things_memorability": 0.795513,
+    "things_category": "bird",
+    "memorability_percentile": 50.095763,
+    "recognizability": 0.764706,
+    "nameability": 0.777778,
+    "concreteness_score": 4.71,
+    "concept_name": "ostrich",
+    "category27_label": "bird",
+    "category27_id": 2,
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
@@ -5340,7 +5164,7 @@ window.STIMULI_METADATA = [
     "concept_name": "parrot",
     "category27_label": "bird",
     "category27_id": 2,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
@@ -5356,7 +5180,7 @@ window.STIMULI_METADATA = [
     "concept_name": "penguin",
     "category27_label": "bird",
     "category27_id": 2,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
@@ -5372,7 +5196,7 @@ window.STIMULI_METADATA = [
     "concept_name": "chin",
     "category27_label": "body part",
     "category27_id": 3,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
@@ -5388,23 +5212,23 @@ window.STIMULI_METADATA = [
     "concept_name": "eye",
     "category27_label": "body part",
     "category27_id": 3,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
-    "image_name": "face_08s.jpg",
-    "image_path": "images/face_08s.jpg",
-    "things_file_path": "face/face_08s.jpg",
+    "image_name": "foot_01b.jpg",
+    "image_path": "images/foot_01b.jpg",
+    "things_file_path": "foot/foot_01b.jpg",
     "things_memorability": 0.8,
     "things_category": "body part",
     "memorability_percentile": 51.905692,
-    "recognizability": 0.454545,
-    "nameability": 0.375,
-    "concreteness_score": 4.87,
-    "concept_name": "face",
+    "recognizability": 0.545455,
+    "nameability": 1.0,
+    "concreteness_score": 4.9,
+    "concept_name": "foot",
     "category27_label": "body part",
     "category27_id": 3,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
@@ -5420,7 +5244,7 @@ window.STIMULI_METADATA = [
     "concept_name": "mouth",
     "category27_label": "body part",
     "category27_id": 3,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
@@ -5436,55 +5260,23 @@ window.STIMULI_METADATA = [
     "concept_name": "skin",
     "category27_label": "body part",
     "category27_id": 3,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
-    "image_name": "tooth_07s.jpg",
-    "image_path": "images/tooth_07s.jpg",
-    "things_file_path": "tooth/tooth_07s.jpg",
+    "image_name": "skull_10s.jpg",
+    "image_path": "images/skull_10s.jpg",
+    "things_file_path": "skull/skull_10s.jpg",
     "things_memorability": 0.8,
     "things_category": "body part",
     "memorability_percentile": 51.905692,
-    "recognizability": 0.714286,
-    "nameability": 0.0,
-    "concreteness_score": 4.89,
-    "concept_name": "tooth",
+    "recognizability": 0.615385,
+    "nameability": 0.95,
+    "concreteness_score": 4.83,
+    "concept_name": "skull",
     "category27_label": "body part",
     "category27_id": 3,
-    "memorability_category": "mid",
-    "selection_source": "milp"
-  },
-  {
-    "image_name": "bathrobe_17s.jpg",
-    "image_path": "images/bathrobe_17s.jpg",
-    "things_file_path": "bathrobe/bathrobe_17s.jpg",
-    "things_memorability": 0.794872,
-    "things_category": "clothing",
-    "memorability_percentile": 48.82594,
-    "recognizability": 0.230769,
-    "nameability": 0.263158,
-    "concreteness_score": 5.0,
-    "concept_name": "bathrobe",
-    "category27_label": "clothing",
-    "category27_id": 4,
-    "memorability_category": "mid",
-    "selection_source": "milp"
-  },
-  {
-    "image_name": "bowler_hat_05s.jpg",
-    "image_path": "images/bowler_hat_05s.jpg",
-    "things_file_path": "bowler_hat/bowler_hat_05s.jpg",
-    "things_memorability": 0.794872,
-    "things_category": "clothing",
-    "memorability_percentile": 48.82594,
-    "recognizability": 0.5,
-    "nameability": 0.333333,
-    "concreteness_score": 4.8,
-    "concept_name": "bowler_hat",
-    "category27_label": "clothing",
-    "category27_id": 4,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
@@ -5500,7 +5292,39 @@ window.STIMULI_METADATA = [
     "concept_name": "cloak",
     "category27_label": "clothing",
     "category27_id": 4,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
+    "selection_source": "milp"
+  },
+  {
+    "image_name": "clothes_12s.jpg",
+    "image_path": "images/clothes_12s.jpg",
+    "things_file_path": "clothes/clothes_12s.jpg",
+    "things_memorability": 0.794872,
+    "things_category": "clothing",
+    "memorability_percentile": 48.82594,
+    "recognizability": 0.5,
+    "nameability": 0.6,
+    "concreteness_score": 4.76,
+    "concept_name": "clothes",
+    "category27_label": "clothing",
+    "category27_id": 4,
+    "memorability_bin": "mid",
+    "selection_source": "milp"
+  },
+  {
+    "image_name": "hat_01b.jpg",
+    "image_path": "images/hat_01b.jpg",
+    "things_file_path": "hat/hat_01b.jpg",
+    "things_memorability": 0.794872,
+    "things_category": "clothing",
+    "memorability_percentile": 48.82594,
+    "recognizability": 0.928571,
+    "nameability": 0.888889,
+    "concreteness_score": 4.88,
+    "concept_name": "hat",
+    "category27_label": "clothing",
+    "category27_id": 4,
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
@@ -5516,23 +5340,23 @@ window.STIMULI_METADATA = [
     "concept_name": "jumpsuit",
     "category27_label": "clothing",
     "category27_id": 4,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
-    "image_name": "shorts_14s.jpg",
-    "image_path": "images/shorts_14s.jpg",
-    "things_file_path": "shorts/shorts_14s.jpg",
+    "image_name": "leggings_12s.jpg",
+    "image_path": "images/leggings_12s.jpg",
+    "things_file_path": "leggings/leggings_12s.jpg",
     "things_memorability": 0.794872,
     "things_category": "clothing",
     "memorability_percentile": 48.82594,
-    "recognizability": 0.888889,
-    "nameability": 1.0,
-    "concreteness_score": 4.82,
-    "concept_name": "shorts",
+    "recognizability": 0.384615,
+    "nameability": 0.705882,
+    "concreteness_score": 4.86,
+    "concept_name": "leggings",
     "category27_label": "clothing",
     "category27_id": 4,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
@@ -5548,7 +5372,7 @@ window.STIMULI_METADATA = [
     "concept_name": "slipper",
     "category27_label": "clothing",
     "category27_id": 4,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
@@ -5564,23 +5388,23 @@ window.STIMULI_METADATA = [
     "concept_name": "boa",
     "category27_label": "clothing accessory",
     "category27_id": 5,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
-    "image_name": "bolo_tie_09s.jpg",
-    "image_path": "images/bolo_tie_09s.jpg",
-    "things_file_path": "bolo_tie/bolo_tie_09s.jpg",
+    "image_name": "bow1_01b.jpg",
+    "image_path": "images/bow1_01b.jpg",
+    "things_file_path": "bow1/bow1_01b.jpg",
     "things_memorability": 0.794872,
     "things_category": "clothing accessory",
     "memorability_percentile": 48.82594,
-    "recognizability": 0.266667,
-    "nameability": 0.333333,
-    "concreteness_score": 4.24,
-    "concept_name": "bolo_tie",
+    "recognizability": 0.5,
+    "nameability": 0.947368,
+    "concreteness_score": 4.61,
+    "concept_name": "bow1",
     "category27_label": "clothing accessory",
     "category27_id": 5,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
@@ -5596,7 +5420,7 @@ window.STIMULI_METADATA = [
     "concept_name": "bracelet2",
     "category27_label": "clothing accessory",
     "category27_id": 5,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
@@ -5612,23 +5436,23 @@ window.STIMULI_METADATA = [
     "concept_name": "buckle",
     "category27_label": "clothing accessory",
     "category27_id": 5,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
-    "image_name": "mitten_01b.jpg",
-    "image_path": "images/mitten_01b.jpg",
-    "things_file_path": "mitten/mitten_01b.jpg",
+    "image_name": "button1_08s.jpg",
+    "image_path": "images/button1_08s.jpg",
+    "things_file_path": "button1/button1_08s.jpg",
     "things_memorability": 0.794872,
     "things_category": "clothing accessory",
     "memorability_percentile": 48.82594,
-    "recognizability": 0.363636,
-    "nameability": 0.888889,
-    "concreteness_score": 4.89,
-    "concept_name": "mitten",
+    "recognizability": 0.0,
+    "nameability": 1.0,
+    "concreteness_score": 4.96,
+    "concept_name": "button1",
     "category27_label": "clothing accessory",
     "category27_id": 5,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
@@ -5644,23 +5468,87 @@ window.STIMULI_METADATA = [
     "concept_name": "patch",
     "category27_label": "clothing accessory",
     "category27_id": 5,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
-    "image_name": "coffee_pot_09s.jpg",
-    "image_path": "images/coffee_pot_09s.jpg",
-    "things_file_path": "coffee_pot/coffee_pot_09s.jpg",
+    "image_name": "bin_06s.jpg",
+    "image_path": "images/bin_06s.jpg",
+    "things_file_path": "bin/bin_06s.jpg",
     "things_memorability": 0.794872,
     "things_category": "container",
     "memorability_percentile": 48.82594,
-    "recognizability": 0.181818,
-    "nameability": 0.0,
-    "concreteness_score": 4.93,
-    "concept_name": "coffee_pot",
+    "recognizability": 0.153846,
+    "nameability": 0.526316,
+    "concreteness_score": 4.72,
+    "concept_name": "bin",
     "category27_label": "container",
     "category27_id": 6,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
+    "selection_source": "milp"
+  },
+  {
+    "image_name": "birdbath_09s.jpg",
+    "image_path": "images/birdbath_09s.jpg",
+    "things_file_path": "birdbath/birdbath_09s.jpg",
+    "things_memorability": 0.794872,
+    "things_category": "container",
+    "memorability_percentile": 48.82594,
+    "recognizability": 0.692308,
+    "nameability": 0.736842,
+    "concreteness_score": 4.96,
+    "concept_name": "birdbath",
+    "category27_label": "container",
+    "category27_id": 6,
+    "memorability_bin": "mid",
+    "selection_source": "milp"
+  },
+  {
+    "image_name": "box_11s.jpg",
+    "image_path": "images/box_11s.jpg",
+    "things_file_path": "box/box_11s.jpg",
+    "things_memorability": 0.794872,
+    "things_category": "container",
+    "memorability_percentile": 48.82594,
+    "recognizability": 0.923077,
+    "nameability": 0.944444,
+    "concreteness_score": 4.9,
+    "concept_name": "box",
+    "category27_label": "container",
+    "category27_id": 6,
+    "memorability_bin": "mid",
+    "selection_source": "milp"
+  },
+  {
+    "image_name": "container_05s.jpg",
+    "image_path": "images/container_05s.jpg",
+    "things_file_path": "container/container_05s.jpg",
+    "things_memorability": 0.794872,
+    "things_category": "container",
+    "memorability_percentile": 48.82594,
+    "recognizability": 0.733333,
+    "nameability": 0.8125,
+    "concreteness_score": 4.85,
+    "concept_name": "container",
+    "category27_label": "container",
+    "category27_id": 6,
+    "memorability_bin": "mid",
+    "selection_source": "milp"
+  },
+  {
+    "image_name": "dustpan_10s.jpg",
+    "image_path": "images/dustpan_10s.jpg",
+    "things_file_path": "dustpan/dustpan_10s.jpg",
+    "things_memorability": 0.794872,
+    "things_category": "container",
+    "memorability_percentile": 48.82594,
+    "recognizability": 0.833333,
+    "nameability": 0.277778,
+    "concreteness_score": 5.0,
+    "concept_name": "dustpan",
+    "category27_label": "container",
+    "category27_id": 6,
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
@@ -5676,87 +5564,7 @@ window.STIMULI_METADATA = [
     "concept_name": "hatbox",
     "category27_label": "container",
     "category27_id": 6,
-    "memorability_category": "mid",
-    "selection_source": "milp"
-  },
-  {
-    "image_name": "hot_tub_14s.jpg",
-    "image_path": "images/hot_tub_14s.jpg",
-    "things_file_path": "hot_tub/hot_tub_14s.jpg",
-    "things_memorability": 0.795513,
-    "things_category": "container",
-    "memorability_percentile": 50.095763,
-    "recognizability": 0.285714,
-    "nameability": 0.823529,
-    "concreteness_score": 4.75,
-    "concept_name": "hot_tub",
-    "category27_label": "container",
-    "category27_id": 6,
-    "memorability_category": "mid",
-    "selection_source": "milp"
-  },
-  {
-    "image_name": "pocket_11s.jpg",
-    "image_path": "images/pocket_11s.jpg",
-    "things_file_path": "pocket/pocket_11s.jpg",
-    "things_memorability": 0.794872,
-    "things_category": "container",
-    "memorability_percentile": 48.82594,
-    "recognizability": 0.583333,
-    "nameability": 0.789474,
-    "concreteness_score": 4.68,
-    "concept_name": "pocket",
-    "category27_label": "container",
-    "category27_id": 6,
-    "memorability_category": "mid",
-    "selection_source": "milp"
-  },
-  {
-    "image_name": "thermos_12s.jpg",
-    "image_path": "images/thermos_12s.jpg",
-    "things_file_path": "thermos/thermos_12s.jpg",
-    "things_memorability": 0.794872,
-    "things_category": "container",
-    "memorability_percentile": 48.82594,
-    "recognizability": 0.315789,
-    "nameability": 0.631579,
-    "concreteness_score": 4.67,
-    "concept_name": "thermos",
-    "category27_label": "container",
-    "category27_id": 6,
-    "memorability_category": "mid",
-    "selection_source": "milp"
-  },
-  {
-    "image_name": "water_bottle_11s.jpg",
-    "image_path": "images/water_bottle_11s.jpg",
-    "things_file_path": "water_bottle/water_bottle_11s.jpg",
-    "things_memorability": 0.794872,
-    "things_category": "container",
-    "memorability_percentile": 48.82594,
-    "recognizability": 0.461538,
-    "nameability": 0.823529,
-    "concreteness_score": 4.93,
-    "concept_name": "water_bottle",
-    "category27_label": "container",
-    "category27_id": 6,
-    "memorability_category": "mid",
-    "selection_source": "milp"
-  },
-  {
-    "image_name": "baklava_15s.jpg",
-    "image_path": "images/baklava_15s.jpg",
-    "things_file_path": "baklava/baklava_15s.jpg",
-    "things_memorability": 0.794872,
-    "things_category": "dessert",
-    "memorability_percentile": 48.82594,
-    "recognizability": 0.235294,
-    "nameability": 0.555556,
-    "concreteness_score": 4.32,
-    "concept_name": "baklava",
-    "category27_label": "dessert",
-    "category27_id": 7,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
@@ -5772,7 +5580,23 @@ window.STIMULI_METADATA = [
     "concept_name": "birthday_cake",
     "category27_label": "dessert",
     "category27_id": 7,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
+    "selection_source": "milp"
+  },
+  {
+    "image_name": "cake_mix_11s.jpg",
+    "image_path": "images/cake_mix_11s.jpg",
+    "things_file_path": "cake_mix/cake_mix_11s.jpg",
+    "things_memorability": 0.794872,
+    "things_category": "dessert",
+    "memorability_percentile": 48.82594,
+    "recognizability": 0.5,
+    "nameability": 0.315789,
+    "concreteness_score": 4.89,
+    "concept_name": "cake_mix",
+    "category27_label": "dessert",
+    "category27_id": 7,
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
@@ -5788,7 +5612,7 @@ window.STIMULI_METADATA = [
     "concept_name": "crepe",
     "category27_label": "dessert",
     "category27_id": 7,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
@@ -5804,7 +5628,7 @@ window.STIMULI_METADATA = [
     "concept_name": "donut",
     "category27_label": "dessert",
     "category27_id": 7,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
@@ -5820,7 +5644,7 @@ window.STIMULI_METADATA = [
     "concept_name": "muffin",
     "category27_label": "dessert",
     "category27_id": 7,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
@@ -5836,7 +5660,7 @@ window.STIMULI_METADATA = [
     "concept_name": "pie",
     "category27_label": "dessert",
     "category27_id": 7,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
@@ -5852,7 +5676,7 @@ window.STIMULI_METADATA = [
     "concept_name": "beer",
     "category27_label": "drink",
     "category27_id": 8,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
@@ -5868,23 +5692,23 @@ window.STIMULI_METADATA = [
     "concept_name": "drink",
     "category27_label": "drink",
     "category27_id": 8,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
-    "image_name": "eggnog_02s.jpg",
-    "image_path": "images/eggnog_02s.jpg",
-    "things_file_path": "eggnog/eggnog_02s.jpg",
-    "things_memorability": 0.8,
+    "image_name": "lemonade_05s.jpg",
+    "image_path": "images/lemonade_05s.jpg",
+    "things_file_path": "lemonade/lemonade_05s.jpg",
+    "things_memorability": 0.804878,
     "things_category": "drink",
-    "memorability_percentile": 51.905692,
-    "recognizability": 0.111111,
-    "nameability": 0.722222,
-    "concreteness_score": 5.0,
-    "concept_name": "eggnog",
+    "memorability_percentile": 55.144411,
+    "recognizability": 0.375,
+    "nameability": 0.8,
+    "concreteness_score": 4.83,
+    "concept_name": "lemonade",
     "category27_label": "drink",
     "category27_id": 8,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
@@ -5900,7 +5724,7 @@ window.STIMULI_METADATA = [
     "concept_name": "milkshake",
     "category27_label": "drink",
     "category27_id": 8,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
@@ -5916,7 +5740,7 @@ window.STIMULI_METADATA = [
     "concept_name": "smoothie",
     "category27_label": "drink",
     "category27_id": 8,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
@@ -5932,7 +5756,7 @@ window.STIMULI_METADATA = [
     "concept_name": "soda",
     "category27_label": "drink",
     "category27_id": 8,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
@@ -5948,7 +5772,7 @@ window.STIMULI_METADATA = [
     "concept_name": "blower",
     "category27_label": "electronic device",
     "category27_id": 9,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
@@ -5964,7 +5788,7 @@ window.STIMULI_METADATA = [
     "concept_name": "sewing_machine",
     "category27_label": "electronic device",
     "category27_id": 9,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
@@ -5980,23 +5804,7 @@ window.STIMULI_METADATA = [
     "concept_name": "shredder",
     "category27_label": "electronic device",
     "category27_id": 9,
-    "memorability_category": "mid",
-    "selection_source": "milp"
-  },
-  {
-    "image_name": "slot_machine_11s.jpg",
-    "image_path": "images/slot_machine_11s.jpg",
-    "things_file_path": "slot_machine/slot_machine_11s.jpg",
-    "things_memorability": 0.794872,
-    "things_category": "electronic device",
-    "memorability_percentile": 48.82594,
-    "recognizability": 0.466667,
-    "nameability": 0.894737,
-    "concreteness_score": 4.83,
-    "concept_name": "slot_machine",
-    "category27_label": "electronic device",
-    "category27_id": 9,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
@@ -6012,7 +5820,23 @@ window.STIMULI_METADATA = [
     "concept_name": "stereo",
     "category27_label": "electronic device",
     "category27_id": 9,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
+    "selection_source": "milp"
+  },
+  {
+    "image_name": "television_12s.jpg",
+    "image_path": "images/television_12s.jpg",
+    "things_file_path": "television/television_12s.jpg",
+    "things_memorability": 0.794872,
+    "things_category": "electronic device",
+    "memorability_percentile": 48.82594,
+    "recognizability": 0.923077,
+    "nameability": 0.5,
+    "concreteness_score": 4.83,
+    "concept_name": "television",
+    "category27_label": "electronic device",
+    "category27_id": 9,
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
@@ -6028,7 +5852,7 @@ window.STIMULI_METADATA = [
     "concept_name": "vending_machine",
     "category27_label": "electronic device",
     "category27_id": 9,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
@@ -6044,7 +5868,7 @@ window.STIMULI_METADATA = [
     "concept_name": "cracker",
     "category27_label": "food",
     "category27_id": 10,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
@@ -6060,7 +5884,23 @@ window.STIMULI_METADATA = [
     "concept_name": "gyro",
     "category27_label": "food",
     "category27_id": 10,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
+    "selection_source": "milp"
+  },
+  {
+    "image_name": "licorice_08s.jpg",
+    "image_path": "images/licorice_08s.jpg",
+    "things_file_path": "licorice/licorice_08s.jpg",
+    "things_memorability": 0.794872,
+    "things_category": "food",
+    "memorability_percentile": 48.82594,
+    "recognizability": 0.526316,
+    "nameability": 0.842105,
+    "concreteness_score": 4.97,
+    "concept_name": "licorice",
+    "category27_label": "food",
+    "category27_id": 10,
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
@@ -6076,39 +5916,23 @@ window.STIMULI_METADATA = [
     "concept_name": "nacho",
     "category27_label": "food",
     "category27_id": 10,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
-    "image_name": "pizza_03s.jpg",
-    "image_path": "images/pizza_03s.jpg",
-    "things_file_path": "pizza/pizza_03s.jpg",
+    "image_name": "peanut_12s.jpg",
+    "image_path": "images/peanut_12s.jpg",
+    "things_file_path": "peanut/peanut_12s.jpg",
     "things_memorability": 0.794872,
     "things_category": "food",
     "memorability_percentile": 48.82594,
-    "recognizability": 1.0,
-    "nameability": 1.0,
-    "concreteness_score": 5.0,
-    "concept_name": "pizza",
+    "recognizability": 0.75,
+    "nameability": 0.947368,
+    "concreteness_score": 4.89,
+    "concept_name": "peanut",
     "category27_label": "food",
     "category27_id": 10,
-    "memorability_category": "mid",
-    "selection_source": "milp"
-  },
-  {
-    "image_name": "ready_meal_11s.jpg",
-    "image_path": "images/ready_meal_11s.jpg",
-    "things_file_path": "ready_meal/ready_meal_11s.jpg",
-    "things_memorability": 0.794872,
-    "things_category": "food",
-    "memorability_percentile": 48.82594,
-    "recognizability": 0.0625,
-    "nameability": 0.0,
-    "concreteness_score": 4.41,
-    "concept_name": "ready_meal",
-    "category27_label": "food",
-    "category27_id": 10,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
@@ -6124,7 +5948,7 @@ window.STIMULI_METADATA = [
     "concept_name": "tostada",
     "category27_label": "food",
     "category27_id": 10,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
@@ -6140,7 +5964,7 @@ window.STIMULI_METADATA = [
     "concept_name": "blackberry",
     "category27_label": "fruit",
     "category27_id": 11,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
@@ -6156,23 +5980,7 @@ window.STIMULI_METADATA = [
     "concept_name": "coconut",
     "category27_label": "fruit",
     "category27_id": 11,
-    "memorability_category": "mid",
-    "selection_source": "milp"
-  },
-  {
-    "image_name": "fruit_08s.jpg",
-    "image_path": "images/fruit_08s.jpg",
-    "things_file_path": "fruit/fruit_08s.jpg",
-    "things_memorability": 0.794872,
-    "things_category": "fruit",
-    "memorability_percentile": 48.82594,
-    "recognizability": 1.0,
-    "nameability": 0.842105,
-    "concreteness_score": 4.81,
-    "concept_name": "fruit",
-    "category27_label": "fruit",
-    "category27_id": 11,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
@@ -6188,7 +5996,7 @@ window.STIMULI_METADATA = [
     "concept_name": "mango",
     "category27_label": "fruit",
     "category27_id": 11,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
@@ -6204,7 +6012,7 @@ window.STIMULI_METADATA = [
     "concept_name": "plum",
     "category27_label": "fruit",
     "category27_id": 11,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
@@ -6220,23 +6028,23 @@ window.STIMULI_METADATA = [
     "concept_name": "prune",
     "category27_label": "fruit",
     "category27_id": 11,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
-    "image_name": "bed_02s.jpg",
-    "image_path": "images/bed_02s.jpg",
-    "things_file_path": "bed/bed_02s.jpg",
+    "image_name": "strawberry_15n.jpg",
+    "image_path": "images/strawberry_15n.jpg",
+    "things_file_path": "strawberry/strawberry_15n.jpg",
     "things_memorability": 0.794872,
-    "things_category": "furniture",
+    "things_category": "fruit",
     "memorability_percentile": 48.82594,
-    "recognizability": 0.875,
-    "nameability": 0.947368,
+    "recognizability": 0.95,
+    "nameability": 1.0,
     "concreteness_score": 5.0,
-    "concept_name": "bed",
-    "category27_label": "furniture",
-    "category27_id": 12,
-    "memorability_category": "mid",
+    "concept_name": "strawberry",
+    "category27_label": "fruit",
+    "category27_id": 11,
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
@@ -6252,7 +6060,7 @@ window.STIMULI_METADATA = [
     "concept_name": "closet",
     "category27_label": "furniture",
     "category27_id": 12,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
@@ -6268,7 +6076,7 @@ window.STIMULI_METADATA = [
     "concept_name": "couch",
     "category27_label": "furniture",
     "category27_id": 12,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
@@ -6284,7 +6092,23 @@ window.STIMULI_METADATA = [
     "concept_name": "counter",
     "category27_label": "furniture",
     "category27_id": 12,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
+    "selection_source": "milp"
+  },
+  {
+    "image_name": "dresser_14s.jpg",
+    "image_path": "images/dresser_14s.jpg",
+    "things_file_path": "dresser/dresser_14s.jpg",
+    "things_memorability": 0.794872,
+    "things_category": "furniture",
+    "memorability_percentile": 48.82594,
+    "recognizability": 0.117647,
+    "nameability": 0.777778,
+    "concreteness_score": 4.96,
+    "concept_name": "dresser",
+    "category27_label": "furniture",
+    "category27_id": 12,
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
@@ -6300,7 +6124,7 @@ window.STIMULI_METADATA = [
     "concept_name": "loveseat",
     "category27_label": "furniture",
     "category27_id": 12,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
@@ -6316,7 +6140,23 @@ window.STIMULI_METADATA = [
     "concept_name": "rocking_chair",
     "category27_label": "furniture",
     "category27_id": 12,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
+    "selection_source": "milp"
+  },
+  {
+    "image_name": "chandelier_07s.jpg",
+    "image_path": "images/chandelier_07s.jpg",
+    "things_file_path": "chandelier/chandelier_07s.jpg",
+    "things_memorability": 0.794872,
+    "things_category": "home decor",
+    "memorability_percentile": 48.82594,
+    "recognizability": 0.5625,
+    "nameability": 1.0,
+    "concreteness_score": 4.79,
+    "concept_name": "chandelier",
+    "category27_label": "home decor",
+    "category27_id": 13,
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
@@ -6332,7 +6172,7 @@ window.STIMULI_METADATA = [
     "concept_name": "frame",
     "category27_label": "home decor",
     "category27_id": 13,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
@@ -6348,7 +6188,7 @@ window.STIMULI_METADATA = [
     "concept_name": "lamp",
     "category27_label": "home decor",
     "category27_id": 13,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
@@ -6364,7 +6204,7 @@ window.STIMULI_METADATA = [
     "concept_name": "pinecone",
     "category27_label": "home decor",
     "category27_id": 13,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
@@ -6380,7 +6220,7 @@ window.STIMULI_METADATA = [
     "concept_name": "scarecrow",
     "category27_label": "home decor",
     "category27_id": 13,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
@@ -6396,119 +6236,7 @@ window.STIMULI_METADATA = [
     "concept_name": "statue",
     "category27_label": "home decor",
     "category27_id": 13,
-    "memorability_category": "mid",
-    "selection_source": "milp"
-  },
-  {
-    "image_name": "wreath_08s.jpg",
-    "image_path": "images/wreath_08s.jpg",
-    "things_file_path": "wreath/wreath_08s.jpg",
-    "things_memorability": 0.794872,
-    "things_category": "home decor",
-    "memorability_percentile": 48.82594,
-    "recognizability": 0.181818,
-    "nameability": 1.0,
-    "concreteness_score": 4.93,
-    "concept_name": "wreath",
-    "category27_label": "home decor",
-    "category27_id": 13,
-    "memorability_category": "mid",
-    "selection_source": "milp"
-  },
-  {
-    "image_name": "ant_03s.jpg",
-    "image_path": "images/ant_03s.jpg",
-    "things_file_path": "ant/ant_03s.jpg",
-    "things_memorability": 0.795455,
-    "things_category": "insect",
-    "memorability_percentile": 49.992339,
-    "recognizability": 1.0,
-    "nameability": 1.0,
-    "concreteness_score": 4.86,
-    "concept_name": "ant",
-    "category27_label": "insect",
-    "category27_id": 14,
-    "memorability_category": "mid",
-    "selection_source": "milp"
-  },
-  {
-    "image_name": "bee_18s.jpg",
-    "image_path": "images/bee_18s.jpg",
-    "things_file_path": "bee/bee_18s.jpg",
-    "things_memorability": 0.794872,
-    "things_category": "insect",
-    "memorability_percentile": 48.82594,
-    "recognizability": 0.9375,
-    "nameability": 1.0,
-    "concreteness_score": 4.88,
-    "concept_name": "bee",
-    "category27_label": "insect",
-    "category27_id": 14,
-    "memorability_category": "mid",
-    "selection_source": "milp"
-  },
-  {
-    "image_name": "caterpillar_03s.jpg",
-    "image_path": "images/caterpillar_03s.jpg",
-    "things_file_path": "caterpillar/caterpillar_03s.jpg",
-    "things_memorability": 0.794872,
-    "things_category": "insect",
-    "memorability_percentile": 48.82594,
-    "recognizability": 0.75,
-    "nameability": 0.947368,
-    "concreteness_score": 4.87,
-    "concept_name": "caterpillar",
-    "category27_label": "insect",
-    "category27_id": 14,
-    "memorability_category": "mid",
-    "selection_source": "milp"
-  },
-  {
-    "image_name": "dragonfly_03s.jpg",
-    "image_path": "images/dragonfly_03s.jpg",
-    "things_file_path": "dragonfly/dragonfly_03s.jpg",
-    "things_memorability": 0.8,
-    "things_category": "insect",
-    "memorability_percentile": 51.905692,
-    "recognizability": 0.933333,
-    "nameability": 0.647059,
-    "concreteness_score": 4.83,
-    "concept_name": "dragonfly",
-    "category27_label": "insect",
-    "category27_id": 14,
-    "memorability_category": "mid",
-    "selection_source": "milp"
-  },
-  {
-    "image_name": "praying_mantis_07s.jpg",
-    "image_path": "images/praying_mantis_07s.jpg",
-    "things_file_path": "praying_mantis/praying_mantis_07s.jpg",
-    "things_memorability": 0.792105,
-    "things_category": "insect",
-    "memorability_percentile": 47.747644,
-    "recognizability": 0.375,
-    "nameability": 0.666667,
-    "concreteness_score": 4.93,
-    "concept_name": "praying_mantis",
-    "category27_label": "insect",
-    "category27_id": 14,
-    "memorability_category": "mid",
-    "selection_source": "milp"
-  },
-  {
-    "image_name": "wasp_13n.jpg",
-    "image_path": "images/wasp_13n.jpg",
-    "things_file_path": "wasp/wasp_13n.jpg",
-    "things_memorability": 0.794872,
-    "things_category": "insect",
-    "memorability_percentile": 48.82594,
-    "recognizability": 0.3125,
-    "nameability": 0.352941,
-    "concreteness_score": 4.96,
-    "concept_name": "wasp",
-    "category27_label": "insect",
-    "category27_id": 14,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
@@ -6524,55 +6252,55 @@ window.STIMULI_METADATA = [
     "concept_name": "burner",
     "category27_label": "kitchen appliance",
     "category27_id": 15,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
-    "image_name": "dishwasher_01b.jpg",
-    "image_path": "images/dishwasher_01b.jpg",
-    "things_file_path": "dishwasher/dishwasher_01b.jpg",
-    "things_memorability": 0.80061,
+    "image_name": "coffeemaker_12s.jpg",
+    "image_path": "images/coffeemaker_12s.jpg",
+    "things_file_path": "coffeemaker/coffeemaker_12s.jpg",
+    "things_memorability": 0.804878,
     "things_category": "kitchen appliance",
-    "memorability_percentile": 53.704129,
+    "memorability_percentile": 55.144411,
     "recognizability": 0.714286,
-    "nameability": 0.777778,
-    "concreteness_score": 4.86,
-    "concept_name": "dishwasher",
+    "nameability": 0.933333,
+    "concreteness_score": 4.93,
+    "concept_name": "coffeemaker",
     "category27_label": "kitchen appliance",
     "category27_id": 15,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
-    "image_name": "food_processor_13s.jpg",
-    "image_path": "images/food_processor_13s.jpg",
-    "things_file_path": "food_processor/food_processor_13s.jpg",
-    "things_memorability": 0.794872,
+    "image_name": "freezer_04s.jpg",
+    "image_path": "images/freezer_04s.jpg",
+    "things_file_path": "freezer/freezer_04s.jpg",
+    "things_memorability": 0.789474,
     "things_category": "kitchen appliance",
-    "memorability_percentile": 48.82594,
-    "recognizability": 0.411765,
-    "nameability": 0.736842,
-    "concreteness_score": 4.89,
-    "concept_name": "food_processor",
+    "memorability_percentile": 46.5755,
+    "recognizability": 0.714286,
+    "nameability": 0.823529,
+    "concreteness_score": 4.87,
+    "concept_name": "freezer",
     "category27_label": "kitchen appliance",
     "category27_id": 15,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
-    "image_name": "hotplate_02s.jpg",
-    "image_path": "images/hotplate_02s.jpg",
-    "things_file_path": "hotplate/hotplate_02s.jpg",
-    "things_memorability": 0.795455,
+    "image_name": "juicer2_12s.jpg",
+    "image_path": "images/juicer2_12s.jpg",
+    "things_file_path": "juicer2/juicer2_12s.jpg",
+    "things_memorability": 0.789474,
     "things_category": "kitchen appliance",
-    "memorability_percentile": 49.992339,
-    "recognizability": 0.066667,
-    "nameability": 0.526316,
-    "concreteness_score": 4.7,
-    "concept_name": "hotplate",
+    "memorability_percentile": 46.5755,
+    "recognizability": 0.785714,
+    "nameability": 0.705882,
+    "concreteness_score": 4.48,
+    "concept_name": "juicer2",
     "category27_label": "kitchen appliance",
     "category27_id": 15,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
@@ -6588,7 +6316,7 @@ window.STIMULI_METADATA = [
     "concept_name": "slicer",
     "category27_label": "kitchen appliance",
     "category27_id": 15,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
@@ -6604,7 +6332,7 @@ window.STIMULI_METADATA = [
     "concept_name": "water_filter",
     "category27_label": "kitchen appliance",
     "category27_id": 15,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
@@ -6620,7 +6348,7 @@ window.STIMULI_METADATA = [
     "concept_name": "corkscrew",
     "category27_label": "kitchen tool",
     "category27_id": 16,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
@@ -6636,7 +6364,7 @@ window.STIMULI_METADATA = [
     "concept_name": "kettle",
     "category27_label": "kitchen tool",
     "category27_id": 16,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
@@ -6652,7 +6380,7 @@ window.STIMULI_METADATA = [
     "concept_name": "ladle",
     "category27_label": "kitchen tool",
     "category27_id": 16,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
@@ -6668,7 +6396,7 @@ window.STIMULI_METADATA = [
     "concept_name": "nutcracker",
     "category27_label": "kitchen tool",
     "category27_id": 16,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
@@ -6684,7 +6412,7 @@ window.STIMULI_METADATA = [
     "concept_name": "pepper_mill",
     "category27_label": "kitchen tool",
     "category27_id": 16,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
@@ -6700,39 +6428,7 @@ window.STIMULI_METADATA = [
     "concept_name": "strainer",
     "category27_label": "kitchen tool",
     "category27_id": 16,
-    "memorability_category": "mid",
-    "selection_source": "milp"
-  },
-  {
-    "image_name": "cane_01s.jpg",
-    "image_path": "images/cane_01s.jpg",
-    "things_file_path": "cane/cane_01s.jpg",
-    "things_memorability": 0.794872,
-    "things_category": "medical equipment",
-    "memorability_percentile": 48.82594,
-    "recognizability": 0.230769,
-    "nameability": 0.823529,
-    "concreteness_score": 4.87,
-    "concept_name": "cane",
-    "category27_label": "medical equipment",
-    "category27_id": 17,
-    "memorability_category": "mid",
-    "selection_source": "milp"
-  },
-  {
-    "image_name": "penlight_11s.jpg",
-    "image_path": "images/penlight_11s.jpg",
-    "things_file_path": "penlight/penlight_11s.jpg",
-    "things_memorability": 0.8,
-    "things_category": "medical equipment",
-    "memorability_percentile": 51.905692,
-    "recognizability": 0.466667,
-    "nameability": 0.277778,
-    "concreteness_score": 4.71,
-    "concept_name": "penlight",
-    "category27_label": "medical equipment",
-    "category27_id": 17,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
@@ -6748,7 +6444,23 @@ window.STIMULI_METADATA = [
     "concept_name": "pillbox",
     "category27_label": "medical equipment",
     "category27_id": 17,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
+    "selection_source": "milp"
+  },
+  {
+    "image_name": "stethoscope_11s.jpg",
+    "image_path": "images/stethoscope_11s.jpg",
+    "things_file_path": "stethoscope/stethoscope_11s.jpg",
+    "things_memorability": 0.8,
+    "things_category": "medical equipment",
+    "memorability_percentile": 51.905692,
+    "recognizability": 0.944444,
+    "nameability": 1.0,
+    "concreteness_score": 4.86,
+    "concept_name": "stethoscope",
+    "category27_label": "medical equipment",
+    "category27_id": 17,
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
@@ -6764,23 +6476,23 @@ window.STIMULI_METADATA = [
     "concept_name": "stretcher",
     "category27_label": "medical equipment",
     "category27_id": 17,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
-    "image_name": "swab_08s.jpg",
-    "image_path": "images/swab_08s.jpg",
-    "things_file_path": "swab/swab_08s.jpg",
+    "image_name": "syringe_12s.jpg",
+    "image_path": "images/syringe_12s.jpg",
+    "things_file_path": "syringe/syringe_12s.jpg",
     "things_memorability": 0.8,
     "things_category": "medical equipment",
     "memorability_percentile": 51.905692,
-    "recognizability": 0.571429,
-    "nameability": 0.125,
-    "concreteness_score": 4.34,
-    "concept_name": "swab",
+    "recognizability": 1.0,
+    "nameability": 0.833333,
+    "concreteness_score": 4.81,
+    "concept_name": "syringe",
     "category27_label": "medical equipment",
     "category27_id": 17,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
@@ -6796,55 +6508,55 @@ window.STIMULI_METADATA = [
     "concept_name": "tweezers",
     "category27_label": "medical equipment",
     "category27_id": 17,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
-    "image_name": "bagpipe_10s.jpg",
-    "image_path": "images/bagpipe_10s.jpg",
-    "things_file_path": "bagpipe/bagpipe_10s.jpg",
+    "image_name": "wheelchair_06s.jpg",
+    "image_path": "images/wheelchair_06s.jpg",
+    "things_file_path": "wheelchair/wheelchair_06s.jpg",
     "things_memorability": 0.8,
-    "things_category": "musical instrument",
+    "things_category": "medical equipment",
     "memorability_percentile": 51.905692,
-    "recognizability": 0.846154,
+    "recognizability": 0.909091,
     "nameability": 1.0,
-    "concreteness_score": 4.97,
-    "concept_name": "bagpipe",
-    "category27_label": "musical instrument",
-    "category27_id": 18,
-    "memorability_category": "mid",
+    "concreteness_score": 4.93,
+    "concept_name": "wheelchair",
+    "category27_label": "medical equipment",
+    "category27_id": 17,
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
-    "image_name": "bell_02s.jpg",
-    "image_path": "images/bell_02s.jpg",
-    "things_file_path": "bell/bell_02s.jpg",
+    "image_name": "accordion_13s.jpg",
+    "image_path": "images/accordion_13s.jpg",
+    "things_file_path": "accordion/accordion_13s.jpg",
     "things_memorability": 0.8,
     "things_category": "musical instrument",
     "memorability_percentile": 51.905692,
-    "recognizability": 0.9,
-    "nameability": 1.0,
-    "concreteness_score": 4.96,
-    "concept_name": "bell",
+    "recognizability": 0.384615,
+    "nameability": 0.947368,
+    "concreteness_score": 4.86,
+    "concept_name": "accordion",
     "category27_label": "musical instrument",
     "category27_id": 18,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
-    "image_name": "chime_08s.jpg",
-    "image_path": "images/chime_08s.jpg",
-    "things_file_path": "chime/chime_08s.jpg",
+    "image_name": "cymbal_06s.jpg",
+    "image_path": "images/cymbal_06s.jpg",
+    "things_file_path": "cymbal/cymbal_06s.jpg",
     "things_memorability": 0.8,
     "things_category": "musical instrument",
     "memorability_percentile": 51.905692,
-    "recognizability": 0.3125,
-    "nameability": 0.647059,
-    "concreteness_score": 4.4,
-    "concept_name": "chime",
+    "recognizability": 0.666667,
+    "nameability": 0.722222,
+    "concreteness_score": 4.92,
+    "concept_name": "cymbal",
     "category27_label": "musical instrument",
     "category27_id": 18,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
@@ -6860,7 +6572,39 @@ window.STIMULI_METADATA = [
     "concept_name": "kazoo",
     "category27_label": "musical instrument",
     "category27_id": 18,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
+    "selection_source": "milp"
+  },
+  {
+    "image_name": "mandolin_03n.jpg",
+    "image_path": "images/mandolin_03n.jpg",
+    "things_file_path": "mandolin/mandolin_03n.jpg",
+    "things_memorability": 0.8,
+    "things_category": "musical instrument",
+    "memorability_percentile": 51.905692,
+    "recognizability": 0.25,
+    "nameability": 0.294118,
+    "concreteness_score": 4.76,
+    "concept_name": "mandolin",
+    "category27_label": "musical instrument",
+    "category27_id": 18,
+    "memorability_bin": "mid",
+    "selection_source": "milp"
+  },
+  {
+    "image_name": "triangle_10s.jpg",
+    "image_path": "images/triangle_10s.jpg",
+    "things_file_path": "triangle/triangle_10s.jpg",
+    "things_memorability": 0.8,
+    "things_category": "musical instrument",
+    "memorability_percentile": 51.905692,
+    "recognizability": 0.533333,
+    "nameability": 0.85,
+    "concreteness_score": 4.52,
+    "concept_name": "triangle",
+    "category27_label": "musical instrument",
+    "category27_id": 18,
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
@@ -6876,23 +6620,7 @@ window.STIMULI_METADATA = [
     "concept_name": "trombone",
     "category27_label": "musical instrument",
     "category27_id": 18,
-    "memorability_category": "mid",
-    "selection_source": "milp"
-  },
-  {
-    "image_name": "violin_05s.jpg",
-    "image_path": "images/violin_05s.jpg",
-    "things_file_path": "violin/violin_05s.jpg",
-    "things_memorability": 0.795455,
-    "things_category": "musical instrument",
-    "memorability_percentile": 49.992339,
-    "recognizability": 0.928571,
-    "nameability": 1.0,
-    "concreteness_score": 4.96,
-    "concept_name": "violin",
-    "category27_label": "musical instrument",
-    "category27_id": 18,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
@@ -6908,7 +6636,23 @@ window.STIMULI_METADATA = [
     "concept_name": "envelope",
     "category27_label": "office supply",
     "category27_id": 19,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
+    "selection_source": "milp"
+  },
+  {
+    "image_name": "eraser_08s.jpg",
+    "image_path": "images/eraser_08s.jpg",
+    "things_file_path": "eraser/eraser_08s.jpg",
+    "things_memorability": 0.8,
+    "things_category": "office supply",
+    "memorability_percentile": 51.905692,
+    "recognizability": 0.785714,
+    "nameability": 0.666667,
+    "concreteness_score": 4.74,
+    "concept_name": "eraser",
+    "category27_label": "office supply",
+    "category27_id": 19,
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
@@ -6924,39 +6668,7 @@ window.STIMULI_METADATA = [
     "concept_name": "folder",
     "category27_label": "office supply",
     "category27_id": 19,
-    "memorability_category": "mid",
-    "selection_source": "milp"
-  },
-  {
-    "image_name": "fountain_pen_11s.jpg",
-    "image_path": "images/fountain_pen_11s.jpg",
-    "things_file_path": "fountain_pen/fountain_pen_11s.jpg",
-    "things_memorability": 0.795455,
-    "things_category": "office supply",
-    "memorability_percentile": 49.992339,
-    "recognizability": 0.142857,
-    "nameability": 0.315789,
-    "concreteness_score": 4.93,
-    "concept_name": "fountain_pen",
-    "category27_label": "office supply",
-    "category27_id": 19,
-    "memorability_category": "mid",
-    "selection_source": "milp"
-  },
-  {
-    "image_name": "notebook_05s.jpg",
-    "image_path": "images/notebook_05s.jpg",
-    "things_file_path": "notebook/notebook_05s.jpg",
-    "things_memorability": 0.794872,
-    "things_category": "office supply",
-    "memorability_percentile": 48.82594,
-    "recognizability": 0.705882,
-    "nameability": 0.421053,
-    "concreteness_score": 4.92,
-    "concept_name": "notebook",
-    "category27_label": "office supply",
-    "category27_id": 19,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
@@ -6972,7 +6684,7 @@ window.STIMULI_METADATA = [
     "concept_name": "pen",
     "category27_label": "office supply",
     "category27_id": 19,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
@@ -6988,7 +6700,23 @@ window.STIMULI_METADATA = [
     "concept_name": "scissors",
     "category27_label": "office supply",
     "category27_id": 19,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
+    "selection_source": "milp"
+  },
+  {
+    "image_name": "staple_02s.jpg",
+    "image_path": "images/staple_02s.jpg",
+    "things_file_path": "staple/staple_02s.jpg",
+    "things_memorability": 0.8,
+    "things_category": "office supply",
+    "memorability_percentile": 51.905692,
+    "recognizability": 0.875,
+    "nameability": 0.95,
+    "concreteness_score": 4.34,
+    "concept_name": "staple",
+    "category27_label": "office supply",
+    "category27_id": 19,
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
@@ -7004,7 +6732,7 @@ window.STIMULI_METADATA = [
     "concept_name": "exhaust_pipe",
     "category27_label": "part of car",
     "category27_id": 20,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
@@ -7020,7 +6748,7 @@ window.STIMULI_METADATA = [
     "concept_name": "odometer",
     "category27_label": "part of car",
     "category27_id": 20,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
@@ -7036,7 +6764,7 @@ window.STIMULI_METADATA = [
     "concept_name": "spark_plug",
     "category27_label": "part of car",
     "category27_id": 20,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
@@ -7052,7 +6780,7 @@ window.STIMULI_METADATA = [
     "concept_name": "speedometer",
     "category27_label": "part of car",
     "category27_id": 20,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
@@ -7068,7 +6796,7 @@ window.STIMULI_METADATA = [
     "concept_name": "steering_wheel",
     "category27_label": "part of car",
     "category27_id": 20,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
@@ -7084,7 +6812,23 @@ window.STIMULI_METADATA = [
     "concept_name": "windshield_wiper",
     "category27_label": "part of car",
     "category27_id": 20,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
+    "selection_source": "milp"
+  },
+  {
+    "image_name": "corn_17s.jpg",
+    "image_path": "images/corn_17s.jpg",
+    "things_file_path": "corn/corn_17s.jpg",
+    "things_memorability": 0.794872,
+    "things_category": "plant",
+    "memorability_percentile": 48.82594,
+    "recognizability": 0.928571,
+    "nameability": 1.0,
+    "concreteness_score": 4.96,
+    "concept_name": "corn",
+    "category27_label": "plant",
+    "category27_id": 21,
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
@@ -7100,7 +6844,7 @@ window.STIMULI_METADATA = [
     "concept_name": "dandelion",
     "category27_label": "plant",
     "category27_id": 21,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
@@ -7116,7 +6860,7 @@ window.STIMULI_METADATA = [
     "concept_name": "lavender",
     "category27_label": "plant",
     "category27_id": 21,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
@@ -7132,7 +6876,7 @@ window.STIMULI_METADATA = [
     "concept_name": "marijuana",
     "category27_label": "plant",
     "category27_id": 21,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
@@ -7148,23 +6892,7 @@ window.STIMULI_METADATA = [
     "concept_name": "mint",
     "category27_label": "plant",
     "category27_id": 21,
-    "memorability_category": "mid",
-    "selection_source": "milp"
-  },
-  {
-    "image_name": "parsley_10s.jpg",
-    "image_path": "images/parsley_10s.jpg",
-    "things_file_path": "parsley/parsley_10s.jpg",
-    "things_memorability": 0.794872,
-    "things_category": "plant",
-    "memorability_percentile": 48.82594,
-    "recognizability": 0.294118,
-    "nameability": 0.375,
-    "concreteness_score": 4.77,
-    "concept_name": "parsley",
-    "category27_label": "plant",
-    "category27_id": 21,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
@@ -7180,23 +6908,7 @@ window.STIMULI_METADATA = [
     "concept_name": "tumbleweed",
     "category27_label": "plant",
     "category27_id": 21,
-    "memorability_category": "mid",
-    "selection_source": "milp"
-  },
-  {
-    "image_name": "dartboard_08s.jpg",
-    "image_path": "images/dartboard_08s.jpg",
-    "things_file_path": "dartboard/dartboard_08s.jpg",
-    "things_memorability": 0.794872,
-    "things_category": "sports equipment",
-    "memorability_percentile": 48.82594,
-    "recognizability": 0.625,
-    "nameability": 0.588235,
-    "concreteness_score": 4.75,
-    "concept_name": "dartboard",
-    "category27_label": "sports equipment",
-    "category27_id": 22,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
@@ -7212,7 +6924,7 @@ window.STIMULI_METADATA = [
     "concept_name": "flipper",
     "category27_label": "sports equipment",
     "category27_id": 22,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
@@ -7228,23 +6940,7 @@ window.STIMULI_METADATA = [
     "concept_name": "home_plate",
     "category27_label": "sports equipment",
     "category27_id": 22,
-    "memorability_category": "mid",
-    "selection_source": "milp"
-  },
-  {
-    "image_name": "iceskate_12s.jpg",
-    "image_path": "images/iceskate_12s.jpg",
-    "things_file_path": "iceskate/iceskate_12s.jpg",
-    "things_memorability": 0.794872,
-    "things_category": "sports equipment",
-    "memorability_percentile": 48.82594,
-    "recognizability": 0.3125,
-    "nameability": 0.222222,
-    "concreteness_score": 4.77,
-    "concept_name": "iceskate",
-    "category27_label": "sports equipment",
-    "category27_id": 22,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
@@ -7260,23 +6956,71 @@ window.STIMULI_METADATA = [
     "concept_name": "oar",
     "category27_label": "sports equipment",
     "category27_id": 22,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
-    "image_name": "surfboard_09s.jpg",
-    "image_path": "images/surfboard_09s.jpg",
-    "things_file_path": "surfboard/surfboard_09s.jpg",
+    "image_name": "ping-pong_table_11s.jpg",
+    "image_path": "images/ping-pong_table_11s.jpg",
+    "things_file_path": "ping-pong_table/ping-pong_table_11s.jpg",
     "things_memorability": 0.794872,
     "things_category": "sports equipment",
     "memorability_percentile": 48.82594,
-    "recognizability": 0.833333,
-    "nameability": 0.5,
-    "concreteness_score": 4.57,
-    "concept_name": "surfboard",
+    "recognizability": 0.764706,
+    "nameability": 0.0,
+    "concreteness_score": 4.93,
+    "concept_name": "ping-pong_table",
     "category27_label": "sports equipment",
     "category27_id": 22,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
+    "selection_source": "milp"
+  },
+  {
+    "image_name": "saddle_03s.jpg",
+    "image_path": "images/saddle_03s.jpg",
+    "things_file_path": "saddle/saddle_03s.jpg",
+    "things_memorability": 0.794872,
+    "things_category": "sports equipment",
+    "memorability_percentile": 48.82594,
+    "recognizability": 0.8125,
+    "nameability": 0.944444,
+    "concreteness_score": 4.85,
+    "concept_name": "saddle",
+    "category27_label": "sports equipment",
+    "category27_id": 22,
+    "memorability_bin": "mid",
+    "selection_source": "milp"
+  },
+  {
+    "image_name": "soccer_ball_03s.jpg",
+    "image_path": "images/soccer_ball_03s.jpg",
+    "things_file_path": "soccer_ball/soccer_ball_03s.jpg",
+    "things_memorability": 0.794872,
+    "things_category": "sports equipment",
+    "memorability_percentile": 48.82594,
+    "recognizability": 0.25,
+    "nameability": 0.9,
+    "concreteness_score": 4.89,
+    "concept_name": "soccer_ball",
+    "category27_label": "sports equipment",
+    "category27_id": 22,
+    "memorability_bin": "mid",
+    "selection_source": "milp"
+  },
+  {
+    "image_name": "chopsticks_04s.jpg",
+    "image_path": "images/chopsticks_04s.jpg",
+    "things_file_path": "chopsticks/chopsticks_04s.jpg",
+    "things_memorability": 0.794872,
+    "things_category": "tool",
+    "memorability_percentile": 48.82594,
+    "recognizability": 0.916667,
+    "nameability": 0.8,
+    "concreteness_score": 5.0,
+    "concept_name": "chopsticks",
+    "category27_label": "tool",
+    "category27_id": 23,
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
@@ -7292,55 +7036,23 @@ window.STIMULI_METADATA = [
     "concept_name": "crank",
     "category27_label": "tool",
     "category27_id": 23,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
-    "image_name": "file1_01b.jpg",
-    "image_path": "images/file1_01b.jpg",
-    "things_file_path": "file1/file1_01b.jpg",
+    "image_name": "mallet_11s.jpg",
+    "image_path": "images/mallet_11s.jpg",
+    "things_file_path": "mallet/mallet_11s.jpg",
     "things_memorability": 0.794872,
     "things_category": "tool",
     "memorability_percentile": 48.82594,
-    "recognizability": 0.6,
-    "nameability": 0.444444,
-    "concreteness_score": 4.41,
-    "concept_name": "file1",
+    "recognizability": 0.428571,
+    "nameability": 0.4,
+    "concreteness_score": 4.93,
+    "concept_name": "mallet",
     "category27_label": "tool",
     "category27_id": 23,
-    "memorability_category": "mid",
-    "selection_source": "milp"
-  },
-  {
-    "image_name": "magnifying_glass_04s.jpg",
-    "image_path": "images/magnifying_glass_04s.jpg",
-    "things_file_path": "magnifying_glass/magnifying_glass_04s.jpg",
-    "things_memorability": 0.794872,
-    "things_category": "tool",
-    "memorability_percentile": 48.82594,
-    "recognizability": 0.277778,
-    "nameability": 0.55,
-    "concreteness_score": 4.96,
-    "concept_name": "magnifying_glass",
-    "category27_label": "tool",
-    "category27_id": 23,
-    "memorability_category": "mid",
-    "selection_source": "milp"
-  },
-  {
-    "image_name": "match_04s.jpg",
-    "image_path": "images/match_04s.jpg",
-    "things_file_path": "match/match_04s.jpg",
-    "things_memorability": 0.794872,
-    "things_category": "tool",
-    "memorability_percentile": 48.82594,
-    "recognizability": 0.583333,
-    "nameability": 1.0,
-    "concreteness_score": 4.14,
-    "concept_name": "match",
-    "category27_label": "tool",
-    "category27_id": 23,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
@@ -7356,23 +7068,39 @@ window.STIMULI_METADATA = [
     "concept_name": "nail_file",
     "category27_label": "tool",
     "category27_id": 23,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
-    "image_name": "vise_01b.jpg",
-    "image_path": "images/vise_01b.jpg",
-    "things_file_path": "vise/vise_01b.jpg",
+    "image_name": "pocketknife_11s.jpg",
+    "image_path": "images/pocketknife_11s.jpg",
+    "things_file_path": "pocketknife/pocketknife_11s.jpg",
     "things_memorability": 0.794872,
     "things_category": "tool",
     "memorability_percentile": 48.82594,
-    "recognizability": 0.352941,
-    "nameability": 0.368421,
-    "concreteness_score": 4.0,
-    "concept_name": "vise",
+    "recognizability": 0.2,
+    "nameability": 0.777778,
+    "concreteness_score": 4.93,
+    "concept_name": "pocketknife",
     "category27_label": "tool",
     "category27_id": 23,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
+    "selection_source": "milp"
+  },
+  {
+    "image_name": "razor_03s.jpg",
+    "image_path": "images/razor_03s.jpg",
+    "things_file_path": "razor/razor_03s.jpg",
+    "things_memorability": 0.794872,
+    "things_category": "tool",
+    "memorability_percentile": 48.82594,
+    "recognizability": 0.583333,
+    "nameability": 0.666667,
+    "concreteness_score": 4.9,
+    "concept_name": "razor",
+    "category27_label": "tool",
+    "category27_id": 23,
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
@@ -7388,7 +7116,23 @@ window.STIMULI_METADATA = [
     "concept_name": "balloon",
     "category27_label": "toy",
     "category27_id": 24,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
+    "selection_source": "milp"
+  },
+  {
+    "image_name": "dreidel_10s.jpg",
+    "image_path": "images/dreidel_10s.jpg",
+    "things_file_path": "dreidel/dreidel_10s.jpg",
+    "things_memorability": 0.794872,
+    "things_category": "toy",
+    "memorability_percentile": 48.82594,
+    "recognizability": 0.3125,
+    "nameability": 0.65,
+    "concreteness_score": 4.88,
+    "concept_name": "dreidel",
+    "category27_label": "toy",
+    "category27_id": 24,
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
@@ -7404,7 +7148,7 @@ window.STIMULI_METADATA = [
     "concept_name": "gyroscope",
     "category27_label": "toy",
     "category27_id": 24,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
@@ -7420,23 +7164,7 @@ window.STIMULI_METADATA = [
     "concept_name": "kaleidoscope",
     "category27_label": "toy",
     "category27_id": 24,
-    "memorability_category": "mid",
-    "selection_source": "milp"
-  },
-  {
-    "image_name": "kite_03s.jpg",
-    "image_path": "images/kite_03s.jpg",
-    "things_file_path": "kite/kite_03s.jpg",
-    "things_memorability": 0.794872,
-    "things_category": "toy",
-    "memorability_percentile": 48.82594,
-    "recognizability": 1.0,
-    "nameability": 1.0,
-    "concreteness_score": 5.0,
-    "concept_name": "kite",
-    "category27_label": "toy",
-    "category27_id": 24,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
@@ -7452,7 +7180,7 @@ window.STIMULI_METADATA = [
     "concept_name": "toy",
     "category27_label": "toy",
     "category27_id": 24,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
@@ -7468,7 +7196,7 @@ window.STIMULI_METADATA = [
     "concept_name": "train_set",
     "category27_label": "toy",
     "category27_id": 24,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
@@ -7484,23 +7212,7 @@ window.STIMULI_METADATA = [
     "concept_name": "brussels_sprouts",
     "category27_label": "vegetable",
     "category27_id": 25,
-    "memorability_category": "mid",
-    "selection_source": "milp"
-  },
-  {
-    "image_name": "corn_17s.jpg",
-    "image_path": "images/corn_17s.jpg",
-    "things_file_path": "corn/corn_17s.jpg",
-    "things_memorability": 0.794872,
-    "things_category": "vegetable",
-    "memorability_percentile": 48.82594,
-    "recognizability": 0.928571,
-    "nameability": 1.0,
-    "concreteness_score": 4.96,
-    "concept_name": "corn",
-    "category27_label": "vegetable",
-    "category27_id": 25,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
@@ -7516,7 +7228,7 @@ window.STIMULI_METADATA = [
     "concept_name": "cucumber",
     "category27_label": "vegetable",
     "category27_id": 25,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
@@ -7532,7 +7244,7 @@ window.STIMULI_METADATA = [
     "concept_name": "eggplant",
     "category27_label": "vegetable",
     "category27_id": 25,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
@@ -7548,7 +7260,23 @@ window.STIMULI_METADATA = [
     "concept_name": "lettuce",
     "category27_label": "vegetable",
     "category27_id": 25,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
+    "selection_source": "milp"
+  },
+  {
+    "image_name": "parsley_10s.jpg",
+    "image_path": "images/parsley_10s.jpg",
+    "things_file_path": "parsley/parsley_10s.jpg",
+    "things_memorability": 0.794872,
+    "things_category": "vegetable",
+    "memorability_percentile": 48.82594,
+    "recognizability": 0.294118,
+    "nameability": 0.375,
+    "concreteness_score": 4.77,
+    "concept_name": "parsley",
+    "category27_label": "vegetable",
+    "category27_id": 25,
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
@@ -7564,39 +7292,23 @@ window.STIMULI_METADATA = [
     "concept_name": "scallion",
     "category27_label": "vegetable",
     "category27_id": 25,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
-    "image_name": "jet_01b.jpg",
-    "image_path": "images/jet_01b.jpg",
-    "things_file_path": "jet/jet_01b.jpg",
+    "image_name": "dirt_bike_01b.jpg",
+    "image_path": "images/dirt_bike_01b.jpg",
+    "things_file_path": "dirt_bike/dirt_bike_01b.jpg",
     "things_memorability": 0.794872,
     "things_category": "vehicle",
     "memorability_percentile": 48.82594,
-    "recognizability": 0.6,
-    "nameability": 0.941176,
-    "concreteness_score": 4.77,
-    "concept_name": "jet",
+    "recognizability": 0.1875,
+    "nameability": 0.555556,
+    "concreteness_score": 5.0,
+    "concept_name": "dirt_bike",
     "category27_label": "vehicle",
     "category27_id": 26,
-    "memorability_category": "mid",
-    "selection_source": "milp"
-  },
-  {
-    "image_name": "police_car_10s.jpg",
-    "image_path": "images/police_car_10s.jpg",
-    "things_file_path": "police_car/police_car_10s.jpg",
-    "things_memorability": 0.794872,
-    "things_category": "vehicle",
-    "memorability_percentile": 48.82594,
-    "recognizability": 0.6875,
-    "nameability": 0.75,
-    "concreteness_score": 4.96,
-    "concept_name": "police_car",
-    "category27_label": "vehicle",
-    "category27_id": 26,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
@@ -7612,7 +7324,23 @@ window.STIMULI_METADATA = [
     "concept_name": "quad",
     "category27_label": "vehicle",
     "category27_id": 26,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
+    "selection_source": "milp"
+  },
+  {
+    "image_name": "raft_07s.jpg",
+    "image_path": "images/raft_07s.jpg",
+    "things_file_path": "raft/raft_07s.jpg",
+    "things_memorability": 0.794872,
+    "things_category": "vehicle",
+    "memorability_percentile": 48.82594,
+    "recognizability": 0.0625,
+    "nameability": 0.555556,
+    "concreteness_score": 5.0,
+    "concept_name": "raft",
+    "category27_label": "vehicle",
+    "category27_id": 26,
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
@@ -7628,7 +7356,7 @@ window.STIMULI_METADATA = [
     "concept_name": "roadsweeper",
     "category27_label": "vehicle",
     "category27_id": 26,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
@@ -7644,7 +7372,7 @@ window.STIMULI_METADATA = [
     "concept_name": "submarine",
     "category27_label": "vehicle",
     "category27_id": 26,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
@@ -7660,7 +7388,23 @@ window.STIMULI_METADATA = [
     "concept_name": "wagon",
     "category27_label": "vehicle",
     "category27_id": 26,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
+    "selection_source": "milp"
+  },
+  {
+    "image_name": "arrow_01b.jpg",
+    "image_path": "images/arrow_01b.jpg",
+    "things_file_path": "arrow/arrow_01b.jpg",
+    "things_memorability": 0.794872,
+    "things_category": "weapon",
+    "memorability_percentile": 48.82594,
+    "recognizability": 0.8125,
+    "nameability": 0.947368,
+    "concreteness_score": 4.97,
+    "concept_name": "arrow",
+    "category27_label": "weapon",
+    "category27_id": 27,
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
@@ -7676,7 +7420,7 @@ window.STIMULI_METADATA = [
     "concept_name": "cannonball",
     "category27_label": "weapon",
     "category27_id": 27,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
@@ -7692,7 +7436,7 @@ window.STIMULI_METADATA = [
     "concept_name": "dynamite",
     "category27_label": "weapon",
     "category27_id": 27,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
@@ -7708,23 +7452,7 @@ window.STIMULI_METADATA = [
     "concept_name": "machete",
     "category27_label": "weapon",
     "category27_id": 27,
-    "memorability_category": "mid",
-    "selection_source": "milp"
-  },
-  {
-    "image_name": "pickax_12s.jpg",
-    "image_path": "images/pickax_12s.jpg",
-    "things_file_path": "pickax/pickax_12s.jpg",
-    "things_memorability": 0.794872,
-    "things_category": "weapon",
-    "memorability_percentile": 48.82594,
-    "recognizability": 0.214286,
-    "nameability": 0.1875,
-    "concreteness_score": 4.72,
-    "concept_name": "pickax",
-    "category27_label": "weapon",
-    "category27_id": 27,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
@@ -7740,23 +7468,23 @@ window.STIMULI_METADATA = [
     "concept_name": "pitchfork",
     "category27_label": "weapon",
     "category27_id": 27,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
     "selection_source": "milp"
   },
   {
-    "image_name": "pocketknife_11s.jpg",
-    "image_path": "images/pocketknife_11s.jpg",
-    "things_file_path": "pocketknife/pocketknife_11s.jpg",
+    "image_name": "trident_06s.jpg",
+    "image_path": "images/trident_06s.jpg",
+    "things_file_path": "trident/trident_06s.jpg",
     "things_memorability": 0.794872,
     "things_category": "weapon",
     "memorability_percentile": 48.82594,
-    "recognizability": 0.2,
-    "nameability": 0.777778,
-    "concreteness_score": 4.93,
-    "concept_name": "pocketknife",
+    "recognizability": 0.6875,
+    "nameability": 0.631579,
+    "concreteness_score": 4.5,
+    "concept_name": "trident",
     "category27_label": "weapon",
     "category27_id": 27,
-    "memorability_category": "mid",
+    "memorability_bin": "mid",
     "selection_source": "milp"
   }
 ];
