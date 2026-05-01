@@ -45,6 +45,7 @@ async function initTask(jsPsych, subject_id) {
         image_path: stimulus.image_path,
         things_file_path: stimulus.things_file_path,
         things_memorability: stimulus.things_memorability,
+        memorability_bin: stimulus.memorability_bin,
         things_category: stimulus.things_category,
         memorability_percentile: stimulus.memorability_percentile,
         value: shuffledValues[index],
@@ -60,8 +61,13 @@ async function initTask(jsPsych, subject_id) {
     jsPsych.data.addProperties({
         experiment_id: params.experiment_id,
         subject_id: subject_id,
+        participant_id: subject_id,
         possible_values: JSON.stringify(params.possible_values),
         chance_rate: 1 / params.possible_values.length,
+        data_pipe_id: params.data_pipe_id,
+        osf_project_id: params.osf_project_id,
+        osf_component_id: params.osf_component_id,
+        task_params: JSON.stringify(params),
     });
 
     timeline.push({
@@ -110,25 +116,30 @@ async function initTask(jsPsych, subject_id) {
             choices: "NO_KEYS",
             trial_duration: params.learning_preview_duration + params.flip_duration + params.revealed_duration,
             data: {
-                phase: "learning",
+                phase: "encoding",
                 is_learning_trial: true,
                 study_index: trial.study_index,
                 trial_number: learningIndex + 1,
                 image_name: trial.image_name,
                 image_path: trial.image_path,
                 image_memorability: trial.things_memorability,
+                memorability_bin: trial.memorability_bin,
                 things_file_path: trial.things_file_path,
                 things_memorability: trial.things_memorability,
                 things_category: trial.things_category,
                 memorability_percentile: trial.memorability_percentile,
                 value: trial.value,
                 value_label: trial.value_label,
+                outcome: trial.value,
             },
             stimulus: function (canvas) {
                 const ctx = canvas.getContext("2d");
                 runLearningAnimation(ctx, trial);
             },
             on_finish: function (data) {
+                data.response = null;
+                data.correct = null;
+                data.response_error = null;
                 data.timestamp = new Date().toISOString();
             }
         });
@@ -170,7 +181,7 @@ async function initTask(jsPsych, subject_id) {
             stimulus: buildMemoryStimulus(trial, memoryIndex),
             choices: MEMORY_RESPONSE_KEYS,
             data: {
-                phase: "memory",
+                phase: "test",
                 is_memory_trial: true,
                 memory_index: memoryIndex,
                 study_index: trial.study_index,
@@ -178,6 +189,7 @@ async function initTask(jsPsych, subject_id) {
                 image_name: trial.image_name,
                 image_path: trial.image_path,
                 image_memorability: trial.things_memorability,
+                memorability_bin: trial.memorability_bin,
                 things_file_path: trial.things_file_path,
                 things_memorability: trial.things_memorability,
                 things_category: trial.things_category,
@@ -193,12 +205,15 @@ async function initTask(jsPsych, subject_id) {
                 const chosenValue = responseIndex >= 0 ? params.possible_values[responseIndex] : null;
                 data.response_key = responseKey;
                 data.response_index = responseIndex;
+                data.response = chosenValue;
                 data.reported_value = chosenValue;
                 data.reported_value_label = chosenValue === null ? null : formatValue(chosenValue);
                 data.chosen_value = chosenValue;
                 data.chosen_value_label = chosenValue === null ? null : formatValue(chosenValue);
                 data.correct = chosenValue === trial.value;
-                data.abs_error = chosenValue === null ? null : Number(Math.abs(chosenValue - trial.value).toFixed(2));
+                data.response_error = chosenValue === null ? null : Number(Math.abs(chosenValue - trial.value).toFixed(2));
+                data.abs_error = data.response_error;
+                data.outcome = trial.value;
                 data.timestamp = new Date().toISOString();
             }
         });
@@ -405,9 +420,10 @@ function loadStimulusMetadata() {
 
     return rows.map((row) => ({
         image_name: row.image_name,
-        image_path: row.image_path || `${params.stimuli_dir}/${row.image_name}`,
+        image_path: `${params.stimuli_dir}/${row.image_name}`,
         things_file_path: row.things_file_path,
         things_memorability: Number(row.things_memorability),
+        memorability_bin: row.memorability_bin,
         things_category: row.things_category,
         memorability_percentile: Number(row.memorability_percentile),
     }));
