@@ -171,3 +171,49 @@ m1a_rt_ns2 <- lmer(item_trial.rt ~ choice_optimal * old_optimal_c + (choice_opti
 m1a_rt_ns3 <- lmer(item_trial.rt ~ choice_optimal * old_optimal_c + (choice_optimal_c + choice_optimal_c:old_optimal_c | subj_id) + (0 + old_optimal_c | subj_id) + (choice_optimal_c || old_item), data = model_df)
 m1a_rt_ns4 <- lmer(item_trial.rt ~ choice_optimal * old_optimal_c + (choice_optimal_c + choice_optimal_c:old_optimal_c | subj_id) + (0 + old_optimal_c | subj_id) + (choice_optimal_c | old_item), data = model_df)
 anova(m0_rt_ns2, m1a_rt_ns3)
+
+
+
+
+resmem_scores <- read.csv('resmem_scores.csv')
+resmem_scores
+resmem_model_df <- model_df |> 
+  left_join(resmem_scores, by = join_by(old_item == image_path)) |>
+  mutate(
+    memscore_z = scale(memscore)
+  )
+
+m2 <- glmer(chosen_is_old ~ old_optimal_c * memscore_z + 
+              (old_optimal_c | subj_id) + (old_optimal_c | old_item), 
+            family = binomial, data = resmem_model_df)
+summary(m2)
+
+m2a <- glmer(chosen_is_old ~ old_optimal_c + 
+              (old_optimal_c | subj_id), 
+            family = binomial, data = model_df)
+m2b <- glmer(chosen_is_old ~ old_optimal_c + 
+              (old_optimal_c | subj_id) + (1 | old_item), 
+            family = binomial, data = model_df)
+m2c <- glmer(chosen_is_old ~ old_optimal_c + 
+              (old_optimal_c | subj_id) + (old_optimal_c || old_item), 
+            family = binomial, data = model_df)
+m2d <- glmer(chosen_is_old ~ old_optimal_c + 
+              (old_optimal_c | subj_id) + (old_optimal_c | old_item), 
+            family = binomial, data = model_df)
+m2e <- glmer(chosen_is_old ~ old_optimal_c + 
+               (old_optimal_c | subj_id) + (0 + old_optimal_c | old_item), 
+             family = binomial, data = model_df)
+anova(m2a, m2b, m2c, m2d)
+anova(m2a, m2e)
+
+sub_value_df <- model_df |>
+  filter(delay >= 9, delay <= 18) |>
+  group_by(subj_id, old_value) |>
+  summarize(
+    p_chosen_is_old = mean(chosen_is_old, na.rm = TRUE)
+  )
+sub_value_df |>
+  ggplot(aes(x = old_value, y = p_chosen_is_old)) +
+  stat_summary() +
+  labs(x = "Old Value", y = "P(Old)") +
+  theme_classic()
