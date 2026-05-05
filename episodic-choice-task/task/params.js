@@ -9,7 +9,7 @@ const params = {
     old_trial_pct: 0.5,
     min_delay: 7,
     max_delay: 15,
-    possible_values: [0, 1],
+    possible_values: [0, 1], //// only $0 or $1 -- binary values
 
     // Timing (ms)
     max_stimulus_duration: 2000,

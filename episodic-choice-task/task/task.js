@@ -521,14 +521,15 @@ function buildBlankCanvasTrial(duration) {
 }
 
 function buildAttentionCheckTrial(attentionCheck) {
-    const label = attentionCheck.correct_key === "arrowup" ? "UP" : "DOWN";
+    const label = attentionCheck.correct_key.toUpperCase();
     return {
         type: jsPsychHtmlKeyboardResponse,
         stimulus: `<div class="instruction-container" style="text-align:center;">
             <h2>Attention Check</h2>
-            <p>Press the <strong>${label}</strong> arrow key.</p>
+            <p>Press the <strong>${label}</strong> key.</p>
+            <p style="color:#ffffff;">IMPORTANT: actually, click the SPACE bar.</p>
         </div>`,
-        choices: ["arrowup", "arrowdown"],
+        choices: "ALL_KEYS",
         data: {
             is_attention_check: true,
             correct_key: attentionCheck.correct_key,
