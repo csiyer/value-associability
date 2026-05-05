@@ -377,6 +377,8 @@ function initTask(jsPsych, subject_id) {
     const stimulusRows = loadStimulusMetadata();
     const plan = EpisodicChoiceSequence.buildSequencePlan(params, stimulusRows);
     const summary = EpisodicChoiceSequence.summarizePlan(plan);
+    // console.log(plan)
+    // console.log(summary)
     TASK_STATE.plan = plan;
 
     jsPsych.data.addProperties({
