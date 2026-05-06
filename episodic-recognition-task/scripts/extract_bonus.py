@@ -27,12 +27,18 @@ def truthy_series(series: pd.Series) -> pd.Series:
     return series.astype(str).str.lower().isin(["true", "1", "yes"])
 
 
-def get_participant_id(row: pd.Series, csv_path: Path) -> str:
-    for column in ("prolific_id", "participant_id", "subject_id"):
-        value = row.get(column)
-        if pd.notna(value) and str(value).strip():
-            return str(value)
-    return csv_path.stem
+def get_prolific_id(row: pd.Series) -> str | None:
+    value = row.get("prolific_id")
+    if pd.isna(value) or not str(value).strip():
+        return None
+    return str(value)
+
+
+def is_prolific_row(row: pd.Series) -> bool:
+    study_id = row.get("study_id")
+    if pd.isna(study_id):
+        return False
+    return str(study_id).strip().lower() not in ("", "local", "nan")
 
 
 def extract_bonus_rows(data_dir: Path) -> list[dict[str, object]]:
@@ -59,7 +65,12 @@ def extract_bonus_rows(data_dir: Path) -> list[dict[str, object]]:
             continue
 
         row = summary.iloc[-1]
-        prolific_id = get_participant_id(row, csv_path)
+        if not is_prolific_row(row):
+            continue
+
+        prolific_id = get_prolific_id(row)
+        if prolific_id is None:
+            continue
 
         try:
             bonus = float(row["final_bonus"])

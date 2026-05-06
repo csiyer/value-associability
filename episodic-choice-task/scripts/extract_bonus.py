@@ -5,7 +5,7 @@ Usage:
     python episodic-choice-task/scripts/extract_bonus.py
     python episodic-choice-task/scripts/extract_bonus.py /path/to/data_dir
 
-Prints tab-separated `participant_id<TAB>bonus` rows for easy copy/paste.
+Prints tab-separated `prolific_id<TAB>bonus` rows for easy copy/paste.
 """
 
 from __future__ import annotations
@@ -21,6 +21,20 @@ TASK_DIR = SCRIPT_DIR.parent
 DEFAULT_DATA_DIR = TASK_DIR / "data"
 
 
+def get_prolific_id(row: pd.Series) -> str | None:
+    value = row.get("prolific_id")
+    if pd.isna(value) or not str(value).strip():
+        return None
+    return str(value)
+
+
+def is_prolific_row(row: pd.Series) -> bool:
+    study_id = row.get("study_id")
+    if pd.isna(study_id):
+        return False
+    return str(study_id).strip().lower() not in ("", "local", "nan")
+
+
 def extract_bonus_rows(data_dir: Path) -> list[tuple[str, float]]:
     rows: list[tuple[str, float]] = []
 
@@ -34,14 +48,23 @@ def extract_bonus_rows(data_dir: Path) -> list[tuple[str, float]]:
         if "final_bonus" not in df.columns:
             continue
 
-        summary = df[df.get("is_summary", False).astype(str).str.lower() == "true"].copy()
+        if "is_summary" in df.columns:
+            summary = df[df["is_summary"].astype(str).str.lower() == "true"].copy()
+        else:
+            summary = pd.DataFrame()
+
         if summary.empty:
             summary = df[df["final_bonus"].notna()].copy()
         if summary.empty:
             continue
 
         row = summary.iloc[-1]
-        participant_id = row.get("participant_id") or row.get("subject_id") or csv_path.stem
+        if not is_prolific_row(row):
+            continue
+
+        prolific_id = get_prolific_id(row)
+        if prolific_id is None:
+            continue
 
         try:
             bonus = float(row["final_bonus"])
@@ -49,7 +72,7 @@ def extract_bonus_rows(data_dir: Path) -> list[tuple[str, float]]:
             continue
 
         if bonus > 0:
-            rows.append((str(participant_id), bonus))
+            rows.append((prolific_id, bonus))
 
     return rows
 
@@ -61,8 +84,8 @@ def main() -> int:
         return 1
 
     rows = extract_bonus_rows(data_dir)
-    for participant_id, bonus in rows:
-        print(f"{participant_id}\t{bonus:.2f}")
+    for prolific_id, bonus in rows:
+        print(f"{prolific_id}\t{bonus:.2f}")
     return 0
 
 
