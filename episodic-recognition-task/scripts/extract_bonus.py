@@ -6,7 +6,7 @@ Usage:
     python episodic-recognition-task/scripts/extract_bonus.py /path/to/data_dir
 
 Prints a tab-separated table with one row per participant:
-participant_id, bonus, accuracy, chance-adjusted accuracy, correct trials, total trials,
+prolific_id, bonus, accuracy, chance-adjusted accuracy, correct trials, total trials,
 and source filename.
 """
 
@@ -25,6 +25,14 @@ DEFAULT_DATA_DIR = TASK_DIR / "data"
 
 def truthy_series(series: pd.Series) -> pd.Series:
     return series.astype(str).str.lower().isin(["true", "1", "yes"])
+
+
+def get_participant_id(row: pd.Series, csv_path: Path) -> str:
+    for column in ("prolific_id", "participant_id", "subject_id"):
+        value = row.get(column)
+        if pd.notna(value) and str(value).strip():
+            return str(value)
+    return csv_path.stem
 
 
 def extract_bonus_rows(data_dir: Path) -> list[dict[str, object]]:
@@ -51,7 +59,7 @@ def extract_bonus_rows(data_dir: Path) -> list[dict[str, object]]:
             continue
 
         row = summary.iloc[-1]
-        participant_id = row.get("participant_id") or row.get("subject_id") or csv_path.stem
+        prolific_id = get_participant_id(row, csv_path)
 
         try:
             bonus = float(row["final_bonus"])
@@ -59,7 +67,7 @@ def extract_bonus_rows(data_dir: Path) -> list[dict[str, object]]:
             continue
 
         rows.append({
-            "participant_id": str(participant_id),
+            "prolific_id": prolific_id,
             "bonus": bonus,
             "accuracy": float(row.get("accuracy", 0) or 0),
             "chance_adjusted_accuracy": float(row.get("chance_adjusted_accuracy", 0) or 0),
@@ -78,10 +86,10 @@ def main() -> int:
         return 1
 
     rows = extract_bonus_rows(data_dir)
-    print("participant_id\tbonus\taccuracy\tchance_adjusted_accuracy\tn_correct\tn_trials\tsource_file")
+    print("prolific_id\tbonus\taccuracy\tchance_adjusted_accuracy\tn_correct\tn_trials\tsource_file")
     for row in rows:
         print(
-            f"{row['participant_id']}\t"
+            f"{row['prolific_id']}\t"
             f"{row['bonus']:.2f}\t"
             f"{row['accuracy']:.3f}\t"
             f"{row['chance_adjusted_accuracy']:.3f}\t"

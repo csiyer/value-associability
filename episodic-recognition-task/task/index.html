@@ -227,15 +227,14 @@
 
         document.body.style.backgroundColor = params.background_color;
 
-        const subject_id = jsPsych.randomization.randomID(10);
+        const prolific_id = jsPsych.data.getURLVariable('PROLIFIC_PID') || `local_${jsPsych.randomization.randomID(10)}`;
         jsPsych.data.addProperties({
-            subject_id: subject_id,
-            prolific_id: jsPsych.data.getURLVariable('PROLIFIC_PID') || 'local',
+            prolific_id: prolific_id,
             study_id: jsPsych.data.getURLVariable('STUDY_ID') || 'local',
             session_id: jsPsych.data.getURLVariable('SESSION_ID') || 'local'
         });
 
-        initTask(jsPsych, subject_id);
+        initTask(jsPsych, prolific_id);
     </script>
 </body>
 

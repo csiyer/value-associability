@@ -424,7 +424,6 @@ function buildChoiceTrial(jsPsych, trialSpec) {
                     choice_missed: true,
                     auto_chosen: true,
                     old_chosen: null,
-                    did_choose_old: null,
                     outcome: autoCard.value,
                     optimal_choice: null,
                 });
@@ -453,7 +452,6 @@ function buildChoiceTrial(jsPsych, trialSpec) {
                 choice_missed: false,
                 auto_chosen: false,
                 old_chosen: trial.trial_type === "old" ? Number(chosenCard.is_old) : null,
-                did_choose_old: trial.trial_type === "old" ? Number(chosenCard.is_old) : null,
                 outcome: chosenCard.value,
                 optimal_choice: computeOptimalChoice(trial, chosenSide),
             });
@@ -555,7 +553,7 @@ function buildBreakTrial() {
 }
 
 // ─── Main init ────────────────────────────────────────────────────────────────
-function initTask(jsPsych, subject_id) {
+function initTask(jsPsych, prolific_id) {
     const timeline = [];
     const stimulusRows = loadStimulusMetadata();
     const plan = EpisodicChoiceSequence.buildSequencePlan(params, stimulusRows);
@@ -566,8 +564,7 @@ function initTask(jsPsych, subject_id) {
 
     jsPsych.data.addProperties({
         experiment_id: params.experiment_id,
-        subject_id,
-        participant_id: subject_id,
+        participant_id: prolific_id,
         possible_values: JSON.stringify(params.possible_values),
         old_trial_pct: params.old_trial_pct,
         min_delay: params.min_delay,
@@ -700,7 +697,7 @@ function initTask(jsPsych, subject_id) {
         type: jsPsychPipe,
         action: "save",
         experiment_id: params.data_pipe_id,
-        filename: `${subject_id}.csv`,
+        filename: `${prolific_id}.csv`,
         data_string() { return jsPsych.data.get().csv(); },
         on_finish() {
             window.location.href = "https://app.prolific.com/submissions/complete?cc=" + params.prolific_completion_code;
