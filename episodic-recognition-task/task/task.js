@@ -265,6 +265,7 @@ function buildRecognitionTrial(trialSpec) {
                 encoding_trial: trial.source_trial_number,
                 delay: trial.delay,
                 old_side: trial.old_side,
+                repeated_source_side: trial.repeated_source_side,
                 correct_key: correctKey,
                 left_image_name: trial.left.image_name,
                 left_image_path: trial.left.image_path,
@@ -282,7 +283,6 @@ function buildRecognitionTrial(trialSpec) {
                 response_category: chosenSide ? "image" : choseNeither ? "neither" : "missed",
                 choice_missed: !responseKey,
                 old_chosen: chosenCard ? Number(chosenCard.is_old) : choseNeither ? 0 : null,
-                did_choose_old: chosenCard ? Number(chosenCard.is_old) : choseNeither ? 0 : null,
                 correct: responseKey === correctKey,
                 timestamp: new Date().toISOString(),
             });
@@ -337,14 +337,15 @@ function buildBlankCanvasTrial(duration) {
 }
 
 function buildAttentionCheckTrial(attentionCheck) {
-    const label = attentionCheck.correct_key === "arrowup" ? "UP" : "DOWN";
+    const label = attentionCheck.correct_key.toUpperCase();
     return {
         type: jsPsychHtmlKeyboardResponse,
         stimulus: `<div class="instruction-container" style="text-align:center;">
             <h2>Attention Check</h2>
-            <p>Press the <strong>${label}</strong> arrow key.</p>
+            <p>Press the <strong>${label}</strong> key.</p>
+            <p style="color:#ffffff;">IMPORTANT: actually, click the SPACE bar.</p>
         </div>`,
-        choices: ["arrowup", "arrowdown"],
+        choices: "ALL_KEYS",
         data: {
             is_attention_check: true,
             correct_key: attentionCheck.correct_key,
@@ -370,17 +371,18 @@ function buildBreakTrial() {
 }
 
 // ─── Main init ────────────────────────────────────────────────────────────────
-function initTask(jsPsych, subject_id) {
+function initTask(jsPsych, prolific_id) {
     const timeline = [];
     const stimulusRows = loadStimulusMetadata();
     const plan = EpisodicChoiceSequence.buildSequencePlan(params, stimulusRows);
     const summary = EpisodicChoiceSequence.summarizePlan(plan);
+    // console.log(plan)
+    // console.log(summary)
     TASK_STATE.plan = plan;
 
     jsPsych.data.addProperties({
         experiment_id: params.experiment_id,
-        subject_id,
-        participant_id: subject_id,
+        participant_id: prolific_id,
         old_trial_pct: params.old_trial_pct,
         min_delay: params.min_delay,
         max_delay: params.max_delay,
@@ -503,7 +505,7 @@ function initTask(jsPsych, subject_id) {
         type: jsPsychPipe,
         action: "save",
         experiment_id: params.data_pipe_id,
-        filename: `${subject_id}.csv`,
+        filename: `${prolific_id}.csv`,
         data_string() { return jsPsych.data.get().csv(); },
         on_finish() {
             window.location.href = "https://app.prolific.com/submissions/complete?cc=" + params.prolific_completion_code;
@@ -525,6 +527,7 @@ function materializeRuntimeTrial(trialSpec) {
             source_trial_number: null,
             delay: null,
             old_side: null,
+            repeated_source_side: null,
             left: buildCardFromStimulus(trialSpec.left_stimulus, false),
             right: buildCardFromStimulus(trialSpec.right_stimulus, false),
         };

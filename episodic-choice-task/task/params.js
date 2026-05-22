@@ -9,7 +9,7 @@ const params = {
     old_trial_pct: 0.5,
     min_delay: 7,
     max_delay: 15,
-    possible_values: [0, 1],
+    possible_values: [0, 1], //// only $0 or $1 -- binary values
 
     // Timing (ms)
     max_stimulus_duration: 2000,
@@ -25,12 +25,12 @@ const params = {
 
     completion_time: 20,
     base_pay: 4,
-    max_bonus: 1,
+    max_bonus: 2,
     bonus_sample_n: 10,
     data_pipe_id: "0eMBjYEVa3qX",
     osf_project_id: "2cm34",
     osf_component_id: "8d2cb",
-    prolific_completion_code: "PLACEHOLDER",
+    prolific_completion_code: "C10TSSI1",
 
     consent_pdf: "https://csiyer.github.io/files/online_consent_form.pdf",
     stimuli_dir: "../../stimuli",

@@ -30,7 +30,12 @@ def load_task_data(data_dir: Path) -> pd.DataFrame:
         raise FileNotFoundError(f"No CSV files found in {data_dir}")
 
     data = pd.concat(frames, ignore_index=True, sort=False)
-    data["participant_id"] = data["participant_id"].fillna(data.get("subject_id"))
+    if "prolific_id" not in data:
+        data["prolific_id"] = pd.NA
+    for fallback in ("participant_id", "subject_id"):
+        if fallback in data:
+            data["prolific_id"] = data["prolific_id"].fillna(data[fallback])
+    data["prolific_id"] = data["prolific_id"].fillna(data["source_file"])
     return data
 
 
@@ -44,7 +49,7 @@ def bool_series(df: pd.DataFrame, column: str) -> pd.Series:
 
 def build_participant_summary(data: pd.DataFrame) -> pd.DataFrame:
     completion = (
-        data.groupby("participant_id", dropna=False)["time_elapsed"]
+        data.groupby("prolific_id", dropna=False)["time_elapsed"]
         .max()
         .div(1000 * 60)
         .rename("completion_minutes")
@@ -93,7 +98,7 @@ def plot_completion_hist(summary: pd.DataFrame, output_dir: Path) -> None:
 
 def plot_old_choice_curve(old_trials: pd.DataFrame, output_dir: Path) -> None:
     per_subject = (
-        old_trials.groupby(["participant_id", "old_value"], dropna=False)["old_chosen"]
+        old_trials.groupby(["prolific_id", "old_value"], dropna=False)["old_chosen"]
         .mean()
         .reset_index()
     )
@@ -117,7 +122,7 @@ def plot_old_choice_curve(old_trials: pd.DataFrame, output_dir: Path) -> None:
 
 def plot_old_choice_by_bin(old_trials: pd.DataFrame, output_dir: Path) -> None:
     per_subject = (
-        old_trials.groupby(["participant_id", "memorability_bin", "old_value"], dropna=False)["old_chosen"]
+        old_trials.groupby(["prolific_id", "memorability_bin", "old_value"], dropna=False)["old_chosen"]
         .mean()
         .reset_index()
     )

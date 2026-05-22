@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
-"""Extract non-zero participant bonuses from episodic choice task CSV files.
+"""Extract participant bonuses from episodic recognition task CSV files.
 
 Usage:
-    python episodic-choice-task/scripts/extract_bonus.py
-    python episodic-choice-task/scripts/extract_bonus.py /path/to/data_dir
+    python episodic-recognition-task/scripts/extract_bonus.py
+    python episodic-recognition-task/scripts/extract_bonus.py /path/to/data_dir
 
-Prints tab-separated `prolific_id<TAB>bonus` rows for easy copy/paste.
+Prints a tab-separated table with one row per participant:
+prolific_id, bonus, accuracy, chance-adjusted accuracy, correct trials, total trials,
+and source filename.
 """
 
 from __future__ import annotations
@@ -19,6 +21,10 @@ import pandas as pd
 SCRIPT_DIR = Path(__file__).resolve().parent
 TASK_DIR = SCRIPT_DIR.parent
 DEFAULT_DATA_DIR = TASK_DIR / "data"
+
+
+def truthy_series(series: pd.Series) -> pd.Series:
+    return series.astype(str).str.lower().isin(["true", "1", "yes"])
 
 
 def get_prolific_id(row: pd.Series) -> str | None:
@@ -35,8 +41,8 @@ def is_prolific_row(row: pd.Series) -> bool:
     return str(study_id).strip().lower() not in ("", "local", "nan")
 
 
-def extract_bonus_rows(data_dir: Path) -> list[tuple[str, float]]:
-    rows: list[tuple[str, float]] = []
+def extract_bonus_rows(data_dir: Path) -> list[dict[str, object]]:
+    rows: list[dict[str, object]] = []
 
     for csv_path in sorted(data_dir.glob("*.csv")):
         try:
@@ -49,7 +55,7 @@ def extract_bonus_rows(data_dir: Path) -> list[tuple[str, float]]:
             continue
 
         if "is_summary" in df.columns:
-            summary = df[df["is_summary"].astype(str).str.lower() == "true"].copy()
+            summary = df[truthy_series(df["is_summary"])].copy()
         else:
             summary = pd.DataFrame()
 
@@ -71,8 +77,15 @@ def extract_bonus_rows(data_dir: Path) -> list[tuple[str, float]]:
         except Exception:
             continue
 
-        if bonus > 0:
-            rows.append((prolific_id, bonus))
+        rows.append({
+            "prolific_id": prolific_id,
+            "bonus": bonus,
+            "accuracy": float(row.get("accuracy", 0) or 0),
+            "chance_adjusted_accuracy": float(row.get("chance_adjusted_accuracy", 0) or 0),
+            "n_correct": int(float(row.get("n_correct", 0) or 0)),
+            "n_trials": int(float(row.get("n_recognition_trials", 0) or 0)),
+            "source_file": csv_path.name,
+        })
 
     return rows
 
@@ -84,8 +97,17 @@ def main() -> int:
         return 1
 
     rows = extract_bonus_rows(data_dir)
-    for prolific_id, bonus in rows:
-        print(f"{prolific_id}\t{bonus:.2f}")
+    print("prolific_id\tbonus\taccuracy\tchance_adjusted_accuracy\tn_correct\tn_trials\tsource_file")
+    for row in rows:
+        print(
+            f"{row['prolific_id']}\t"
+            f"{row['bonus']:.2f}\t"
+            f"{row['accuracy']:.3f}\t"
+            f"{row['chance_adjusted_accuracy']:.3f}\t"
+            f"{row['n_correct']}\t"
+            f"{row['n_trials']}\t"
+            f"{row['source_file']}"
+        )
     return 0
 
 
