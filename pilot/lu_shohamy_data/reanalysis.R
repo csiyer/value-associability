@@ -1,6 +1,8 @@
 library(tidyverse)
 library(lme4)
 library(lmerTest)
+library(broom.mixed)
+library(psych)
 
 # data from pilot analysis https://osf.io/4ukgw/files/osfstorage?view_only=f09e5d80eb79414381e3db8bb05e55e8
 indep_df_proc <- read_csv("indep-df-proc.csv") |>
@@ -44,12 +46,13 @@ train_data <- train_data |>
   ) |>
   group_by(subj_id, old_item) |>
   mutate(
-    old_trial_id = lag(trial_id),
-    delay = trial_id - old_trial_id
+    enc_time_point = lag(trial_id),
+    delay = trial_id - enc_time_point
   ) |> group_by(subj_id) |>
   mutate(
     lag_delay = lag(delay),
-    lag_enc = delay - lag_delay - 1
+    lag_enc = delay - lag_delay - 1,
+    lag_choice_optimal = lag(choice_optimal)
   ) |>
   ungroup()
 
@@ -64,7 +67,6 @@ model_df <- train_data |>
 
 
 # Delay effect ------------------------------------------------------------
-
 
 sub_delay_df <- model_df |>
   filter(delay >= 9, delay <= 18) |>
@@ -119,7 +121,7 @@ sub_value_delay_df |>
 # Lag-CRP (for fun) -------------------------------------------------------
 
 sub_lag_enc_df <- model_df |>
-  filter(delay >= 9, delay <= 18, lag_delay >= 9, lag_delay <= 18, lag_enc >= -3, lag_enc <= 3) |>
+  filter(delay >= 9, delay <= 18, lag_delay >= 9, lag_delay <= 18, lag_enc >= -3, lag_enc <= 3, lag_choice_optimal) |>
   group_by(subj_id, lag_enc) |>
   summarize(
     p_choice_optimal = mean(choice_optimal, na.rm = TRUE)
@@ -131,7 +133,7 @@ sub_lag_enc_df |>
   theme_classic()
 
 sub_lag_enc_df <- model_df |>
-  filter(delay >= 9, delay <= 18, lag_delay >= 9, lag_delay <= 18, lag_enc >= -3, lag_enc <= 3) |>
+  filter(delay >= 9, delay <= 18, lag_delay >= 9, lag_delay <= 18, lag_enc >= -3, lag_enc <= 3, lag_choice_optimal) |>
   group_by(subj_id, lag_enc, choice_optimal) |>
   summarize(
     rt = mean(item_trial.rt, na.rm = TRUE)
@@ -149,34 +151,36 @@ m0 <- glmer(choice_optimal ~ 1 + (1 | subj_id), family = binomial, data = model_
 m1 <- glmer(choice_optimal ~ 1 + (1 | subj_id) + (1 | old_item), family = binomial, data = model_df)
 anova(m0, m1)
 
-m0a <- glmer(choice_optimal ~ old_optimal_c + (old_optimal_c || subj_id), family = binomial, data = model_df)
-m0b <- glmer(choice_optimal ~ old_optimal_c + (old_optimal_c | subj_id), family = binomial, data = model_df)
-m1a <- glmer(choice_optimal ~ old_optimal_c + (old_optimal_c | subj_id) + (1 | old_item), family = binomial, data = model_df)
-m1b <- glmer(choice_optimal ~ old_optimal_c + (old_optimal_c | subj_id) + (old_optimal_c || old_item), family = binomial, data = model_df)
-m1c <- glmer(choice_optimal ~ old_optimal_c + (old_optimal_c | subj_id) + (old_optimal_c | old_item), family = binomial, data = model_df)
-anova(m0a, m0b, m1a, m1b, m1c)
+m0 <- glmer(chosen_is_old ~ old_optimal_c + (old_optimal_c | subj_id), family = binomial, data = model_df)
+m1 <- glmer(chosen_is_old ~ old_optimal_c + (old_optimal_c | subj_id) + (1 | old_item), family = binomial, data = model_df)
+m2 <- glmer(chosen_is_old ~ old_optimal_c + (old_optimal_c | subj_id) + (old_optimal_c || old_item), family = binomial, data = model_df)
+m3 <- glmer(chosen_is_old ~ old_optimal_c + (old_optimal_c | subj_id) + (old_optimal_c | old_item), family = binomial, data = model_df)
+anova(m0, m1, m2, m3)
+anova(m0, m1)
 
 # RT models ---------------------------------------------------------------
 
-m0_rt <- lmer(item_trial.rt ~ choice_optimal * old_optimal_c + (choice_optimal_c * old_optimal_c | subj_id), data = model_df)
-m0_rt_ns1 <- lmer(item_trial.rt ~ choice_optimal * old_optimal_c + (choice_optimal_c * old_optimal_c || subj_id), data = model_df)
-m1_rt_ns1 <- lmer(item_trial.rt ~ choice_optimal * old_optimal_c + (choice_optimal_c * old_optimal_c || subj_id) + (choice_optimal_c * old_optimal_c || old_item), data = model_df)
-m1_rt_ns2 <- lmer(item_trial.rt ~ choice_optimal * old_optimal_c + (choice_optimal_c * old_optimal_c || subj_id) + (choice_optimal_c + old_optimal_c || old_item), data = model_df)
-m1_rt_ns3 <- lmer(item_trial.rt ~ choice_optimal * old_optimal_c + (choice_optimal_c * old_optimal_c || subj_id) + (choice_optimal_c || old_item), data = model_df)
+m0_rt <- lmer(item_trial.rt ~ choice_optimal_c * old_optimal_c + (choice_optimal_c * old_optimal_c | subj_id), data = model_df)
+m0_rt_ns1 <- lmer(item_trial.rt ~ choice_optimal_c * old_optimal_c + (choice_optimal_c * old_optimal_c || subj_id), data = model_df)
+m1_rt_ns1 <- lmer(item_trial.rt ~ choice_optimal_c * old_optimal_c + (choice_optimal_c * old_optimal_c || subj_id) + (choice_optimal_c * old_optimal_c || old_item), data = model_df)
+m1_rt_ns2 <- lmer(item_trial.rt ~ choice_optimal_c * old_optimal_c + (choice_optimal_c * old_optimal_c || subj_id) + (choice_optimal_c + old_optimal_c || old_item), data = model_df)
+m1_rt_ns3 <- lmer(item_trial.rt ~ choice_optimal_c * old_optimal_c + (choice_optimal_c * old_optimal_c || subj_id) + (choice_optimal_c || old_item), data = model_df)
 anova(m0_rt_ns1, m1_rt_ns3)
 
-m0_rt_ns2 <- lmer(item_trial.rt ~ choice_optimal * old_optimal_c + (choice_optimal_c + choice_optimal_c:old_optimal_c | subj_id) + (0 + old_optimal_c | subj_id), data = model_df)
-m1a_rt_ns1 <- lmer(item_trial.rt ~ choice_optimal * old_optimal_c + (choice_optimal_c + choice_optimal_c:old_optimal_c | subj_id) + (0 + old_optimal_c | subj_id) + (choice_optimal_c * old_optimal_c || old_item), data = model_df)
-m1a_rt_ns2 <- lmer(item_trial.rt ~ choice_optimal * old_optimal_c + (choice_optimal_c + choice_optimal_c:old_optimal_c | subj_id) + (0 + old_optimal_c | subj_id) + (choice_optimal_c + choice_optimal_c:old_optimal_c || old_item), data = model_df)
-m1a_rt_ns3 <- lmer(item_trial.rt ~ choice_optimal * old_optimal_c + (choice_optimal_c + choice_optimal_c:old_optimal_c | subj_id) + (0 + old_optimal_c | subj_id) + (choice_optimal_c || old_item), data = model_df)
-m1a_rt_ns4 <- lmer(item_trial.rt ~ choice_optimal * old_optimal_c + (choice_optimal_c + choice_optimal_c:old_optimal_c | subj_id) + (0 + old_optimal_c | subj_id) + (choice_optimal_c | old_item), data = model_df)
-anova(m0_rt_ns2, m1a_rt_ns3)
+m0a_rt_ns1 <- lmer(item_trial.rt ~ choice_optimal_c * old_optimal_c + (choice_optimal_c + choice_optimal_c:old_optimal_c | subj_id) + (0 + old_optimal_c | subj_id), data = model_df)
+m1a_rt_ns1 <- lmer(item_trial.rt ~ choice_optimal_c * old_optimal_c + (choice_optimal_c + choice_optimal_c:old_optimal_c | subj_id) + (0 + old_optimal_c | subj_id) + (choice_optimal_c * old_optimal_c || old_item), data = model_df)
+m1a_rt_ns2 <- lmer(item_trial.rt ~ choice_optimal_c * old_optimal_c + (choice_optimal_c + choice_optimal_c:old_optimal_c | subj_id) + (0 + old_optimal_c | subj_id) + (choice_optimal_c + choice_optimal_c:old_optimal_c || old_item), data = model_df)
+m1a_rt_ns3 <- lmer(item_trial.rt ~ choice_optimal_c * old_optimal_c + (choice_optimal_c + choice_optimal_c:old_optimal_c | subj_id) + (0 + old_optimal_c | subj_id) + (choice_optimal_c || old_item), data = model_df)
+m1a_rt_ns4 <- lmer(item_trial.rt ~ choice_optimal_c * old_optimal_c + (choice_optimal_c + choice_optimal_c:old_optimal_c | subj_id) + (0 + old_optimal_c | subj_id) + (choice_optimal_c | old_item), data = model_df)
+anova(m0a_rt_ns1, m1a_rt_ns3)
 
+m1a_rt_ns3_res <- m1a_rt_ns3 |>
+  tidy(effects = "ran_vals")
 
-
+m1a_rt_ns3_res |> filter(group == "old_item", term == "choice_optimal_c") |> arrange(estimate)
 
 resmem_scores <- read.csv('resmem_scores.csv')
-resmem_scores
+
 resmem_model_df <- model_df |> 
   left_join(resmem_scores, by = join_by(old_item == image_path)) |>
   mutate(
