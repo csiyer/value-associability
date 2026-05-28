@@ -616,9 +616,20 @@ function initTask(jsPsych, prolific_id) {
         button_label: "Enter fullscreen & begin"
     });
 
-    // Instructions + quiz (loops until all correct)
+    // Instructions + quiz (loops until all correct, max 3 attempts)
+    let quizAttempts = 0;
     timeline.push({
         timeline: [
+            {
+                timeline: [{
+                    type: jsPsychHtmlKeyboardResponse,
+                    stimulus: `<div class="instruction-container" style="text-align:center;">
+                        <p>You have failed the comprehension check! Press any key to go back to the instructions.</p>
+                    </div>`,
+                    choices: "ALL_KEYS",
+                }],
+                conditional_function() { return quizAttempts > 0; },
+            },
             {
                 type: jsPsychInstructions,
                 pages: buildInstructionPages(),
@@ -630,7 +641,23 @@ function initTask(jsPsych, prolific_id) {
         ],
         loop_function(data) {
             const quizResults = data.filter({ is_quiz_trial: true }).values();
-            return quizResults.length < 7 || !quizResults.every(d => d.correct);
+            const allCorrect = quizResults.length >= 7 && quizResults.every(d => d.correct);
+            if (allCorrect) return false;
+            quizAttempts++;
+            if (quizAttempts >= 3) {
+                jsPsych.abortExperiment(`
+                    <div class="instruction-container" style="text-align:center; max-width:640px; margin:80px auto;">
+                        <p>You have failed the comprehension check 3 times. Per Prolific policy, we ask that you return this study. Press the button below to be redirected back to Prolific, and please return this study. Thank you!</p>
+                        <p style="margin-top:32px;">
+                            <button onclick="window.location.href='https://app.prolific.com/submissions/complete?cc=NOCODE'" style="padding:12px 28px; background:#333; color:#fff; border-radius:8px; border:none; font-size:1em; font-weight:bold; cursor:pointer;">
+                                Redirect to Prolific
+                            </button>
+                        </p>
+                    </div>
+                `);
+                return false;
+            }
+            return true;
         }
     });
 
