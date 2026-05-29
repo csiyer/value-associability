@@ -19,6 +19,18 @@ import pandas as pd
 SCRIPT_DIR = Path(__file__).resolve().parent
 TASK_DIR = SCRIPT_DIR.parent
 DEFAULT_DATA_DIR = TASK_DIR / "data"
+AGGREGATE_CSV = DEFAULT_DATA_DIR / "episodic_choice_data.csv"
+
+
+def get_already_processed_ids(aggregate_csv: Path) -> set[str]:
+    if not aggregate_csv.exists():
+        return set()
+    try:
+        df = pd.read_csv(aggregate_csv, usecols=["participant_id"])
+        return set(df["participant_id"].dropna().astype(str))
+    except Exception as exc:
+        print(f"Warning: could not read {aggregate_csv.name}: {exc}", file=sys.stderr)
+        return set()
 
 
 def get_prolific_id(row: pd.Series) -> str | None:
@@ -35,10 +47,13 @@ def is_prolific_row(row: pd.Series) -> bool:
     return str(study_id).strip().lower() not in ("", "local", "nan")
 
 
-def extract_bonus_rows(data_dir: Path) -> list[tuple[str, float]]:
+def extract_bonus_rows(data_dir: Path, already_processed: set[str]) -> list[tuple[str, float]]:
     rows: list[tuple[str, float]] = []
+    aggregate_name = AGGREGATE_CSV.name
 
     for csv_path in sorted(data_dir.glob("*.csv")):
+        if csv_path.name == aggregate_name:
+            continue
         try:
             df = pd.read_csv(csv_path)
         except Exception as exc:
@@ -66,6 +81,9 @@ def extract_bonus_rows(data_dir: Path) -> list[tuple[str, float]]:
         if prolific_id is None:
             continue
 
+        if prolific_id in already_processed:
+            continue
+
         try:
             bonus = float(row["final_bonus"])
         except Exception:
@@ -83,9 +101,10 @@ def main() -> int:
         print(f"Data directory not found: {data_dir}", file=sys.stderr)
         return 1
 
-    rows = extract_bonus_rows(data_dir)
+    already_processed = get_already_processed_ids(AGGREGATE_CSV)
+    rows = extract_bonus_rows(data_dir, already_processed)
     for prolific_id, bonus in rows:
-        print(f"{prolific_id}\t{bonus:.2f}")
+        print(f"{prolific_id},{bonus:.2f}")
     return 0
 
 
