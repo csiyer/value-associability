@@ -105,7 +105,8 @@ def run_one_sim(p_high, min_delay, max_delay, rng):
 
     Returns
     -------
-    dict with n_old, type_counts, total_trials, and per-type details.
+    dict with n_old, type_counts, total_trials, per-type details,
+    and per-trial delay_H / delay_L lists for bias analysis.
     """
     # Balanced $0 / $1 values for the 152 encoding trials
     values = np.array([0] * (N_ENC // 2) + [1] * (N_ENC - N_ENC // 2))
@@ -116,6 +117,9 @@ def run_one_sim(p_high, min_delay, max_delay, rng):
 
     type_counts = [0, 0, 0, 0]
     trial_num   = 1   # absolute position in the final sequence (enc + ret)
+
+    delays_H = []   # delay_H for each inserted retrieval trial
+    delays_L = []   # delay_L for each inserted retrieval trial
 
     for enc_idx in range(N_ENC):
         # ── Process this encoding trial ──────────────────────────────────────
@@ -141,16 +145,27 @@ def run_one_sim(p_high, min_delay, max_delay, rng):
             type_counts[t - 1] += 1
             pool_H.remove(h)
             pool_L.remove(l)
+            delays_H.append(ret_num - h[0])
+            delays_L.append(ret_num - l[0])
             trial_num += 1   # old trial occupies ret_num
 
+    delays_H = np.array(delays_H) if delays_H else np.array([np.nan])
+    delays_L = np.array(delays_L) if delays_L else np.array([np.nan])
+    diff     = delays_H - delays_L   # positive → H waited longer
+
     return dict(
-        n_old        = sum(type_counts),
-        type_counts  = type_counts,
-        total_trials = trial_num - 1,
-        n_type1      = type_counts[0],
-        n_type2      = type_counts[1],
-        n_type3      = type_counts[2],
-        n_type4      = type_counts[3],
+        n_old          = sum(type_counts),
+        type_counts    = type_counts,
+        total_trials   = trial_num - 1,
+        n_type1        = type_counts[0],
+        n_type2        = type_counts[1],
+        n_type3        = type_counts[2],
+        n_type4        = type_counts[3],
+        # delay stats (per-participant means)
+        mean_delay_H   = float(np.nanmean(delays_H)),
+        mean_delay_L   = float(np.nanmean(delays_L)),
+        mean_delay_diff= float(np.nanmean(diff)),   # H − L; >0 means H has longer delay
+        std_delay_diff = float(np.nanstd(diff)),
     )
 
 
@@ -169,20 +184,31 @@ def run_sweep(p_high_values, n_sim, min_delay, max_delay, seed):
         n_total  = np.array([s['total_trials'] for s in sims])
         tc       = np.array([s['type_counts']  for s in sims])   # (n_sim, 4)
 
+        dH   = np.array([s['mean_delay_H']    for s in sims])
+        dL   = np.array([s['mean_delay_L']    for s in sims])
+        diff = np.array([s['mean_delay_diff'] for s in sims])   # H − L per participant
+
         rows.append(dict(
-            p_high         = p_high,
-            n_old_mean     = n_old.mean(),
-            n_old_std      = n_old.std(),
-            n_old_min      = n_old.min(),
-            n_old_max      = n_old.max(),
-            total_mean     = n_total.mean(),
-            old_pct_mean   = (n_old / n_total).mean() * 100,
-            type1_mean     = tc[:, 0].mean(),
-            type2_mean     = tc[:, 1].mean(),
-            type3_mean     = tc[:, 2].mean(),
-            type4_mean     = tc[:, 3].mean(),
-            type_min_mean  = tc.min(axis=1).mean(),
-            type_min_p10   = np.percentile(tc.min(axis=1), 10),
+            p_high          = p_high,
+            n_old_mean      = n_old.mean(),
+            n_old_std       = n_old.std(),
+            n_old_min       = n_old.min(),
+            n_old_max       = n_old.max(),
+            total_mean      = n_total.mean(),
+            old_pct_mean    = (n_old / n_total).mean() * 100,
+            type1_mean      = tc[:, 0].mean(),
+            type2_mean      = tc[:, 1].mean(),
+            type3_mean      = tc[:, 2].mean(),
+            type4_mean      = tc[:, 3].mean(),
+            type_min_mean   = tc.min(axis=1).mean(),
+            type_min_p10    = np.percentile(tc.min(axis=1), 10),
+            # delay bias
+            delay_H_mean    = dH.mean(),     # mean delay for H items across participants
+            delay_L_mean    = dL.mean(),     # mean delay for L items
+            delay_diff_mean = diff.mean(),   # H − L  (positive → H waits longer)
+            delay_diff_std  = diff.std(),    # between-participant SD of H−L
+            delay_diff_p5   = np.percentile(diff,  5),
+            delay_diff_p95  = np.percentile(diff, 95),
         ))
 
     return pd.DataFrame(rows)
@@ -212,6 +238,53 @@ def run_window_sweep(window_configs, p_high, n_sim, seed):
 # ══════════════════════════════════════════════════════════════════════════════
 # Plotting
 # ══════════════════════════════════════════════════════════════════════════════
+
+def plot_delay_bias(df, min_delay, max_delay, out_dir):
+    """
+    Two panels:
+      Left  – mean delay for H and L items as a function of p_high
+      Right – mean(delay_H − delay_L) with 5th/95th percentile band
+    A positive difference means H items sit in the pool longer before being
+    tested — a potential confound if memorability affects forgetting rate.
+    """
+    fig, axes = plt.subplots(1, 2, figsize=(11, 4))
+    fig.suptitle(
+        f"Delay bias: H vs L items on old/old trials  "
+        f"|  delay [{min_delay}–{max_delay}]  |  {N_SIM:,} sims/point",
+        fontsize=11)
+    p = df['p_high'].values
+
+    # Panel 1: raw delays
+    ax = axes[0]
+    ax.plot(p, df['delay_H_mean'], 'o-', color='C0', label='mean delay (H item)')
+    ax.plot(p, df['delay_L_mean'], 's-', color='C1', label='mean delay (L item)')
+    ax.axhline((min_delay + max_delay) / 2, color='gray', lw=0.8, ls='--',
+               label=f'window midpoint ({(min_delay+max_delay)/2:.0f})')
+    ax.set_xlabel('p(choose H in encoding)', fontsize=10)
+    ax.set_ylabel('Mean delay (trials)', fontsize=10)
+    ax.set_title('Mean delay by memorability bin', fontsize=10)
+    ax.legend(fontsize=8)
+
+    # Panel 2: difference H − L
+    ax = axes[1]
+    ax.fill_between(p, df['delay_diff_p5'], df['delay_diff_p95'],
+                    alpha=0.15, color='C3', label='5th–95th pct (between participants)')
+    ax.fill_between(p,
+                    df['delay_diff_mean'] - df['delay_diff_std'],
+                    df['delay_diff_mean'] + df['delay_diff_std'],
+                    alpha=0.30, color='C3', label='mean ± 1 SD')
+    ax.plot(p, df['delay_diff_mean'], 'o-', color='C3', label='mean(delay_H − delay_L)')
+    ax.axhline(0, color='k', lw=1.0, ls='--', label='no bias')
+    ax.set_xlabel('p(choose H in encoding)', fontsize=10)
+    ax.set_ylabel('delay_H − delay_L (trials)', fontsize=10)
+    ax.set_title('H − L delay difference\n(>0 → H waits longer → potential confound)', fontsize=10)
+    ax.legend(fontsize=8)
+
+    plt.tight_layout()
+    out = Path(out_dir) / f'sim_delay_bias_{min_delay}-{max_delay}.png'
+    fig.savefig(out, dpi=150); plt.show()
+    print(f"Figure saved → {out}")
+
 
 def plot_p_sweep(df, min_delay, max_delay, out_dir):
     fig, axes = plt.subplots(1, 3, figsize=(14, 4))
@@ -312,14 +385,23 @@ def main():
 
     df = run_sweep(p_high_values, args.n_sim, args.min_delay, args.max_delay, args.seed)
 
-    pd.set_option('display.float_format', '{:.1f}'.format)
-    pd.set_option('display.width', 140)
-    print("── p_high sweep ───────────────────────────────────────────────────────────")
+    pd.set_option('display.float_format', '{:.2f}'.format)
+    pd.set_option('display.width', 160)
+
+    print("── p_high sweep: trial yield & type balance ───────────────────────────────")
     print(df[['p_high','n_old_mean','n_old_std','n_old_min','total_mean','old_pct_mean',
               'type1_mean','type2_mean','type3_mean','type4_mean',
               'type_min_mean','type_min_p10']].to_string(index=False))
     print()
 
+    print("── p_high sweep: delay bias (H − L, positive = H waits longer) ────────────")
+    print(df[['p_high',
+              'delay_H_mean','delay_L_mean',
+              'delay_diff_mean','delay_diff_std',
+              'delay_diff_p5','delay_diff_p95']].to_string(index=False))
+    print()
+
+    plot_delay_bias(df, args.min_delay, args.max_delay, args.out_dir)
     plot_p_sweep(df, args.min_delay, args.max_delay, args.out_dir)
 
     if args.sweep_windows:
