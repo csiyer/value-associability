@@ -161,13 +161,21 @@ def main() -> int:
     )
     parser.add_argument(
         "--output",
-        default=str(DEFAULT_OUTPUT),
-        help="Path for the combined CSV.",
+        default=None,
+        help=(
+            "Path for the combined CSV. Defaults to episodic_choice_data.csv when "
+            "using the default data dir, or episodic_choice_data-<data_dir_name>.csv otherwise."
+        ),
     )
     args = parser.parse_args()
 
     data_dir = Path(args.data_dir).expanduser().resolve()
-    output_path = Path(args.output).expanduser().resolve()
+    if args.output is not None:
+        output_path = Path(args.output).expanduser().resolve()
+    elif data_dir == DEFAULT_DATA_DIR:
+        output_path = DEFAULT_OUTPUT
+    else:
+        output_path = DEFAULT_DATA_DIR / f"episodic_choice_data-{data_dir.name}.csv"
     output_path.parent.mkdir(parents=True, exist_ok=True)
 
     combined = combine_data(data_dir, output_path)

@@ -3,13 +3,15 @@
 
 Usage:
     python episodic-choice-task/scripts/extract_bonus.py
-    python episodic-choice-task/scripts/extract_bonus.py /path/to/data_dir
+    python episodic-choice-task/scripts/extract_bonus.py data/graded_value
+    python episodic-choice-task/scripts/extract_bonus.py data/graded_value --aggregate data/episodic_choice_data-graded_value.csv
 
-Prints tab-separated `prolific_id<TAB>bonus` rows for easy copy/paste.
+Prints comma-separated `prolific_id,bonus` rows for easy copy/paste.
 """
 
 from __future__ import annotations
 
+import argparse
 import sys
 from pathlib import Path
 
@@ -19,7 +21,6 @@ import pandas as pd
 SCRIPT_DIR = Path(__file__).resolve().parent
 TASK_DIR = SCRIPT_DIR.parent
 DEFAULT_DATA_DIR = TASK_DIR / "data"
-AGGREGATE_CSV = DEFAULT_DATA_DIR / "episodic_choice_data.csv"
 
 
 def get_already_processed_ids(aggregate_csv: Path) -> set[str]:
@@ -47,12 +48,12 @@ def is_prolific_row(row: pd.Series) -> bool:
     return str(study_id).strip().lower() not in ("", "local", "nan")
 
 
-def extract_bonus_rows(data_dir: Path, already_processed: set[str]) -> list[tuple[str, float]]:
+def extract_bonus_rows(data_dir: Path, aggregate_csv: Path) -> list[tuple[str, float]]:
+    already_processed = get_already_processed_ids(aggregate_csv)
     rows: list[tuple[str, float]] = []
-    aggregate_name = AGGREGATE_CSV.name
 
     for csv_path in sorted(data_dir.glob("*.csv")):
-        if csv_path.name == aggregate_name:
+        if csv_path.resolve() == aggregate_csv.resolve():
             continue
         try:
             df = pd.read_csv(csv_path)
@@ -96,13 +97,37 @@ def extract_bonus_rows(data_dir: Path, already_processed: set[str]) -> list[tupl
 
 
 def main() -> int:
-    data_dir = Path(sys.argv[1]).expanduser() if len(sys.argv) > 1 else DEFAULT_DATA_DIR
+    parser = argparse.ArgumentParser(description="Extract bonuses from episodic choice task data.")
+    parser.add_argument(
+        "data_dir",
+        nargs="?",
+        default=str(DEFAULT_DATA_DIR),
+        help="Directory containing participant CSV files.",
+    )
+    parser.add_argument(
+        "--aggregate",
+        default=None,
+        help=(
+            "Path to the combined aggregate CSV (used to skip already-processed participants). "
+            "Defaults to episodic_choice_data.csv for the default data dir, or "
+            "episodic_choice_data-<data_dir_name>.csv otherwise."
+        ),
+    )
+    args = parser.parse_args()
+
+    data_dir = Path(args.data_dir).expanduser().resolve()
     if not data_dir.exists():
         print(f"Data directory not found: {data_dir}", file=sys.stderr)
         return 1
 
-    already_processed = get_already_processed_ids(AGGREGATE_CSV)
-    rows = extract_bonus_rows(data_dir, already_processed)
+    if args.aggregate is not None:
+        aggregate_csv = Path(args.aggregate).expanduser().resolve()
+    elif data_dir == DEFAULT_DATA_DIR:
+        aggregate_csv = DEFAULT_DATA_DIR / "episodic_choice_data.csv"
+    else:
+        aggregate_csv = DEFAULT_DATA_DIR / f"episodic_choice_data-{data_dir.name}.csv"
+
+    rows = extract_bonus_rows(data_dir, aggregate_csv)
     for prolific_id, bonus in rows:
         print(f"{prolific_id},{bonus:.2f}")
     return 0
