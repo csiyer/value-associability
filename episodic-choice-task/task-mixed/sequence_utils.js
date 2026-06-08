@@ -196,8 +196,6 @@
                 delay_h:                 delayH,
                 delay_l:                 delayL,
                 left_is_high:            leftIsH,
-                fallback_hh_side:        bestHH.spec.fallback_side,
-                fallback_ll_side:        bestLL.spec.fallback_side,
             });
             trialNum++;
             return true;
@@ -216,30 +214,28 @@
                 const spec = hhSpecs[hhIdx];
                 poolHH.push({ seq_num: trialNum, value: spec.shared_value, spec });
                 trials.push({
-                    trial_number:  trialNum,
-                    block_index:   getBlockIndex(trialNum),
-                    trial_type:    'new',
-                    enc_type:      'HH',
-                    hh_index:      hhIdx,
-                    left_stimulus: spec.left_stimulus,
+                    trial_number:   trialNum,
+                    block_index:    getBlockIndex(trialNum),
+                    trial_type:     'new',
+                    enc_type:       'HH',
+                    hh_index:       hhIdx,
+                    left_stimulus:  spec.left_stimulus,
                     right_stimulus: spec.right_stimulus,
-                    shared_value:  spec.shared_value,
-                    fallback_side: spec.fallback_side,
+                    shared_value:   spec.shared_value,
                 });
                 hhIdx++;
             } else {
                 const spec = llSpecs[llIdx];
                 poolLL.push({ seq_num: trialNum, value: spec.shared_value, spec });
                 trials.push({
-                    trial_number:  trialNum,
-                    block_index:   getBlockIndex(trialNum),
-                    trial_type:    'new',
-                    enc_type:      'LL',
-                    ll_index:      llIdx,
-                    left_stimulus: spec.left_stimulus,
+                    trial_number:   trialNum,
+                    block_index:    getBlockIndex(trialNum),
+                    trial_type:     'new',
+                    enc_type:       'LL',
+                    ll_index:       llIdx,
+                    left_stimulus:  spec.left_stimulus,
                     right_stimulus: spec.right_stimulus,
-                    shared_value:  spec.shared_value,
-                    fallback_side: spec.fallback_side,
+                    shared_value:   spec.shared_value,
                 });
                 llIdx++;
             }
@@ -277,7 +273,6 @@
      *   enc_type       – 'HH' or 'LL'
      *   left_stimulus / right_stimulus  – stimulus objects
      *   shared_value   – $0 or $1
-     *   fallback_side  – 'left'|'right' (used if participant misses the trial)
      *
      * Retrieval trials  (trial_type: 'old'):
      *   ret_type               – 1–4
@@ -286,7 +281,6 @@
      *   h_value / l_value      – values of H and L items
      *   delay_h / delay_l      – lags in sequence positions (both ≈ equal)
      *   left_is_high           – whether left card is the H item
-     *   fallback_hh_side / fallback_ll_side – sides to show if source was missed
      */
     function buildSequencePlan(params, metadataRows, randomFn = Math.random) {
         const rng = makeRandomHelpers(randomFn);
@@ -328,7 +322,6 @@
                 left_stimulus:  leftIsFirst ? s1 : s2,
                 right_stimulus: leftIsFirst ? s2 : s1,
                 shared_value:   hhValues[i],
-                fallback_side:  rng.sample(['left', 'right'], 1)[0],
             });
         }
 
@@ -341,7 +334,6 @@
                 left_stimulus:  leftIsFirst ? s1 : s2,
                 right_stimulus: leftIsFirst ? s2 : s1,
                 shared_value:   llValues[i],
-                fallback_side:  rng.sample(['left', 'right'], 1)[0],
             });
         }
 

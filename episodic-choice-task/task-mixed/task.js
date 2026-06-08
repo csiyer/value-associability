@@ -329,29 +329,15 @@ function buildRetrievalChoiceTrial(jsPsych, trialSpec) {
         data: { phase: "choice", is_choice_trial: true },
 
         on_start() {
-            // Retrieve H card (from HH encoding trial)
-            const hhChoice  = TASK_STATE.chosenByEncTrial.get(trialSpec.source_hh_trial_number);
-            const hhEncSpec = TASK_STATE.trialSpecByNumber.get(trialSpec.source_hh_trial_number);
-            let hCard;
-            if (hhChoice) {
-                hCard = Object.assign({}, hhChoice.card, { is_old: true });
-            } else {
-                const stim = trialSpec.fallback_hh_side === "left"
-                    ? hhEncSpec.left_stimulus : hhEncSpec.right_stimulus;
-                hCard = buildCardFromStimulus(stim, trialSpec.h_value, true);
-            }
+            // Retrieve H card (from HH encoding trial) — always present since on_finish
+            // records every encoding trial, even missed ones (via autoSide).
+            const hhChoice = TASK_STATE.chosenByEncTrial.get(trialSpec.source_hh_trial_number);
+            const llChoice = TASK_STATE.chosenByEncTrial.get(trialSpec.source_ll_trial_number);
+            if (!hhChoice) throw new Error(`No encoding record for HH trial ${trialSpec.source_hh_trial_number}`);
+            if (!llChoice) throw new Error(`No encoding record for LL trial ${trialSpec.source_ll_trial_number}`);
 
-            // Retrieve L card (from LL encoding trial)
-            const llChoice  = TASK_STATE.chosenByEncTrial.get(trialSpec.source_ll_trial_number);
-            const llEncSpec = TASK_STATE.trialSpecByNumber.get(trialSpec.source_ll_trial_number);
-            let lCard;
-            if (llChoice) {
-                lCard = Object.assign({}, llChoice.card, { is_old: true });
-            } else {
-                const stim = trialSpec.fallback_ll_side === "left"
-                    ? llEncSpec.left_stimulus : llEncSpec.right_stimulus;
-                lCard = buildCardFromStimulus(stim, trialSpec.l_value, true);
-            }
+            const hCard = Object.assign({}, hhChoice.card, { is_old: true });
+            const lCard = Object.assign({}, llChoice.card, { is_old: true });
 
             const leftCard  = trialSpec.left_is_high ? hCard : lCard;
             const rightCard = trialSpec.left_is_high ? lCard : hCard;
@@ -370,8 +356,8 @@ function buildRetrievalChoiceTrial(jsPsych, trialSpec) {
                 delay_l:                trialSpec.delay_l,
                 source_hh_trial_number: trialSpec.source_hh_trial_number,
                 source_ll_trial_number: trialSpec.source_ll_trial_number,
-                hh_source_chosen:       hhChoice ? hhChoice.source_was_chosen : false,
-                ll_source_chosen:       llChoice ? llChoice.source_was_chosen : false,
+                hh_source_chosen:       hhChoice.source_was_chosen,
+                ll_source_chosen:       llChoice.source_was_chosen,
                 left:                   leftCard,
                 right:                  rightCard,
             };
@@ -388,19 +374,14 @@ function buildRetrievalChoiceTrial(jsPsych, trialSpec) {
             const responseKey = (data.response || "").toLowerCase();
             handleChoiceResponse(data, trial, responseKey);
 
-            // Which bin should be chosen? Defined when H and L have different values.
-            let optimalOldChoice = null;
-            if (trial.h_value !== trial.l_value) {
-                optimalOldChoice = trial.h_value > trial.l_value ? "high" : "low";
-            }
-
             Object.assign(data, {
                 trial_number:           trial.trial_number,
                 block_index:            trial.block_index,
                 trial_type:             "old",
                 old_trial:              1,
                 ret_type:               trial.ret_type,
-                optimal_old_choice:     optimalOldChoice,
+                // 0/1 for uneven types (1 & 2); null for even types (3 & 4) and new trials
+                optimal_old_choice:     data.optimal_choice,
                 source_hh_trial_number: trial.source_hh_trial_number,
                 source_ll_trial_number: trial.source_ll_trial_number,
                 delay_h:                trial.delay_h,

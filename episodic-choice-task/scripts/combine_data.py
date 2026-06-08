@@ -31,32 +31,51 @@ KEEPCOLS = [
     "trial_number",
     "block_index",
     "old_trial",
+    # ── old-task columns ────────────────────────────────────────
     "memorability_bin",
     "encoding_trial",
     "delay",
     "old_side",
     "old_value",
+    "left_is_old",
+    "right_is_old",
+    "repeat_source_was_chosen",
+    "old_chosen",
+    # ── shared columns ──────────────────────────────────────────
     "left_image_name",
     "left_image_path",
     "left_memorability",
     "left_value",
-    "left_is_old",
     "right_image_name",
     "right_image_path",
     "right_memorability",
     "right_value",
-    "right_is_old",
     "chosen_side",
     "chosen_image_name",
     "chosen_image_path",
     "chosen_value",
     "reward",
-    "repeat_source_was_chosen",
     "response_key",
     "choice_missed",
-    "old_chosen",
     "optimal_old_choice",
+    "optimal_choice",
     "final_bonus",
+    # ── mixed-memorability columns ──────────────────────────────
+    "enc_type",
+    "shared_value",
+    "chosen_mem_bin",
+    "ret_type",
+    "left_mem_bin",
+    "right_mem_bin",
+    "left_is_high",
+    "h_value",
+    "l_value",
+    "delay_h",
+    "delay_l",
+    "source_hh_trial_number",
+    "source_ll_trial_number",
+    "hh_source_chosen",
+    "ll_source_chosen",
 ]
 
 
@@ -121,6 +140,23 @@ def compute_attention_check_correct(df: pd.DataFrame) -> pd.Series:
 
 
 def compute_optimal_old_choice(df: pd.DataFrame) -> pd.Series:
+    # Mixed-memorability task writes optimal_old_choice as 0/1/null.
+    # Older pilots wrote it as "high"/"low"/null strings; normalise those to 0/1
+    # using the optimal_choice column (already 0/1) that was always present.
+    if "optimal_old_choice" in df:
+        existing = df["optimal_old_choice"].dropna()
+        if len(existing) > 0:
+            as_numeric = pd.to_numeric(existing, errors="coerce")
+            if as_numeric.notna().all():
+                # Already numeric (0/1) — keep as-is
+                return pd.to_numeric(df["optimal_old_choice"], errors="coerce")
+            else:
+                # Legacy string format ("high"/"low") — replace with optimal_choice (0/1)
+                if "optimal_choice" in df:
+                    return pd.to_numeric(df["optimal_choice"], errors="coerce")
+                return df["optimal_old_choice"]  # fallback: keep strings if no numeric version
+
+    # Old-task format: recompute from old_value and old_chosen
     if "old_value" not in df or "old_chosen" not in df:
         return pd.Series(pd.NA, index=df.index, dtype="Float64")
 
