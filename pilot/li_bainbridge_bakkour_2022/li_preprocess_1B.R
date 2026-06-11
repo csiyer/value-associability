@@ -79,4 +79,4 @@ choice.z <- choice.z |>
   )
 
 choice.low.v = choice.z %>% filter(rank.v <= median.v)
-choice.high.v = choice.z %>% filter(rank.v > median.v)
+choice.high.v <- choice.z |> filter(rank.v > median.v)
