@@ -149,27 +149,16 @@ m1_log_rt_chosen_low.v_ns1 <- lmer(log_rt ~ delta.mem.chosen * scale(SumValue) +
                                      (1 | stim_right),
                                    data = choice.low.v.w)
 
-m2_right_all_ns1 <- glmer(choseright ~ delta.mem * scale(SumValue) + z.delta.value * scale(SumMem) +
-                            (delta.mem * scale(SumValue) + z.delta.value * scale(SumMem) || ID) + (1 | stim_left) +
+m2_right_all_ns1 <- glmer(choseright ~ delta.mem * scale(SumValue) + z.delta.value * SumMem +
+                            (delta.mem * scale(SumValue) + z.delta.value * SumMem || ID) + (1 | stim_left) +
                             (1 | stim_right),
                           family = "binomial",
                           data = choice.test)
-m2_right_dv_bin_all_ns1 <- glmer(choseright ~ delta.mem * scale(SumValue) + dv_bin * scale(SumMem) +
-                                   (delta.mem * scale(SumValue) + dv_bin * scale(SumMem) || ID) + (1 | stim_left) +
+m2_right_dv_bin_all_ns1 <- glmer(choseright ~ delta.mem * scale(SumValue) + dv_bin * SumMem +
+                                   (delta.mem * scale(SumValue) + dv_bin * SumMem || ID) + (1 | stim_left) +
                                    (1 | stim_right),
                                  family = "binomial",
                                  data = choice.test)
-
-m2_right_high.v_ns1 <- glmer(choseright ~ delta.mem * scale(SumValue) + z.delta.value * scale(SumMem) +
-                               (delta.mem * scale(SumValue) + z.delta.value * scale(SumMem) || ID) + (1 | stim_left) +
-                               (1 | stim_right),
-                             family = "binomial",
-                             data = choice.high.v.w)
-m2_right_dv_bin_high.v_ns1 <- glmer(choseright ~ delta.mem * scale(SumValue) + dv_bin * scale(SumMem) +
-                                      (delta.mem * scale(SumValue) + dv_bin * scale(SumMem) || ID) + (1 | stim_left) +
-                                      (1 | stim_right),
-                                    family = "binomial",
-                                    data = choice.high.v.w)
 
 m2_log_rt_all_ns1 <- lmer(log_rt ~ delta.mem.v.alt * scale(SumValue) + scale(abs.delta.v.z) * scale(SumMem) + 
                             (delta.mem.v.alt * scale(SumValue) + scale(abs.delta.v.z) * scale(SumMem) || ID) + (1 | stim_left) +
