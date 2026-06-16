@@ -60,7 +60,7 @@ delta.mem.choice.sub.df |>
   stat_summary(geom = "line", position = position_dodge(width = 0.2)) +
   labs(y = "P(Right)", color = "Overall Value") +
   scale_x_discrete(
-    "Difference in Memorability (Right - Left)",
+    bquote(paste(Delta, "Memorability (Right - Left)")),
     labels = c(
       "1" = "Low",
       "2" = "",
@@ -76,6 +76,7 @@ delta.mem.rt.sub.df <- choice.low.v |>
   mutate(
     delta.mem.z = delta.mem / sd(delta.mem),
     abs.delta.mem.5 = ordered(cut(abs(delta.mem.z), breaks = abs_qnorm_breaks5, labels = FALSE)),
+    # bin.mem = ntile(abs.mem, 5), # From Li code
     SumValue3 = ordered(ntile(SumValue, 3))
   ) |>
   group_by(ID, abs.delta.mem.5, SumValue3) |>
@@ -90,7 +91,7 @@ delta.mem.rt.sub.df |>
   stat_summary(geom = "line", position = position_dodge(width = 0.2)) +
   labs(y = "RT", color = "Overall Value") +
   scale_x_discrete(
-    "Abs(Difference in Memorability)",
+    bquote(paste("|", Delta, "Memorability|")),,
     labels = c(
       "1" = "Low",
       "2" = "",
@@ -140,8 +141,8 @@ m1_right_low.v_ns1 <- glmer(choseright ~ delta.mem * scale(SumValue) +
                              data = choice.low.v)
 
 # assume that difference in value is actually 0 so sign of dM is potentially wrong.
-m1_log_rt_low.v_ns1 <- lmer(log_rt ~ scale(abs.delta.mem) * scale(SumValue) + 
-                          (scale(abs.delta.mem) * scale(SumValue) || ID) + (1 | stim_left) +
+m1_log_rt_low.v_ns1 <- lmer(log_rt ~ scale(abs.mem) * scale(SumValue) + 
+                          (scale(abs.mem) * scale(SumValue) || ID) + (1 | stim_left) +
                           (1 | stim_right),
                         data = choice.low.v)
 m1_log_rt_chosen_low.v_ns1 <- lmer(log_rt ~ delta.mem.chosen * scale(SumValue) + 

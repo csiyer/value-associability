@@ -52,13 +52,13 @@ choice.test = merge(word.mem, choice.test, by.x = 'word', by.y = 'stim_right') %
   dplyr::rename(stim_right = word, mem.r = word.mem)
 
 choice.test = choice.test %>% mutate(
-  delta.mem = as.numeric(mem.r) - as.numeric(mem.l)) %>% 
-  mutate(abs.mem = abs(delta.mem)) %>% 
-  mutate(chosehigh.mem = case_when(
+  delta.mem = as.numeric(mem.r) - as.numeric(mem.l),
+  abs.mem = abs(delta.mem),
+  chosehigh.mem = case_when(
     choseright == 1 & delta.mem >=0 ~ 1, 
     choseright == 0 & delta.mem <0 ~ 1, 
     choseright == 1 & delta.mem <0 ~ 0,
-    choseright == 0 & delta.mem >=0 ~ 0 ))
+    choseright == 0 & delta.mem >=0 ~ 0))
 
 rating.w_sel <- rating.w |> 
   select(ID, word, z)
@@ -76,10 +76,9 @@ choice.test <- choice.test |>
     z.value.l = z.value.l[,1],
     abs.delta.v.z = abs.delta.v.z[,1],
     SumValue = z.value.r + z.value.l,
-    abs.delta.mem = abs(delta.mem),
     delta.mem.v = case_when(delta.value > 0 ~ delta.mem, 
                             delta.value < 0 ~ -delta.mem,
-                            delta.value == 0 ~ abs.delta.mem),
+                            delta.value == 0 ~ abs.mem),
     z.value.chosen = if_else(choseright == 1, z.value.r, z.value.l),
     z.value.unchosen = if_else(choseright == 1, z.value.l, z.value.r),
     mem_chosen = if_else(choseright == 1, mem.r, mem.l),
@@ -103,7 +102,7 @@ choice.test <- choice.test |>
     dv_type = if_else(rank.v <= median.v, "low", "high"),
     dv_type_c = if_else(rank.v <= median.v, -1, 1),
     dv_bin = if_else(rank.v <= median.v, 0, sign(z.delta.value)),
-    delta.mem.v.alt = if_else(rank.v <= median.v, abs.delta.mem, delta.mem.v)
+    delta.mem.v.alt = if_else(rank.v <= median.v, abs.mem, delta.mem.v)
   )
 
 choice.low.v.w = choice.test %>% filter(rank.v <= median.v)

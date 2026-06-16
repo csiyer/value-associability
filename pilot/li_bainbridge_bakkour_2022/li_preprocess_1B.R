@@ -15,7 +15,8 @@ choice = choice %>% filter(rt != "null") %>%
     delta.mem = as.numeric(mem_right) - as.numeric(mem_left),
     delta.value = as.numeric(value_right) - as.numeric(value_left),
     rt = as.numeric(rt),
-    choseright = case_when(key_press == 75 ~ 1, key_press == 74 ~ 0))
+    choseright = case_when(key_press == 75 ~ 1, key_press == 74 ~ 0),
+    abs.mem = abs(delta.mem))
 
 choice = choice %>% filter(rt >= 300)
 
@@ -47,10 +48,9 @@ choice.z <- choice.z |>
     z.value.l = z.value.l[,1],
     abs.delta.v.z = abs.delta.v.z[,1],
     SumValue = z.value.r + z.value.l,
-    abs.delta.mem = abs(delta.mem),
     delta.mem.v = case_when(delta.value > 0 ~ delta.mem, 
                    delta.value < 0 ~ -delta.mem,
-                   delta.value == 0 ~ abs.delta.mem),
+                   delta.value == 0 ~ abs.mem),
     z.value.chosen = if_else(choseright == 1, z.value.r, z.value.l),
     z.value.unchosen = if_else(choseright == 1, z.value.l, z.value.r),
     mem_chosen = if_else(choseright == 1, mem_right, mem_left),
@@ -75,7 +75,7 @@ choice.z <- choice.z |>
     dv_type = if_else(rank.v <= median.v, "low", "high"),
     dv_type_c = if_else(rank.v <= median.v, -1, 1),
     dv_bin = if_else(rank.v <= median.v, 0, sign(z.delta.value)),
-    delta.mem.v.alt = if_else(rank.v <= median.v, abs.delta.mem, delta.mem.v)
+    delta.mem.v.alt = if_else(rank.v <= median.v, abs.mem, delta.mem.v)
   )
 
 choice.low.v = choice.z %>% filter(rank.v <= median.v)
