@@ -4,6 +4,17 @@ function renderSequenceSimulation() {
     const summaryNode = document.getElementById("summary");
     const tableBody = document.getElementById("trial-table");
 
+    const delaysByBin = { high: [], mid: [], low: [] };
+    plan.trials.forEach((trial) => {
+        if (trial.trial_type === "old") delaysByBin[trial.memorability_bin].push(trial.delay);
+    });
+    summary.mean_delay_by_bin = Object.fromEntries(
+        Object.entries(delaysByBin).map(([bin, delays]) => [
+            bin,
+            delays.length ? +(delays.reduce((a, b) => a + b, 0) / delays.length).toFixed(3) : null,
+        ])
+    );
+
     summaryNode.textContent = JSON.stringify(summary, null, 2);
     tableBody.innerHTML = "";
 

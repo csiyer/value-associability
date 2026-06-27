@@ -1,5 +1,5 @@
 const params = {
-    experiment_id: "mixed_memorability_6-5-26",
+    experiment_id: "mixed_memorability",
 
     // Trial structure (computed by buildSequencePlan; shown here for reference)
     //   78 H/H encoding + 78 L/L encoding + 78 old/old = 234 trials total

@@ -8,3 +8,20 @@ This repo contains the following:
 - `pilot/pilot-mem-inc-ep`: task code and pilot data for an incremental-episodic task using (1) high- and low-memorability object images, and (2) distinctive vs. non-distinctive objects to modulate episodic memory strength.
 - `pilot/stimuli` contains the stimuli used in these pilot experiments.
 - `stimuli` contains stimuli sampled from the THINGS dataset with high, medium, and low image memorability. Rebuild this folder with `select_stimuli.py`.
+
+
+Currently, we're using the following exclusion criteria:
+1. Pass AI checks
+2. Pass all attention checks
+3. Old trial optimal performance passes t-test above chance.
+
+With these, we currently have this many participants for our 3 key pilots
+1. Main: n = 65ish
+2. Mixed-memorability: n = 50ish
+3. Matched-memorability: n = 0
+
+
+
+Miscellaneous notes:
+
+- on 6/26/26, we realized we wanted to match delays more tightly and implemented new sequencing tools.
