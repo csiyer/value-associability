@@ -353,6 +353,66 @@ function buildQuizTrials() {
     ];
 }
 
+// ═══════════════════════════════════════════════════
+//  Turnstile Configuration
+// ═══════════════════════════════════════════════════
+const TURNSTILE_SITE_KEY = '0x4AAAAAADuq2AVsFg4ANjrs';
+const TURNSTILE_WORKER_URL = 'https://turnstile-verify.csiyer.workers.dev';
+
+// ═══════════════════════════════════════════════════
+//  Turnstile Verification Function
+// ═══════════════════════════════════════════════════
+function initTurnstile(jsPsych) {
+    var checkInterval = setInterval(function() {
+        if (typeof turnstile !== 'undefined' && document.getElementById('turnstile-container')) {
+            clearInterval(checkInterval);
+            turnstile.render('#turnstile-container', {
+                sitekey: TURNSTILE_SITE_KEY,
+                theme: 'dark',
+                callback: function(token) {
+                    var statusEl = document.getElementById('turnstile-status');
+                    statusEl.innerHTML = 'Verifying...';
+                    statusEl.className = 'turnstile-status';
+
+                    fetch(TURNSTILE_WORKER_URL, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ token: token }),
+                    })
+                    .then(function(res) { return res.json(); })
+                    .then(function(data) {
+                        if (data.success) {
+                            statusEl.innerHTML = 'Verified! Continuing...';
+                            statusEl.className = 'turnstile-status turnstile-success';
+                            jsPsych.data.get().push({
+                                trial_type: 'turnstile_verification',
+                                verified: true,
+                                timestamp: new Date().toISOString(),
+                            });
+                            setTimeout(function() {
+                                jsPsych.finishTrial({ turnstile_passed: true });
+                            }, 2000);
+                        } else {
+                            statusEl.innerHTML = 'Verification failed. Please try again.';
+                            statusEl.className = 'turnstile-status turnstile-fail';
+                            turnstile.reset('#turnstile-container');
+                        }
+                    })
+                    .catch(function(err) {
+                        statusEl.innerHTML = 'Network error. Please refresh and try again.';
+                        statusEl.className = 'turnstile-status turnstile-fail';
+                    });
+                },
+                'error-callback': function() {
+                    var statusEl = document.getElementById('turnstile-status');
+                    statusEl.innerHTML = 'Verification error. Please refresh the page.';
+                    statusEl.className = 'turnstile-status turnstile-fail';
+                }
+            });
+        }
+    }, 300);
+}
+
 // ─── Trial builders ───────────────────────────────────────────────────────────
 function buildChoiceTrial(jsPsych, trialSpec) {
     return {
@@ -560,8 +620,21 @@ function buildBreakTrial() {
 // ─── Main init ────────────────────────────────────────────────────────────────
 function initTask(jsPsych, prolific_id) {
     const timeline = [];
+
+    // Bot detection
+    timeline.push({
+        type: jsPsychHtmlKeyboardResponse,
+        stimulus: '<div class="turnstile-page">' +
+            '<div class="turnstile-widget"><div id="turnstile-container"></div></div>' +
+            '<div id="turnstile-status" class="turnstile-status"></div>' +
+            '</div>',
+        choices: "NO_KEYS",
+        trial_duration: null,
+        response_ends_trial: false,
+        on_load: function() { initTurnstile(jsPsych); },
+    });
     const stimulusRows = loadStimulusMetadata();
-    const plan = EpisodicChoiceSequence.buildSequencePlan(params, stimulusRows);
+    const plan = EpisodicChoiceSequence.buildSequencePlan(params, stimulusRows, Math.random, prolific_id);
     const summary = EpisodicChoiceSequence.summarizePlan(plan);
     // console.log(plan)
     // console.log(summary)

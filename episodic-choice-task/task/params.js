@@ -1,5 +1,5 @@
 const params = {
-    experiment_id: "original_pilot",
+    experiment_id: "main_task",
 
     n_trials: 312,
     n_blocks: 3,
