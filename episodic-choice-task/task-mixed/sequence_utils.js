@@ -22,55 +22,50 @@
         return Math.max(min, Math.min(max, value));
     }
 
-    function mean(values) {
-        return values.reduce((s, v) => s + v, 0) / values.length;
-    }
-
-    function decimalScale(values) {
-        const decimals = values.map(v => {
-            const t = String(v); const d = t.indexOf(".");
-            return d === -1 ? 0 : t.length - d - 1;
+    // Assigns left_is_high to old trials so that, within each retrieval_type x
+    // "which side has the longer delay" group, left/right is balanced. Because
+    // retrieval_type fixes h_value/l_value, and each group here is split further
+    // by which side is longer, this balances left/right simultaneously against
+    // value and delay-length -- same spirit as the matched-memorability
+    // assignBalancedLeftRight, generalized to 4 retrieval types instead of a
+    // single (bin, value) pairing. Group sizes are small (roughly 5-10), so the
+    // split can be off by at most 1 trial per group.
+    function assignBalancedLeftRight(oldTrials, rng) {
+        const groups = {};
+        oldTrials.forEach(t => {
+            const highLonger = t.delay_h > t.delay_l;
+            const key = `${t.ret_type}_${highLonger}`;
+            (groups[key] = groups[key] || []).push(t);
         });
-        return 10 ** Math.max(0, ...decimals);
+
+        Object.values(groups).forEach(group => {
+            const shuffled = rng.shuffle(group);
+            const half = Math.floor(shuffled.length / 2);
+            shuffled.forEach((t, idx) => {
+                t.left_is_high = idx < half;
+            });
+        });
     }
 
-    function findClosestRemainderCombo(valuesInt, remainder, targetSum) {
-        let bestCombo = null, bestDistance = Infinity;
-        function recurse(startIndex, remainingCount, remainingTarget, current) {
-            if (remainingCount === 0) {
-                const distance = Math.abs(remainingTarget);
-                if (distance < bestDistance) { bestDistance = distance; bestCombo = current.slice(); }
-                return;
-            }
-            for (let i = startIndex; i < valuesInt.length; i++) {
-                current.push(i);
-                recurse(i, remainingCount - 1, remainingTarget - valuesInt[i], current);
-                current.pop();
-            }
+    // Simple string hash (djb2) -> non-negative int, for deterministic-per-participant
+    // selection among the precomputed sequence structures.
+    function hashString(str) {
+        let hash = 5381;
+        for (let i = 0; i < str.length; i++) {
+            hash = ((hash << 5) + hash + str.charCodeAt(i)) | 0;
         }
-        recurse(0, remainder, targetSum, []);
-        return bestCombo;
+        return Math.abs(hash);
     }
 
-    function buildBalancedValueList(n, possibleValues, rng) {
-        if (n <= 0) return [];
-        const sorted = possibleValues.slice().sort((a, b) => a - b);
-        const k = sorted.length;
-        const base = Math.floor(n / k);
-        const remainder = n % k;
-        const counts = Array(k).fill(base);
-        if (remainder > 0) {
-            const scale = decimalScale(sorted);
-            const scaled = sorted.map(v => Math.round(v * scale));
-            const targetExtraSum = Math.round(remainder * mean(sorted) * scale);
-            const combo = findClosestRemainderCombo(scaled, remainder, targetExtraSum);
-            if (!combo) throw new Error("Unable to build balanced value list.");
-            combo.forEach(idx => counts[idx]++);
-        }
-        const expanded = [];
-        counts.forEach((count, idx) => { for (let i = 0; i < count; i++) expanded.push(sorted[idx]); });
-        return rng.shuffle(expanded);
-    }
+    // Numeric ret_type codes retained for backward-compat with existing analysis
+    // scripts (episodic-choice-task/analysis.R / .ipynb expect 1-4):
+    //   1: H=$0, L=$1     2: H=$1, L=$0     3: both $0     4: both $1
+    const RET_TYPE_CODES = {
+        uneven_h0: 1,
+        uneven_h1: 2,
+        even_0:    3,
+        even_1:    4,
+    };
 
     // ── Stimulus normalization ────────────────────────────────────────────────
     function normalizeStimulusRows(rows, params) {
@@ -80,269 +75,136 @@
         return rows.map(row => {
             const relPath = row.image_path || `images/${row.image_name}`;
             return {
-                image_name:             row.image_name,
-                image_path:             `${params.stimuli_dir}/${relPath}`,
-                relative_image_path:    relPath,
-                things_file_path:       row.things_file_path,
-                things_memorability:    Number(row.memorability_score ?? row.things_memorability),
-                things_category:        row.things_category,
+                image_name:              row.image_name,
+                image_path:              `${params.stimuli_dir}/${relPath}`,
+                relative_image_path:     relPath,
+                things_file_path:        row.things_file_path,
+                things_memorability:     Number(row.memorability_score ?? row.things_memorability),
+                things_category:         row.things_category,
                 memorability_percentile: Number(row.memorability_percentile),
-                category27_label:       row.category27_label,
-                category27_id:          Number(row.category27_id),
-                concept_name:           row.concept_name || row.concept_id,
-                memorability_bin:       row.memorability_bin,
+                category27_label:        row.category27_label,
+                category27_id:           Number(row.category27_id),
+                concept_name:            row.concept_name || row.concept_id,
+                memorability_bin:        row.memorability_bin,
             };
         });
-    }
-
-    // ── Retrieval type ────────────────────────────────────────────────────────
-    function getRetType(hValue, lValue) {
-        if      (hValue === 0 && lValue === 1) return 1;   // H=$0, L=$1
-        else if (hValue === 1 && lValue === 0) return 2;   // H=$1, L=$0
-        else if (hValue === 0 && lValue === 0) return 3;   // both $0
-        else                                   return 4;   // both $1
-    }
-
-    // ── Sequence planner ──────────────────────────────────────────────────────
-    /**
-     * planSequence
-     * ------------
-     * Builds the full ordered trial list for Design A.
-     *
-     * Algorithm (mirrors simulate_design_a.py):
-     *  1. Alternate H/H and L/L encoding trials; swap which comes first every
-     *     other *pair* so that delay_H − delay_L alternates ±1 → mean ≈ 0.
-     *  2. After each encoding trial, try to insert one old/old trial:
-     *       primary   criterion: urgency  (fewest remaining steps — prevents starvation)
-     *       tiebreak1 criterion: rarest retrieval type
-     *       tiebreak2 criterion: rarest delay direction
-     *       tiebreak3 criterion: smallest |pos_HH − pos_LL|
-     *  3. Trailing pass: advance time to catch pool items near sequence end.
-     *
-     * Returns an array of trial-spec objects, each with:
-     *   { trial_number, block_index, trial_type: 'new'|'old', ... }
-     */
-    function planSequence(hhSpecs, llSpecs, params, rng) {
-        const { min_delay, max_delay, block_trial_boundaries } = params;
-        const n_hh = hhSpecs.length;
-        const n_ll = llSpecs.length;
-
-        const poolHH = [];   // { seq_num, value, spec }
-        const poolLL = [];
-        const typeCounts    = [0, 0, 0, 0];
-        const delayDirCounts = [0, 0];   // [0]: HH encoded first (delay_H > delay_L), [1]: LL first
-        const trials = [];
-        let trialNum = 1;
-        let hhIdx = 0, llIdx = 0, step = 0;
-
-        function getBlockIndex(t) {
-            if (t <= block_trial_boundaries[0]) return 1;
-            if (t <= block_trial_boundaries[1]) return 2;
-            return 3;
-        }
-
-        function tryInsert() {
-            const lo = trialNum - max_delay;
-            const hi = trialNum - min_delay;
-            const availHH = poolHH.filter(x => lo <= x.seq_num && x.seq_num <= hi);
-            const availLL = poolLL.filter(x => lo <= x.seq_num && x.seq_num <= hi);
-            if (!availHH.length || !availLL.length) return false;
-
-            // Primary:   urgency (fewest remaining steps for either item — prevents starvation)
-            // Tiebreak 1: rarest ret type
-            // Tiebreak 2: rarest delay direction
-            // Tiebreak 3: smallest |delay diff|
-            let bestHH = null, bestLL = null;
-            let bestUG = Infinity, bestTC = Infinity, bestDC = Infinity, bestDD = Infinity;
-            for (const hh of availHH) {
-                for (const ll of availLL) {
-                    const rt  = getRetType(hh.value, ll.value);
-                    const tc  = typeCounts[rt - 1];
-                    const dir = hh.seq_num < ll.seq_num ? 0 : 1;
-                    const dc  = delayDirCounts[dir];
-                    const dd  = Math.abs(hh.seq_num - ll.seq_num);
-                    const ug  = Math.min(hh.seq_num + max_delay - trialNum,
-                                         ll.seq_num + max_delay - trialNum);
-                    if (ug < bestUG ||
-                        (ug === bestUG && tc < bestTC) ||
-                        (ug === bestUG && tc === bestTC && dc < bestDC) ||
-                        (ug === bestUG && tc === bestTC && dc === bestDC && dd < bestDD)) {
-                        bestUG = ug; bestTC = tc; bestDC = dc; bestDD = dd;
-                        bestHH = hh; bestLL = ll;
-                    }
-                }
-            }
-
-            const rt  = getRetType(bestHH.value, bestLL.value);
-            const dir = bestHH.seq_num < bestLL.seq_num ? 0 : 1;
-            typeCounts[rt - 1]++;
-            delayDirCounts[dir]++;
-            poolHH.splice(poolHH.indexOf(bestHH), 1);
-            poolLL.splice(poolLL.indexOf(bestLL), 1);
-
-            const delayH = trialNum - bestHH.seq_num;
-            const delayL = trialNum - bestLL.seq_num;
-            const leftIsH = rng.random() < 0.5;
-
-            trials.push({
-                trial_number:            trialNum,
-                block_index:             getBlockIndex(trialNum),
-                trial_type:              'old',
-                ret_type:                rt,
-                source_hh_trial_number:  bestHH.seq_num,
-                source_ll_trial_number:  bestLL.seq_num,
-                h_value:                 bestHH.value,
-                l_value:                 bestLL.value,
-                delay_h:                 delayH,
-                delay_l:                 delayL,
-                left_is_high:            leftIsH,
-            });
-            trialNum++;
-            return true;
-        }
-
-        // ── Main encoding loop ───────────────────────────────────────────────
-        while (hhIdx < n_hh || llIdx < n_ll) {
-            // Alternate HH/LL; swap lead every other pair for delay balance
-            // HLLHHLLH... pattern: each (HH,LL) pair alternates which type leads,
-            // so delay_H − delay_L alternates +1/−1 → mean ≈ 0.
-            const placeHH = (hhIdx < n_hh && llIdx < n_ll)
-                ? ((step + Math.floor(step / 2)) % 2 === 0)
-                : (hhIdx < n_hh);
-
-            if (placeHH) {
-                const spec = hhSpecs[hhIdx];
-                poolHH.push({ seq_num: trialNum, value: spec.shared_value, spec });
-                trials.push({
-                    trial_number:   trialNum,
-                    block_index:    getBlockIndex(trialNum),
-                    trial_type:     'new',
-                    enc_type:       'HH',
-                    hh_index:       hhIdx,
-                    left_stimulus:  spec.left_stimulus,
-                    right_stimulus: spec.right_stimulus,
-                    shared_value:   spec.shared_value,
-                });
-                hhIdx++;
-            } else {
-                const spec = llSpecs[llIdx];
-                poolLL.push({ seq_num: trialNum, value: spec.shared_value, spec });
-                trials.push({
-                    trial_number:   trialNum,
-                    block_index:    getBlockIndex(trialNum),
-                    trial_type:     'new',
-                    enc_type:       'LL',
-                    ll_index:       llIdx,
-                    left_stimulus:  spec.left_stimulus,
-                    right_stimulus: spec.right_stimulus,
-                    shared_value:   spec.shared_value,
-                });
-                llIdx++;
-            }
-            trialNum++;
-            step++;
-
-            tryInsert();
-        }
-
-        // ── Trailing pass ────────────────────────────────────────────────────
-        // Advance time so items near the end of the sequence enter the window.
-        let stalled = 0;
-        while (stalled <= max_delay) {
-            if (tryInsert()) {
-                stalled = 0;
-            } else {
-                trialNum++;
-                stalled++;
-            }
-        }
-
-        return trials;
     }
 
     // ── Main plan builder ─────────────────────────────────────────────────────
     /**
      * buildSequencePlan
      * -----------------
-     * Design A: within-bin H/H and L/L encoding + cross-bin old/old retrieval.
+     * Loads one of the 10 precomputed structural solutions
+     * (window.SEQUENCE_STRUCTURES, produced offline by
+     * sequences/build_sequences.py's two-phase MILP), selected deterministically
+     * per participant (hash of participantId mod length, so a page reload keeps
+     * the same structure), and fills it in with randomly assigned concrete
+     * images (per participant) and randomized left/right screen placement.
      *
-     * Returns { trials, preload_images, normalized_stimuli }
-     * where trials is a flat ordered list of all trial specs.
+     * The MILP guarantees, exactly:
+     *   - 78 high-mem + 78 low-mem new (encoding) trials, each split 39 $1 / 39 $0
+     *   - 78 old (retrieval) trials, always cross-bin (one high-mem source + one
+     *     low-mem source): 20 even_1 (both $1) + 20 even_0 (both $0) +
+     *     19 uneven_h1 (high=$1/low=$0) + 19 uneven_h0 (high=$0/low=$1)
+     *   - identical delay-bucket histograms for the high-mem source and the
+     *     low-mem source, within each of the "even" and "uneven" groups
+     *   - exactly 19/19 split (within uneven trials) of which value has the
+     *     longer delay, and 20/20 split (within even trials) of which
+     *     memorability side has the longer delay
+     *   - no run of >3 consecutive same-bin new trials (old trials, always
+     *     showing one high + one low card, break any run)
+     *   - no run of >8 consecutive same trial_type (old/new) trials
      *
-     * Encoding trials  (trial_type: 'new'):
+     * Returns { trials, preload_images, normalized_stimuli }.
+     *
+     * Encoding trials (trial_type: 'new'):
      *   enc_type       – 'HH' or 'LL'
      *   left_stimulus / right_stimulus  – stimulus objects
      *   shared_value   – $0 or $1
      *
-     * Retrieval trials  (trial_type: 'old'):
-     *   ret_type               – 1–4
-     *   source_hh_trial_number – trial_number of the H/H encoding source
-     *   source_ll_trial_number – trial_number of the L/L encoding source
-     *   h_value / l_value      – values of H and L items
-     *   delay_h / delay_l      – lags in sequence positions (both ≈ equal)
-     *   left_is_high           – whether left card is the H item
+     * Retrieval trials (trial_type: 'old'):
+     *   ret_type                – 1-4 (see RET_TYPE_CODES above)
+     *   source_hh_trial_number / source_ll_trial_number
+     *   h_value / l_value
+     *   delay_h / delay_l
+     *   left_is_high  – whether left card is the high-mem item; assigned by
+     *     assignBalancedLeftRight so that, within each retrieval type, left/right
+     *     is balanced against which side has the longer delay.
      */
-    function buildSequencePlan(params, metadataRows, randomFn = Math.random) {
+    function buildSequencePlan(params, metadataRows, randomFn = Math.random, participantId = "") {
         const rng = makeRandomHelpers(randomFn);
-        const normalizedStimuli = normalizeStimulusRows(metadataRows, params);
+        const structures = window.SEQUENCE_STRUCTURES;
+        if (!Array.isArray(structures) || structures.length === 0) {
+            throw new Error("Sequence structures missing. Make sure sequences/sequences.js is loaded.");
+        }
+        const structureIndex = hashString(String(participantId)) % structures.length;
+        const structure = structures[structureIndex];
 
+        const normalizedStimuli = normalizeStimulusRows(metadataRows, params);
         const highStim = rng.shuffle(normalizedStimuli.filter(s => s.memorability_bin === 'high'));
         const lowStim  = rng.shuffle(normalizedStimuli.filter(s => s.memorability_bin === 'low'));
 
-        // H/H trials use 2 H items each
-        const n_hh = Math.floor(highStim.length / 2);   // 78 with 156 H items
-        const n_ll = Math.floor(lowStim.length  / 2);   // 78 with 156 L items
+        const structTrials = structure.trials;
+        const newStructTrials = structTrials.filter(t => t.trial_type === 'new');
+        const nHigh = newStructTrials.filter(t => t.memorability_bin === 'high').length;
+        const nLow  = newStructTrials.filter(t => t.memorability_bin === 'low').length;
 
-        if (n_hh === 0 || n_ll === 0) {
-            throw new Error("Not enough high or low-mem stimuli to build the sequence.");
+        if (highStim.length < nHigh * 2 || lowStim.length < nLow * 2) {
+            throw new Error("Not enough high or low-mem stimuli to fill the precomputed sequence structure.");
         }
 
-        // Joint balanced value assignment: hh/ll values are paired so that
-        // urgency-first matching (which pairs hh_idx=i with ll_idx=i) gives exactly
-        // balanced ret-type counts.  For 78 pairs: types 1,2 get 20 each, 3,4 get 19.
-        const nPairs = Math.min(n_hh, n_ll);
-        const base   = Math.floor(nPairs / 4);
-        const rem    = nPairs % 4;   // 78 % 4 = 2 → types 1,2 each get base+1=20
-        const typeToValues = [[0,1],[1,0],[0,0],[1,1]];   // ret-types 1-4
-        const valuePairs = [];
-        for (let t = 0; t < 4; t++) {
-            const count = base + (t < rem ? 1 : 0);
-            for (let k = 0; k < count; k++) valuePairs.push(typeToValues[t]);
-        }
-        const shuffledPairs = rng.shuffle(valuePairs);
-        const hhValues = shuffledPairs.map(p => p[0]);
-        const llValues = shuffledPairs.map(p => p[1]);
-
-        // Build H/H encoding specs (each uses 2 H items)
-        const hhSpecs = [];
-        for (let i = 0; i < n_hh; i++) {
-            const s1 = highStim[i * 2], s2 = highStim[i * 2 + 1];
-            const leftIsFirst = rng.random() < 0.5;
-            hhSpecs.push({
-                left_stimulus:  leftIsFirst ? s1 : s2,
-                right_stimulus: leftIsFirst ? s2 : s1,
-                shared_value:   hhValues[i],
-            });
+        // Each 'new' structure entry is one HH/LL encoding trial, consuming 2
+        // same-bin stimuli (shown together, sharing one value).
+        let highCursor = 0, lowCursor = 0;
+        const blockBoundaries = params.block_trial_boundaries;
+        function getBlockIndex(t) {
+            if (t <= blockBoundaries[0]) return 1;
+            if (t <= blockBoundaries[1]) return 2;
+            return 3;
         }
 
-        // Build L/L encoding specs (each uses 2 L items)
-        const llSpecs = [];
-        for (let i = 0; i < n_ll; i++) {
-            const s1 = lowStim[i * 2], s2 = lowStim[i * 2 + 1];
-            const leftIsFirst = rng.random() < 0.5;
-            llSpecs.push({
-                left_stimulus:  leftIsFirst ? s1 : s2,
-                right_stimulus: leftIsFirst ? s2 : s1,
-                shared_value:   llValues[i],
-            });
-        }
+        const trials = structTrials.map(st => {
+            const block_index = getBlockIndex(st.trial_number);
+            if (st.trial_type === 'new') {
+                const isHigh = st.memorability_bin === 'high';
+                const s1 = isHigh ? highStim[highCursor++] : lowStim[lowCursor++];
+                const s2 = isHigh ? highStim[highCursor++] : lowStim[lowCursor++];
+                const leftIsFirst = rng.random() < 0.5;
+                return {
+                    trial_number:     st.trial_number,
+                    block_index,
+                    trial_type:       'new',
+                    enc_type:         isHigh ? 'HH' : 'LL',
+                    memorability_bin: st.memorability_bin,
+                    left_stimulus:    leftIsFirst ? s1 : s2,
+                    right_stimulus:   leftIsFirst ? s2 : s1,
+                    shared_value:     st.shared_value,
+                };
+            }
+            return {
+                trial_number:            st.trial_number,
+                block_index,
+                trial_type:              'old',
+                ret_type:                RET_TYPE_CODES[st.retrieval_type],
+                retrieval_type:          st.retrieval_type,
+                source_hh_trial_number:  st.high_source_trial_number,
+                source_ll_trial_number:  st.low_source_trial_number,
+                h_value:                 st.value_high,
+                l_value:                 st.value_low,
+                delay_h:                 st.delay_high,
+                delay_l:                 st.delay_low,
+                left_is_high:            null,   // assigned below by assignBalancedLeftRight
+            };
+        });
 
-        const trials = planSequence(hhSpecs, llSpecs, params, rng);
+        assignBalancedLeftRight(trials.filter(t => t.trial_type === 'old'), rng);
 
         return {
             trials,
             preload_images:     normalizedStimuli.map(s => s.image_path),
             normalized_stimuli: normalizedStimuli,
+            structure_index:    structureIndex,
+            structure_seed:     structure.metadata ? structure.metadata.seed : null,
         };
     }
 
@@ -350,7 +212,6 @@
     window.EpisodicChoiceSequence = {
         clamp,
         makeRandomHelpers,
-        buildBalancedValueList,
         buildSequencePlan,
     };
 })();

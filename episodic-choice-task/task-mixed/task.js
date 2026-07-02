@@ -666,7 +666,7 @@ function getBonusSummary(jsPsych) {
 function initTask(jsPsych, prolific_id) {
     const timeline = [];
     const stimulusRows = loadStimulusMetadata();
-    const plan = EpisodicChoiceSequence.buildSequencePlan(params, stimulusRows);
+    const plan = EpisodicChoiceSequence.buildSequencePlan(params, stimulusRows, Math.random, prolific_id);
     TASK_STATE.plan = plan;
     TASK_STATE.trialSpecByNumber = new Map(plan.trials.map(t => [t.trial_number, t]));
 
