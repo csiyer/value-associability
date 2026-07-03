@@ -32,13 +32,23 @@ Design
     overall delay distribution == the low-mem bin's overall delay
     distribution, i.e. "the two memorability bins share the exact same
     delay distributions".)
-  - Across the 38 uneven trials, exactly 19 have the $1-source at the
-    longer delay and 19 have the $0-source at the longer delay (balances
-    left/right assignment at runtime).
+  - Across the 38 uneven trials, exactly 19 have the high-mem source at the
+    longer delay and 19 have the low-mem source at the longer delay. This is
+    the PRIORITIZED split (matching the two memorability bins is the primary
+    design goal, so it gets the hard equality).
+  - Given that, the $1-source/$0-source-longer split on those same 38 uneven
+    trials CANNOT also be exactly 19/19: N_UNEVEN_H1 == N_UNEVEN_H0 == 19
+    (odd), and forcing high-longer==19 algebraically forces the $1-longer
+    count to be even (proof: let x = #uneven_h1 with high-longer, y =
+    #uneven_h0 with high-longer; high-longer = x+y = 19 fixed; $1-longer =
+    x + (19-y) = 38-2y, always even -- 19 is odd, so unreachable). It's
+    instead bounded to the two nearest achievable values, 18 or 20 (off by
+    exactly one trial), rather than left unconstrained.
   - Across the 40 even trials, exactly 20 have the high-mem source at the
-    longer delay and 20 have the low-mem source at the longer delay (added
-    for symmetry/counterbalancing, not strictly required by the value
-    design since both sources share a value on even trials).
+    longer delay and 20 have the low-mem source at the longer delay -- no
+    parity conflict here since both group sizes (20 and 20) are even, so
+    this and the (identical, since value_high==value_low on even trials)
+    $1/$0-longer split can both be exactly 20/20 simultaneously.
   - No run of MAX_MEMORABILITY_RUN+1 or more consecutive NEW trials shares
     the same memorability_bin with nothing (old or opposite-bin new) in
     between. Old trials always show one high + one low card together, so
@@ -64,7 +74,9 @@ Phase 2 (~700 binary vars): given each old trial's fixed (short-delay,
   which source (high-mem or low-mem) lands on the longer delay, so that:
     - category counts are exactly 20/20/19/19
     - per-category/per-role delay histograms match exactly (as above)
-    - the uneven $1-longer/$0-longer split is exactly 19/19
+    - the uneven high-longer/low-longer split is exactly 19/19 (prioritized,
+      hard equality); the $1-longer/$0-longer split on those same trials is
+      bounded to 18 or 20 (parity-limited, cannot be exact -- see Design)
     - the even high-longer/low-longer split is exactly 20/20
     - no memorability_bin run (over the full N-position sequence, old
       positions contributing to neither high nor low) exceeds
@@ -280,7 +292,20 @@ def solve_phase2(pairs, time_limit, rng):
             eq(high_terms[d], hist[d])
             eq(low_terms[d], hist[d])
 
-    # Uneven $1-longer / $0-longer split: exactly 19/19 over the 38 uneven trials.
+    # Uneven high-longer / low-longer split: exactly 19/19 (PRIORITIZED --
+    # hard equality). high-longer = hiLong[p], for any p, regardless of
+    # category, so over just the uneven positions this is
+    # sum(z[uneven_h1]) + sum(z[uneven_h0]).
+    rd = {}
+    for p in old_positions:
+        rd[z_idx["uneven_h1"][p]] = rd.get(z_idx["uneven_h1"][p], 0) + 1
+        rd[z_idx["uneven_h0"][p]] = rd.get(z_idx["uneven_h0"][p], 0) + 1
+    eq(rd, 19)
+
+    # Uneven $1-longer / $0-longer split: as close to 19/19 as parity allows
+    # given the hard constraint above (see Design docstring for the proof
+    # that exact 19/19 is impossible here) -- bounded to {18, 20} instead of
+    # forced to 19, which would make Phase 2 infeasible.
     # value1-longer = (# uneven_h1 with hiLong) + (# uneven_h0 with NOT hiLong)
     #               = sum z[uneven_h1] + sum(cat[uneven_h0] - z[uneven_h0])
     rd = {}
@@ -288,7 +313,8 @@ def solve_phase2(pairs, time_limit, rng):
         rd[z_idx["uneven_h1"][p]] = rd.get(z_idx["uneven_h1"][p], 0) + 1
         rd[cat_idx["uneven_h0"][p]] = rd.get(cat_idx["uneven_h0"][p], 0) + 1
         rd[z_idx["uneven_h0"][p]] = rd.get(z_idx["uneven_h0"][p], 0) - 1
-    eq(rd, N_UNEVEN_H1)   # == 19
+    geq(rd, 18)
+    leq(rd, 20)
 
     # Even high-longer / low-longer split: exactly 20/20 over the 40 even trials.
     rd = {}
@@ -455,8 +481,10 @@ def validate(trials):
     uneven = [t for t in old_trials if t["retrieval_type"] in ("uneven_h1", "uneven_h0")]
     n_v1_longer = sum(1 for t in uneven if t["delay_high"] > t["delay_low"] and t["value_high"] == 1
                        or t["delay_low"] > t["delay_high"] and t["value_low"] == 1)
+    n_high_longer_uneven = sum(1 for t in uneven if t["delay_high"] > t["delay_low"])
     if len(uneven) != 38: errors.append(f"uneven count={len(uneven)}, expected 38")
-    if n_v1_longer != 19: errors.append(f"uneven $1-longer count={n_v1_longer}, expected 19")
+    if n_high_longer_uneven != 19: errors.append(f"uneven high-mem-longer count={n_high_longer_uneven}, expected 19 (hard/prioritized)")
+    if n_v1_longer not in (18, 20): errors.append(f"uneven $1-longer count={n_v1_longer}, expected 18 or 20 (soft, parity-limited)")
 
     even = [t for t in old_trials if t["retrieval_type"] in ("even_1", "even_0")]
     n_high_longer = sum(1 for t in even if t["delay_high"] > t["delay_low"])
@@ -504,7 +532,9 @@ def summarize(trials):
 
     uneven = [t for t in old_trials if t["retrieval_type"] in ("uneven_h1", "uneven_h0")]
     n_v1_longer = sum(1 for t in uneven if (t["delay_high"] > t["delay_low"]) == (t["value_high"] == 1))
-    print(f"\nUneven: $1-source longer delay: {n_v1_longer} / 38  ($0-longer: {38-n_v1_longer})")
+    n_high_longer_uneven = sum(1 for t in uneven if t["delay_high"] > t["delay_low"])
+    print(f"\nUneven: high-mem source longer delay: {n_high_longer_uneven} / 38  (hard target: 19)")
+    print(f"Uneven: $1-source longer delay: {n_v1_longer} / 38  ($0-longer: {38-n_v1_longer})  (soft target: 18 or 20)")
 
     even = [t for t in old_trials if t["retrieval_type"] in ("even_1", "even_0")]
     n_high_longer = sum(1 for t in even if t["delay_high"] > t["delay_low"])
