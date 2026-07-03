@@ -939,7 +939,7 @@ function initTask(jsPsych, prolific_id) {
         type: jsPsychPipe,
         action: "save",
         experiment_id: params.data_pipe_id,
-        filename: `${prolific_id}.csv`,
+        filename: `mixed_memorability/${prolific_id}.csv`,
         data_string() { return jsPsych.data.get().csv(); },
         on_finish() {
             window.location.href =

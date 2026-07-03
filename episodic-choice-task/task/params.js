@@ -1,5 +1,5 @@
 const params = {
-    experiment_id: "main_task",
+    experiment_id: "main_task-7-3-26",
 
     n_trials: 312,
     n_blocks: 3,
@@ -23,7 +23,7 @@ const params = {
     text_color: "#333333",
     highlight_color: "#22c55e",
 
-    completion_time: 20,
+    completion_time: 25,
     base_pay: 5,
     max_bonus: 2,
     bonus_sample_n: 10,

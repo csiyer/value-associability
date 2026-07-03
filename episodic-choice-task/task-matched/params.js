@@ -1,5 +1,5 @@
 const params = {
-    experiment_id: "matched_memorability",
+    experiment_id: "matched_memorability-7-3-26",
 
     // Trial structure (fixed by the precomputed sequence structures; see sequences/)
     //   78 H/H encoding + 78 L/L encoding + 78 old/old = 234 trials total

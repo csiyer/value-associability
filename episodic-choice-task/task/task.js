@@ -839,7 +839,7 @@ function initTask(jsPsych, prolific_id) {
         type: jsPsychPipe,
         action: "save",
         experiment_id: params.data_pipe_id,
-        filename: `${prolific_id}.csv`,
+        filename: `main/${prolific_id}.csv`,
         data_string() { return jsPsych.data.get().csv(); },
         on_finish() {
             window.location.href = "https://app.prolific.com/submissions/complete?cc=" + params.prolific_completion_code;
