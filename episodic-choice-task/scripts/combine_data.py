@@ -1,14 +1,20 @@
 #!/usr/bin/env python3
-"""Combine episodic choice task CSV files into one analysis CSV.
+"""Combine episodic choice task CSV files into one analysis CSV per task version.
 
-Reads every CSV in episodic-choice-task/data except the output file itself,
-keeps only choice-trial and attention-check rows, and writes
-episodic_choice_data.csv.
+Each task version's raw participant CSVs live in their own subdirectory of
+episodic-choice-task/data (e.g. data/mixed_memorability/, data/matched_memorability/).
+For every such subdirectory, writes/updates data/episodic_choice_data-<version>.csv,
+keeping only choice-trial and attention-check rows.
+
+If a version's combined CSV already contains every participant found in its raw
+data subdirectory, that combined CSV is left untouched.
+
+Usage:
+    python episodic-choice-task/scripts/combine_data.py
 """
 
 from __future__ import annotations
 
-import argparse
 from pathlib import Path
 
 import pandas as pd
@@ -16,8 +22,7 @@ import pandas as pd
 
 SCRIPT_DIR = Path(__file__).resolve().parent
 TASK_DIR = SCRIPT_DIR.parent
-DEFAULT_DATA_DIR = TASK_DIR / "data"
-DEFAULT_OUTPUT = DEFAULT_DATA_DIR / "episodic_choice_data.csv"
+DATA_DIR = TASK_DIR / "data"
 
 KEEPCOLS = [
     "experiment_id",
@@ -172,11 +177,11 @@ def compute_optimal_old_choice(df: pd.DataFrame) -> pd.Series:
     return optimal
 
 
-def combine_data(data_dir: Path, output_path: Path) -> pd.DataFrame:
+def combine_data(version_dir: Path, output_path: Path) -> pd.DataFrame:
     frames = []
     output_path = output_path.resolve()
 
-    for csv_path in sorted(data_dir.glob("*.csv")):
+    for csv_path in sorted(version_dir.glob("*.csv")):
         if csv_path.resolve() == output_path:
             continue
         frames.append(load_csv(csv_path))
@@ -187,36 +192,37 @@ def combine_data(data_dir: Path, output_path: Path) -> pd.DataFrame:
     return pd.concat(frames, ignore_index=True, sort=False)
 
 
-def main() -> int:
-    parser = argparse.ArgumentParser(description="Combine episodic choice task data.")
-    parser.add_argument(
-        "data_dir",
-        nargs="?",
-        default=str(DEFAULT_DATA_DIR),
-        help="Directory containing participant CSV files.",
-    )
-    parser.add_argument(
-        "--output",
-        default=None,
-        help=(
-            "Path for the combined CSV. Defaults to episodic_choice_data.csv when "
-            "using the default data dir, or episodic_choice_data-<data_dir_name>.csv otherwise."
-        ),
-    )
-    args = parser.parse_args()
+def version_dirs() -> list[Path]:
+    return sorted(p for p in DATA_DIR.iterdir() if p.is_dir() and not p.name.startswith("."))
 
-    data_dir = Path(args.data_dir).expanduser().resolve()
-    if args.output is not None:
-        output_path = Path(args.output).expanduser().resolve()
-    elif data_dir == DEFAULT_DATA_DIR:
-        output_path = DEFAULT_OUTPUT
-    else:
-        output_path = DEFAULT_DATA_DIR / f"episodic_choice_data-{data_dir.name}.csv"
-    output_path.parent.mkdir(parents=True, exist_ok=True)
 
-    combined = combine_data(data_dir, output_path)
+def output_path_for(version_dir: Path) -> Path:
+    # The original pilot predates the per-version naming convention; keep its
+    # combined CSV at the unsuffixed legacy filename.
+    if version_dir.name == "original_pilot":
+        return DATA_DIR / "episodic_choice_data.csv"
+    return DATA_DIR / f"episodic_choice_data-{version_dir.name}.csv"
+
+
+def combine_version(version_dir: Path) -> None:
+    output_path = output_path_for(version_dir)
+    combined = combine_data(version_dir, output_path)
+    new_ids = set(combined["participant_id"].dropna().astype(str))
+
+    if output_path.exists():
+        existing = pd.read_csv(output_path, usecols=["participant_id"])
+        existing_ids = set(existing["participant_id"].dropna().astype(str))
+        if new_ids <= existing_ids:
+            print(f"{version_dir.name}: up to date ({len(existing_ids)} participants), leaving {output_path.name} untouched")
+            return
+
     combined.to_csv(output_path, index=False)
-    print(f"Wrote {len(combined)} rows to {output_path}")
+    print(f"{version_dir.name}: wrote {len(combined)} rows ({len(new_ids)} participants) to {output_path.name}")
+
+
+def main() -> int:
+    for version_dir in version_dirs():
+        combine_version(version_dir)
     return 0
 
 

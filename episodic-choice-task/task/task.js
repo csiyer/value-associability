@@ -321,9 +321,8 @@ function buildQuizTrials() {
             "j"),
 
         quizTrial(wrap(2, `
-            <p>Each card is worth a random amount of money between…</p>
-            ${opts("$0 – $5", `${minVal} – ${maxVal}`)}`),
-            "k"),
+            <p>Each card is worth either...</p>
+            ${opts("$0, $5", `${minVal}, ${maxVal}`)}`), "k"),
 
         quizTrial(wrap(3, `
             <p>True or false? If you see the same card again, it will be worth the same amount as the last time you saw it.</p>
@@ -331,7 +330,7 @@ function buildQuizTrials() {
             "j"),
 
         quizTrial(wrap(4, `
-            <p>If you previously learned the banana card is worth $0, which card should you pick to earn more money?</p>
+            <p>If you previously learned tshe banana card is worth $0, which card should you pick to earn more money?</p>
             ${cardPair}
             ${opts("The left card (banana)", "The right card (car)")}`),
             "k"),

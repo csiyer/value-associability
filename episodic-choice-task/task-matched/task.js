@@ -595,8 +595,8 @@ function buildQuizTrials() {
             ${opts("True", "False")}`), "j"),
 
         quizTrial(wrap(2, `
-            <p>Each card is worth a random amount of money between…</p>
-            ${opts("$0 – $5", `${minVal} – ${maxVal}`)}`), "k"),
+            <p>Each card is worth either...</p>
+            ${opts("$0, $5", `${minVal}, ${maxVal}`)}`), "k"),
 
         quizTrial(wrap(3, `
             <p>True or false? If you see the same card again, it will be worth the same amount as the last time you saw it.</p>

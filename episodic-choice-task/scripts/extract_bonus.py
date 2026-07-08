@@ -1,17 +1,19 @@
 #!/usr/bin/env python3
 """Extract non-zero participant bonuses from episodic choice task CSV files.
 
+Scans every task-version subdirectory of episodic-choice-task/data (e.g.
+data/mixed_memorability/, data/matched_memorability/) for participants whose
+data isn't yet in that version's combined CSV (data/episodic_choice_data-<version>.csv,
+produced by combine_data.py). If no combined CSV exists yet for a version, every
+participant in that version is printed. Prints a separate `prolific_id,bonus` list
+per version for easy copy/paste.
+
 Usage:
     python episodic-choice-task/scripts/extract_bonus.py
-    python episodic-choice-task/scripts/extract_bonus.py data/graded_value
-    python episodic-choice-task/scripts/extract_bonus.py data/graded_value --aggregate data/episodic_choice_data-graded_value.csv
-
-Prints comma-separated `prolific_id,bonus` rows for easy copy/paste.
 """
 
 from __future__ import annotations
 
-import argparse
 import sys
 from pathlib import Path
 
@@ -20,7 +22,7 @@ import pandas as pd
 
 SCRIPT_DIR = Path(__file__).resolve().parent
 TASK_DIR = SCRIPT_DIR.parent
-DEFAULT_DATA_DIR = TASK_DIR / "data"
+DATA_DIR = TASK_DIR / "data"
 
 
 def get_already_processed_ids(aggregate_csv: Path) -> set[str]:
@@ -48,11 +50,11 @@ def is_prolific_row(row: pd.Series) -> bool:
     return str(study_id).strip().lower() not in ("", "local", "nan")
 
 
-def extract_bonus_rows(data_dir: Path, aggregate_csv: Path) -> list[tuple[str, float]]:
+def extract_bonus_rows(version_dir: Path, aggregate_csv: Path) -> list[tuple[str, float]]:
     already_processed = get_already_processed_ids(aggregate_csv)
     rows: list[tuple[str, float]] = []
 
-    for csv_path in sorted(data_dir.glob("*.csv")):
+    for csv_path in sorted(version_dir.glob("*.csv")):
         if csv_path.resolve() == aggregate_csv.resolve():
             continue
         try:
@@ -96,40 +98,31 @@ def extract_bonus_rows(data_dir: Path, aggregate_csv: Path) -> list[tuple[str, f
     return rows
 
 
+def version_dirs() -> list[Path]:
+    return sorted(p for p in DATA_DIR.iterdir() if p.is_dir() and not p.name.startswith("."))
+
+
+def aggregate_path_for(version_dir: Path) -> Path:
+    # The original pilot predates the per-version naming convention; its
+    # combined CSV lives at the unsuffixed legacy filename.
+    if version_dir.name == "original_pilot":
+        return DATA_DIR / "episodic_choice_data.csv"
+    return DATA_DIR / f"episodic_choice_data-{version_dir.name}.csv"
+
+
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Extract bonuses from episodic choice task data.")
-    parser.add_argument(
-        "data_dir",
-        nargs="?",
-        default=str(DEFAULT_DATA_DIR),
-        help="Directory containing participant CSV files.",
-    )
-    parser.add_argument(
-        "--aggregate",
-        default=None,
-        help=(
-            "Path to the combined aggregate CSV (used to skip already-processed participants). "
-            "Defaults to episodic_choice_data.csv for the default data dir, or "
-            "episodic_choice_data-<data_dir_name>.csv otherwise."
-        ),
-    )
-    args = parser.parse_args()
+    for version_dir in version_dirs():
+        aggregate_csv = aggregate_path_for(version_dir)
+        rows = extract_bonus_rows(version_dir, aggregate_csv)
 
-    data_dir = Path(args.data_dir).expanduser().resolve()
-    if not data_dir.exists():
-        print(f"Data directory not found: {data_dir}", file=sys.stderr)
-        return 1
-
-    if args.aggregate is not None:
-        aggregate_csv = Path(args.aggregate).expanduser().resolve()
-    elif data_dir == DEFAULT_DATA_DIR:
-        aggregate_csv = DEFAULT_DATA_DIR / "episodic_choice_data.csv"
-    else:
-        aggregate_csv = DEFAULT_DATA_DIR / f"episodic_choice_data-{data_dir.name}.csv"
-
-    rows = extract_bonus_rows(data_dir, aggregate_csv)
-    for prolific_id, bonus in rows:
-        print(f"{prolific_id},{bonus:.2f}")
+        print(f"=== {version_dir.name} ===")
+        if not aggregate_csv.exists():
+            print(f"(no combined data yet, listing all bonuses)")
+        if not rows:
+            print("(none)")
+        for prolific_id, bonus in rows:
+            print(f"{prolific_id},{bonus:.2f}")
+        print()
     return 0
 
 
