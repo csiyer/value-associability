@@ -58,9 +58,15 @@ def count_participants_task(path):
     AT_CHANCE_PIDS = ttest_df.participant_id[~ttest_df[0]].unique().tolist()
     print(f"     {len(AT_CHANCE_PIDS)} failed to pass t-test from chance")
 
+    ##### filter out incomplete data (mixed/matched only, mirrors analysis.ipynb)
+    INCOMPLETE_PIDS = []
+    if 'mixed' in path or 'matched' in path:
+        INCOMPLETE_PIDS = df[df.old_trial == 1].groupby('participant_id').size().loc[lambda s: s < 70].index.tolist()
+        print(f"     {len(INCOMPLETE_PIDS)} had incomplete data (< 70 old trials)")
+
     #### final count
     total = len(df.participant_id.unique())
-    ALL_EXCLUDED = set(AI_PIDS + FAILED_ATTN_PIDS + AT_CHANCE_PIDS)
+    ALL_EXCLUDED = set(AI_PIDS + FAILED_ATTN_PIDS + AT_CHANCE_PIDS + INCOMPLETE_PIDS)
     included = len([p for p in df.participant_id.unique() if p not in ALL_EXCLUDED])
 
     return (total, included)

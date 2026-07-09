@@ -103,9 +103,9 @@ def version_dirs() -> list[Path]:
 
 
 def aggregate_path_for(version_dir: Path) -> Path:
-    # The original pilot predates the per-version naming convention; its
+    # The main task predates the per-version naming convention; its
     # combined CSV lives at the unsuffixed legacy filename.
-    if version_dir.name == "original_pilot":
+    if version_dir.name == "main":
         return DATA_DIR / "episodic_choice_data.csv"
     return DATA_DIR / f"episodic_choice_data-{version_dir.name}.csv"
 

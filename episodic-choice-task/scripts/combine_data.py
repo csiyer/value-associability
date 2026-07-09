@@ -81,6 +81,14 @@ KEEPCOLS = [
     "source_ll_trial_number",
     "hh_source_chosen",
     "ll_source_chosen",
+    # ── matched-memorability columns ─────────────────────────────
+    "value1_source_trial_number",
+    "value0_source_trial_number",
+    "delay_value1",
+    "delay_value0",
+    "left_is_value1",
+    "value1_source_chosen",
+    "value0_source_chosen",
 ]
 
 
@@ -120,11 +128,7 @@ def load_csv(csv_path: Path) -> pd.DataFrame:
     df["correct"] = compute_attention_check_correct(df)
     df["optimal_old_choice"] = compute_optimal_old_choice(df)
 
-    for column in KEEPCOLS:
-        if column not in df:
-            df[column] = pd.NA
-
-    return df[KEEPCOLS]
+    return df[[column for column in KEEPCOLS if column in df]]
 
 
 def compute_attention_check_correct(df: pd.DataFrame) -> pd.Series:
@@ -189,7 +193,8 @@ def combine_data(version_dir: Path, output_path: Path) -> pd.DataFrame:
     if not frames:
         return pd.DataFrame(columns=KEEPCOLS)
 
-    return pd.concat(frames, ignore_index=True, sort=False)
+    combined = pd.concat(frames, ignore_index=True, sort=False)
+    return combined.reindex(columns=KEEPCOLS)
 
 
 def version_dirs() -> list[Path]:
@@ -197,9 +202,9 @@ def version_dirs() -> list[Path]:
 
 
 def output_path_for(version_dir: Path) -> Path:
-    # The original pilot predates the per-version naming convention; keep its
+    # The main task predates the per-version naming convention; keep its
     # combined CSV at the unsuffixed legacy filename.
-    if version_dir.name == "original_pilot":
+    if version_dir.name == "main":
         return DATA_DIR / "episodic_choice_data.csv"
     return DATA_DIR / f"episodic_choice_data-{version_dir.name}.csv"
 

@@ -608,7 +608,7 @@ function buildQuizTrials() {
             ${opts("The left card (banana)", "The right card (car)")}`), "k"),
 
         quizTrial(wrap(5, `
-            <p>Cards with similar objects on them are worth similar amounts of money.</p>
+            <p>Cards with similar (but not the same) objects on them are worth similar amounts of money.</p>
             ${opts("True", "False")}`), "k"),
 
         quizTrial(wrap(6, `
