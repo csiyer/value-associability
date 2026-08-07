@@ -89,6 +89,15 @@ KEEPCOLS = [
     "left_is_value1",
     "value1_source_chosen",
     "value0_source_chosen",
+    # ── direct-value-memory-test columns ──────────────────────────
+    "is_recognition_trial",
+    "recognition_correct",
+    "is_value_test_trial",
+    "old_image_name",
+    "old_image_path",
+    "value_test_response",
+    "value_test_missed",
+    "value_test_correct",
 ]
 
 
