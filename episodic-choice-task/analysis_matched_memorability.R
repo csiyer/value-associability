@@ -26,7 +26,7 @@ binom_test_df <- old_trials_df |>
 
 clean_df <- old_trials_df |> 
   left_join(binom_test_df) |>
-  filter(p.value < .5) |>
+  filter(p.value < .05) |>
   mutate(
     memorability_bin = ordered(memorability_bin, levels = c("low", "mid", "high"))
   )
@@ -53,7 +53,7 @@ sub_rt_plot_df <- clean_df |>
     rt = mean(rt)
   )
 sub_rt_plot_df |>
-  ggplot(aes(x =  memorability_bin, y = rt, 
+  ggplot(aes(x = memorability_bin, y = rt, 
              color = optimal_choice_str, group = optimal_choice_str)) +
   stat_summary(position = position_dodge(.2)) +
   stat_summary(geom = "line", position = position_dodge(.2)) +

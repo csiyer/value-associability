@@ -26,7 +26,7 @@ binom_test_df <- old_trials_df |>
 
 clean_df <- old_trials_df |> 
   left_join(binom_test_df) |>
-  filter(p.value < .5) |>
+  filter(p.value < .05) |>
   mutate(
     old_value_c = old_value - .5,
     old_image_name = if_else(old_side == "left", left_image_name, right_image_name),
