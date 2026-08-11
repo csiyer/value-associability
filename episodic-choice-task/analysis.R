@@ -9,13 +9,7 @@ FAILED_ATTENTION_PIDS <- episodic_choice_data |>
   filter(correct < .8)
 
 old_trials_df <- episodic_choice_data |>
-  filter(participant_id %notin% FAILED_ATTENTION_PIDS, old_trial == 1) |>
-  mutate(
-    old_value_c = old_value - .5,
-    old_image_name = if_else(old_side == "left", left_image_name, right_image_name),
-    memorability_bin = ordered(memorability_bin, levels = c("low", "mid", "high")),
-    old_value_fct = factor(old_value)
-  )
+  filter(participant_id %notin% FAILED_ATTENTION_PIDS, old_trial == 1)
 
 binom_test_df <- old_trials_df |>
   filter_out(is.na(optimal_old_choice)) |>
@@ -32,7 +26,13 @@ binom_test_df <- old_trials_df |>
 
 clean_df <- old_trials_df |> 
   left_join(binom_test_df) |>
-  filter(p.value < .5)
+  filter(p.value < .5) |>
+  mutate(
+    old_value_c = old_value - .5,
+    old_image_name = if_else(old_side == "left", left_image_name, right_image_name),
+    memorability_bin = ordered(memorability_bin, levels = c("low", "mid", "high")),
+    old_value_fct = factor(old_value)
+  )
 
 sub_choice_plot_df <- clean_df |>
   group_by(participant_id, memorability_bin, old_value_fct) |>
