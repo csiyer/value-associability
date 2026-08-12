@@ -107,16 +107,16 @@ mixed_value_clean_df <- clean_df |>
   )
 
 sub_choice_plot_df <- mixed_value_clean_df |>
-  group_by(participant_id, right_mem_bin, high_value_side) |>
+  group_by(participant_id, right_mem_bin, right_value_fct) |>
   summarize(
     p_right = mean(chose_right, na.rm = TRUE)
   )
 sub_choice_plot_df |>
-  ggplot(aes(x = right_mem_bin, y = p_right, color = high_value_side, group = high_value_side)) +
+  ggplot(aes(x = right_value_fct, y = p_right, color = right_mem_bin, group = right_mem_bin)) +
   stat_summary(position = position_dodge(.2)) +
   stat_summary(geom = "line", position = position_dodge(.2)) +
   theme_classic() +
-  labs(y = "P(Choose Right)", x = "Memorability of Right Option", color = "Right Value")
+  labs(y = "P(Choose Right)", x = "Right Value", color = "Right Memorability")
 
 sub_rt_plot_df <- mixed_value_clean_df |>
   filter_out(is.na(chosen_side)) |>
