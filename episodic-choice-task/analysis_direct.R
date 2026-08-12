@@ -48,12 +48,13 @@ clean_df <- old_trials_df |>
     old_value_c = old_value - .5,
     old_image_name = if_else(old_side == "left", left_image_name, right_image_name),
     memorability_bin = ordered(memorability_bin, levels = c("low", "mid", "high")),
+    memorability_num = as.numeric(memorability_bin) - 2,
     old_value_fct = factor(old_value)
   )
 
 memory_test_trials_df <- clean_df |>
   select(participant_id, trial_number, old_image_name, old_value_c, 
-         memorability_bin, old_value_fct, old_side, recognition_correct, value_test_correct,
+         memorability_bin, memorability_num, old_value_fct, old_side, recognition_correct, value_test_correct,
          value_test_response, response) |>
   group_by(participant_id, trial_number) |>
   mutate(
@@ -147,9 +148,12 @@ sub_value_recall_1_plot_df |>
   facet_wrap(vars(recognition_correct_str)) +
   labs(x = "Memorability", y = 'P(Value Recall "1")', color = "Value")
 
-m1 <- glmer(value_test_correct ~ memorability_bin + 
-              (memorability_bin | participant_id) + (1 | old_image_name), 
+m1 <- glmer(value_test_correct ~ memorability_num + 
+              (memorability_num || participant_id) + (1 | old_image_name), 
             family = binomial, data = memory_test_trials_df)
-m2 <- glmer(value_test_correct ~ old_value_c * memorability_bin + 
-              (old_value_c * memorability_bin | participant_id) + (old_value_c | old_image_name), 
+m2 <- glmer(value_test_correct ~ old_value_c * memorability_num + 
+              (old_value_c * memorability_num || participant_id) + (old_value_c || old_image_name), 
             family = binomial, data = memory_test_trials_df)
+m3 <- glmer(value_test_correct ~ old_value_c * memorability_num + 
+              (old_value_c * memorability_num || participant_id) + (old_value_c || old_image_name), 
+            family = binomial, data = memory_test_trials_df |> filter(recognition_correct == 1))
