@@ -27,17 +27,21 @@ binom_test_df <- old_trials_df |>
 clean_df <- old_trials_df |> 
   left_join(binom_test_df) |>
   filter(p.value < .05) |>
-  filter(left_value == right_value) |>
   mutate(
     left_mem_bin = ordered(left_mem_bin, levels = c("low", "high")),
     right_mem_bin = ordered(right_mem_bin, levels = c("low", "high")),
     right_value_fct = factor(right_value),
+    left_value_fct = factor(left_value),
     chose_right = chosen_side == "right",
     chose_high_mem = if_else(chose_right != left_is_high, TRUE, FALSE)
   )
 
-# Matched value
-sub_choice_plot_df <- clean_df |>
+# Matched value -----------------------------------------------------------
+
+matched_value_clean_df <- clean_df |>
+  filter(left_value == right_value)
+
+sub_choice_plot_df <- matched_value_clean_df |>
   group_by(participant_id, right_mem_bin, right_value_fct) |>
   summarize(
     p_right = mean(chose_right, na.rm = TRUE)
@@ -45,16 +49,11 @@ sub_choice_plot_df <- clean_df |>
 sub_choice_plot_df |>
   ggplot(aes(x = right_mem_bin, y = p_right, color = right_value_fct, group = right_value_fct)) +
   stat_summary(position = position_dodge(.2)) +
-  theme_classic() +
-  labs(y = "P(Choose Right)", x = "Memorability of Right Option", color = "Overall Value")
-sub_choice_plot_df |>
-  ggplot(aes(x = right_value_fct, y = p_right, color = right_mem_bin, group = right_mem_bin)) +
-  stat_summary(position = position_dodge(.2)) +
   stat_summary(geom = "line", position = position_dodge(.2)) +
   theme_classic() +
-  labs(y = "P(Choose Right)", x = "Overall Value", color = "Memorability of Right Option")
+  labs(y = "P(Choose Right)", x = "Memorability of Right Option", color = "Overall Value")
 
-sub_choice_plot_df <- clean_df |>
+sub_choice_plot_df <- matched_value_clean_df |>
   group_by(participant_id, right_value_fct) |>
   summarize(
     p_high_mem = mean(chose_high_mem, na.rm = TRUE)
@@ -65,7 +64,7 @@ sub_choice_plot_df |>
   theme_classic() +
   labs(y = "P(Choose High Memorability)", x = "Overall Value")
 
-sub_rt_plot_df <- clean_df |>
+sub_rt_plot_df <- matched_value_clean_df |>
   mutate(
     chosen_mem_str = if_else(chose_high_mem, "High", "Low")
   ) |>
@@ -82,17 +81,70 @@ sub_rt_plot_df |>
   theme_classic() +
   labs(x = "Overall Value", y = "RT", color = "Chosen Memorability")
 
-sub_rt_plot_df <- clean_df |>
+sub_rt_plot_df <- matched_value_clean_df |>
   filter_out(is.na(chosen_side)) |>
   group_by(participant_id, right_value_fct, left_mem_bin, right_mem_bin, chosen_side) |>
   summarize(
     rt = mean(rt)
   )
+
 sub_rt_plot_df |>
-  ggplot(aes(x = right_value_fct, y = rt, 
+  ggplot(aes(x = right_mem_bin, y = rt, 
              color = chosen_side, group = chosen_side)) +
   stat_summary(position = position_dodge(.2)) +
   stat_summary(geom = "line", position = position_dodge(.2)) +
   theme_classic() +
-  facet_wrap(vars(left_mem_bin, right_mem_bin), labeller = label_both) +
-  labs(x = "Overall Value", y = "RT", color = "Chosen Side")
+  facet_wrap(vars(right_value_fct)) +
+  labs(x = "Memorability of Right Option", y = "RT", color = "Chosen Side")
+
+# Mixed Value -------------------------------------------------------------
+
+mixed_value_clean_df <- clean_df |>
+  filter(left_value != right_value) |>
+  mutate(
+    high_value_side = if_else(left_value > right_value, "left", "right"),
+    optimal_choice_str = if_else(optimal_choice == 1, "Correct", "Error")
+  )
+
+sub_choice_plot_df <- mixed_value_clean_df |>
+  group_by(participant_id, right_mem_bin, high_value_side) |>
+  summarize(
+    p_right = mean(chose_right, na.rm = TRUE)
+  )
+sub_choice_plot_df |>
+  ggplot(aes(x = right_mem_bin, y = p_right, color = high_value_side, group = high_value_side)) +
+  stat_summary(position = position_dodge(.2)) +
+  stat_summary(geom = "line", position = position_dodge(.2)) +
+  theme_classic() +
+  labs(y = "P(Choose Right)", x = "Memorability of Right Option", color = "Right Value")
+
+sub_rt_plot_df <- mixed_value_clean_df |>
+  filter_out(is.na(chosen_side)) |>
+  group_by(participant_id, high_value_side, left_mem_bin, right_mem_bin, chosen_side) |>
+  summarize(
+    rt = mean(rt)
+  )
+sub_rt_plot_df |>
+  ggplot(aes(x = right_mem_bin, y = rt, 
+             color = chosen_side, group = chosen_side)) +
+  stat_summary(position = position_dodge(.2)) +
+  stat_summary(geom = "line", position = position_dodge(.2)) +
+  theme_classic() +
+  facet_wrap(vars(high_value_side)) +
+  labs(x = "Memorability of Right Option", y = "RT", color = "Chosen Side")
+
+sub_rt_plot_df <- mixed_value_clean_df |>
+  filter_out(is.na(chosen_side)) |>
+  group_by(participant_id, optimal_choice_str, right_value_fct, right_mem_bin) |>
+  summarize(
+    rt = mean(rt)
+  )
+sub_rt_plot_df |>
+  ggplot(aes(x = right_value_fct, y = rt, 
+             color = right_mem_bin, linetype = optimal_choice_str, 
+             group = interaction(right_mem_bin, optimal_choice_str))) +
+  stat_summary(position = position_dodge(.2)) +
+  stat_summary(geom = "line", position = position_dodge(.2)) +
+  theme_classic() +
+  # facet_wrap(vars(optimal_choice_str)) +
+  labs(x = "Right Value", y = "RT", color = "Right Memorability", linetype = "Response")
