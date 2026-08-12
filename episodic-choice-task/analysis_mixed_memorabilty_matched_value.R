@@ -81,3 +81,18 @@ sub_rt_plot_df |>
   stat_summary(geom = "line", position = position_dodge(.2)) +
   theme_classic() +
   labs(x = "Overall Value", y = "RT", color = "Chosen Memorability")
+
+sub_rt_plot_df <- clean_df |>
+  filter_out(is.na(chosen_side)) |>
+  group_by(participant_id, right_value_fct, left_mem_bin, right_mem_bin, chosen_side) |>
+  summarize(
+    rt = mean(rt)
+  )
+sub_rt_plot_df |>
+  ggplot(aes(x = right_value_fct, y = rt, 
+             color = chosen_side, group = chosen_side)) +
+  stat_summary(position = position_dodge(.2)) +
+  stat_summary(geom = "line", position = position_dodge(.2)) +
+  theme_classic() +
+  facet_wrap(vars(left_mem_bin, right_mem_bin), labeller = label_both) +
+  labs(x = "Overall Value", y = "RT", color = "Chosen Side")
