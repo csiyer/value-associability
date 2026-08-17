@@ -1,23 +1,16 @@
-# OS junk
 .DS_Store
-
-# Python
 __pycache__/
+.claude
+archive/
 
-# Individual/raw per-participant data files. Only the combined
-# episodic_choice_data*.csv aggregates (produced by scripts/combine_data.py)
-# should be tracked -- those live directly in episodic-choice-task/data/,
-# not in one of its subfolders, so they're unaffected by this rule.
-episodic-choice-task/data/*/
+# raw participant files
+episodic-choice-task/data/*/ 
 
-# Large/generated stimuli image dumps. stimuli/images.zip is the tracked
-# packaged copy of stimuli/images/; stimuli/images_ORIGINAL_HIGHRES/ is the
-# unprocessed source set -- neither needs to live in git history.
+# images
 stimuli/images/
 stimuli/images_ORIGINAL_HIGHRES/
 
-# Pilot: per-participant raw data dumps and a raw external stimulus set
-# (pilot-stimuli/MemCat_Dataset.zip alone is ~1.4GB -- keep it out of history).
+# pilot data and images 
 pilot/pilot-mem-choice/data/
 pilot/pilot-mem-inc-ep/data/
 pilot/pilot-stimuli/MemCat_Dataset.zip
