@@ -82,7 +82,8 @@ def count_participants_task(path):
     ##### value-report screen intermittently fail to register)
     MISS_RATE_PIDS = []
     if is_direct:
-        recog_miss = old_trials_df.groupby('participant_id')['choice_missed'].apply(
+        recog_all_df = df.query('is_recognition_trial == True')
+        recog_miss = recog_all_df.groupby('participant_id')['choice_missed'].apply(
             lambda s: pd.to_numeric(s, errors='coerce').mean()
         )
         value_df = df.query('is_value_test_trial == True').copy()
