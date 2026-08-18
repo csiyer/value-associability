@@ -122,6 +122,23 @@ def get_final_bonus(df: pd.DataFrame) -> object:
     return summary.iloc[-1].get("final_bonus", pd.NA)
 
 
+def recode_direct_misses_as_missing(df: pd.DataFrame) -> pd.DataFrame:
+    """Missed recognition/value-report trials in the direct task were
+    originally logged as 0 (an "incorrect" score) rather than missing, which
+    silently zeroes out anyone whose responses weren't registering (a bug we
+    found in the value-report screen for some sessions) rather than excluding
+    them. task.js now writes null directly for new data; recode existing
+    already-collected data the same way so it doesn't count a timeout as a
+    wrong answer."""
+    if "choice_missed" in df and "recognition_correct" in df:
+        missed = truthy(df["choice_missed"])
+        df.loc[missed, "recognition_correct"] = pd.NA
+    if "value_test_missed" in df and "value_test_correct" in df:
+        missed = pd.to_numeric(df["value_test_missed"], errors="coerce") == 1
+        df.loc[missed, "value_test_correct"] = pd.NA
+    return df
+
+
 def load_csv(csv_path: Path) -> pd.DataFrame:
     df = pd.read_csv(csv_path)
 
@@ -136,6 +153,7 @@ def load_csv(csv_path: Path) -> pd.DataFrame:
     df["final_bonus"] = final_bonus
     df["correct"] = compute_attention_check_correct(df)
     df["optimal_old_choice"] = compute_optimal_old_choice(df)
+    df = recode_direct_misses_as_missing(df)
 
     return df[[column for column in KEEPCOLS if column in df]]
 
