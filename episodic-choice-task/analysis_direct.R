@@ -8,27 +8,31 @@ osf_retrieve_node("8d2cb") |>
   filter(name == "direct") |> 
   osf_download(path = data_dir, recurse = TRUE, conflicts = "skip")
 
+filepaths <- list.files(file.path(data_dir, "direct"), full.names = TRUE)
+# read_csv(filepaths, id = "file")
+direct_df <- filepaths |>
+  map(~ read_csv(.x, col_types = cols(.default = col_character()))) |>
+  list_rbind(names_to = "file") |>
+  type_convert()
+
 # analysis ----------------------------------------------------------------
 
 data_dir <- "~/Documents/GitHub/value-associability/episodic-choice-task/data"
-filepaths <- list.files(file.path(data_dir, "direct"), full.names = TRUE)
-# read_csv(filepaths, id = "file")
-direct_df <- filepaths |> 
-  map(~ read_csv(.x, col_types = cols(.default = col_character()))) |> 
-  list_rbind(names_to = "file") |> 
-  type_convert()
+
+direct_df <- read_csv(file.path(data_dir, "episodic_choice_data-direct.csv"))
 
 FAILED_ATTENTION_PIDS <- direct_df |> 
   filter(is_attention_check) |> 
   group_by(participant_id) |> 
-  summarize(correct = mean(success)) |>
+  summarize(correct = mean(correct)) |>
   filter(correct < .8)
 
 old_trials_df <- direct_df |>
-  filter_out(when_any(participant_id %in% FAILED_ATTENTION_PIDS, is.na(participant_id), is.na(old_trial), old_trial != 1)) |>
-  select(-n_recognition_correct)
+  filter_out(when_any(participant_id %in% FAILED_ATTENTION_PIDS, is.na(participant_id), 
+                      is.na(old_trial), old_trial != 1))
 
 binom_test_df <- old_trials_df |>
+  filter_out(is.na(recognition_correct)) |>
   filter(is_recognition_trial) |>
   group_by(participant_id) |>
   summarize(
