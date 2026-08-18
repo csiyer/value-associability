@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Count participants from each of the 3 tasks, using exclusion criteria. 
+"""Count participants from each of the 4 tasks, using exclusion criteria.
 Uses the pre-made data CSVs from `combine_data.py`
 
 Usage: python episodic-choice-task/scripts/count_participants.py
@@ -13,20 +13,23 @@ from scipy.stats import ttest_1samp
 DATA_DIR = '/Users/chrisiyer/_Current/lab/code/value-associability/episodic-choice-task/data'
 
 
-def subject_sig_above_chance(g):
-    _, p = ttest_1samp(g['optimal_old_choice'], 0.5, alternative='greater')
+def subject_sig_above_chance(g, col):
+    _, p = ttest_1samp(g[col], 0.5, alternative='greater')
     return p < 0.05
 
 def count_participants_task(path):
 
     print('----------------------------------')
+    is_direct = 'direct' in path
     if 'mixed' in path:
         print("Beginning mixed-memorability...")
     elif 'matched' in path:
         print("Beginning matched-memorability...")
+    elif is_direct:
+        print("Beginning direct-value memory test...")
     else:
         print("Beginning main task...")
-    
+
     try:
         df = pd.read_csv(path)
     except:
@@ -46,21 +49,31 @@ def count_participants_task(path):
         print(f"     {len(AI_PIDS)} AI agent(s) detected! PIDS:")
         for pid in AI_PIDS:
             print(f"          {pid}")
-    
+
     ##### filter out attention check failures
     attn_perf = attention_df.groupby('participant_id', as_index=False).agg({'correct': 'mean'})
     FAILED_ATTN_PIDS = attn_perf.query('correct < 1')['participant_id'].tolist()
     print(f"     {len(FAILED_ATTN_PIDS)} failed at least 1 attention check")
 
     ##### filter out chance-level performance
-    old_trials_df = df.query('old_trial == 1').dropna(subset=['optimal_old_choice']).copy()
-    ttest_df = old_trials_df.groupby('participant_id').apply(subject_sig_above_chance, include_groups=False).reset_index()
+    # direct task has no old/new choice trials -- use recognition accuracy instead
+    # of optimal_old_choice (mirrors analysis.ipynb's direct-task section)
+    if is_direct:
+        old_trials_df = df.query('is_recognition_trial == True').dropna(subset=['recognition_correct']).copy()
+        chance_col = 'recognition_correct'
+    else:
+        old_trials_df = df.query('old_trial == 1').dropna(subset=['optimal_old_choice']).copy()
+        chance_col = 'optimal_old_choice'
+    ttest_df = old_trials_df.groupby('participant_id').apply(subject_sig_above_chance, col=chance_col, include_groups=False).reset_index()
     AT_CHANCE_PIDS = ttest_df.participant_id[~ttest_df[0]].unique().tolist()
     print(f"     {len(AT_CHANCE_PIDS)} failed to pass t-test from chance")
 
-    ##### filter out incomplete data (mixed/matched only, mirrors analysis.ipynb)
+    ##### filter out incomplete data (mirrors analysis.ipynb)
     INCOMPLETE_PIDS = []
-    if 'mixed' in path or 'matched' in path:
+    if is_direct:
+        INCOMPLETE_PIDS = df[df.is_recognition_trial == True].groupby('participant_id').size().loc[lambda s: s < 100].index.tolist()
+        print(f"     {len(INCOMPLETE_PIDS)} had incomplete data (< 100 recognition trials)")
+    elif 'mixed' in path or 'matched' in path:
         INCOMPLETE_PIDS = df[df.old_trial == 1].groupby('participant_id').size().loc[lambda s: s < 70].index.tolist()
         print(f"     {len(INCOMPLETE_PIDS)} had incomplete data (< 70 old trials)")
 
@@ -76,8 +89,9 @@ def count_participants():
     counts_main = count_participants_task(os.path.join(DATA_DIR, 'episodic_choice_data.csv'))
     counts_mixed = count_participants_task(os.path.join(DATA_DIR, 'episodic_choice_data-mixed_memorability.csv'))
     counts_matched = count_participants_task(os.path.join(DATA_DIR, 'episodic_choice_data-matched_memorability.csv'))
-    
-    rows = [("Main", *counts_main), ("Mixed", *counts_mixed), ("Matched", *counts_matched)]
+    counts_direct = count_participants_task(os.path.join(DATA_DIR, 'episodic_choice_data-direct.csv'))
+
+    rows = [("Main", *counts_main), ("Mixed", *counts_mixed), ("Matched", *counts_matched), ("Direct", *counts_direct)]
     print("----------------------------------\n")
     print("     ===== Participant counts =====")
     print(f" | {'Task':<8} | {'N (all)':>8} | {'N (included)':>13} |")
