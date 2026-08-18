@@ -77,9 +77,24 @@ def count_participants_task(path):
         INCOMPLETE_PIDS = df[df.old_trial == 1].groupby('participant_id').size().loc[lambda s: s < 70].index.tolist()
         print(f"     {len(INCOMPLETE_PIDS)} had incomplete data (< 70 old trials)")
 
+    ##### filter out high miss rates on either trial type (direct task only --
+    ##### a subset of sessions have a bug where keyboard responses on the
+    ##### value-report screen intermittently fail to register)
+    MISS_RATE_PIDS = []
+    if is_direct:
+        recog_miss = old_trials_df.groupby('participant_id')['choice_missed'].apply(
+            lambda s: pd.to_numeric(s, errors='coerce').mean()
+        )
+        value_df = df.query('is_value_test_trial == True').copy()
+        value_miss = value_df.groupby('participant_id')['value_test_missed'].mean()
+        high_recog_miss = recog_miss[recog_miss > 0.2].index.tolist()
+        high_value_miss = value_miss[value_miss > 0.2].index.tolist()
+        MISS_RATE_PIDS = list(set(high_recog_miss + high_value_miss))
+        print(f"     {len(MISS_RATE_PIDS)} had > 20% miss rate on recognition or value-report trials")
+
     #### final count
     total = len(df.participant_id.unique())
-    ALL_EXCLUDED = set(AI_PIDS + FAILED_ATTN_PIDS + AT_CHANCE_PIDS + INCOMPLETE_PIDS)
+    ALL_EXCLUDED = set(AI_PIDS + FAILED_ATTN_PIDS + AT_CHANCE_PIDS + INCOMPLETE_PIDS + MISS_RATE_PIDS)
     included = len([p for p in df.participant_id.unique() if p not in ALL_EXCLUDED])
 
     return (total, included)
