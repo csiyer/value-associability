@@ -1,4 +1,5 @@
 library(tidyverse)
+library(lme4)
 
 episodic_choice_data <- read_csv("~/Documents/GitHub/value-associability/episodic-choice-task/data/episodic_choice_data.csv")
 
@@ -30,8 +31,12 @@ clean_df <- old_trials_df |>
   mutate(
     old_value_c = old_value - .5,
     old_image_name = if_else(old_side == "left", left_image_name, right_image_name),
+    new_image_name = if_else(old_side == "left", right_image_name, left_image_name),
     memorability_bin = ordered(memorability_bin, levels = c("low", "mid", "high")),
-    old_value_fct = factor(old_value)
+    old_value_fct = factor(old_value),
+    response_type = if_else(optimal_choice == 1, "Correct", "Error"),
+    response_type_c = if_else(optimal_choice == 1, 1, -1),
+    log_rt = log(rt)
   )
 
 sub_choice_plot_df <- clean_df |>
@@ -62,35 +67,30 @@ sub_choice_plot_df |>
   labs(x = "Old Value", y = "P(Old)", color = "Memorability")
 
 sub_rt_plot_df <- clean_df |>
-  mutate(
-    optimal_choice_str = if_else(optimal_choice == 1, "Correct", "Error")
-  ) |>
-  filter_out(is.na(optimal_choice_str)) |>
-  group_by(participant_id, memorability_bin, old_value_fct, optimal_choice_str) |>
+  filter_out(is.na(response_type)) |>
+  group_by(participant_id, memorability_bin, old_value_fct, response_type) |>
   summarize(
-    rt = mean(rt)
+    log_rt = mean(log_rt)
   )
 sub_rt_plot_df |>
-  ggplot(aes(x = old_value_fct, y = rt, 
-             color = memorability_bin, linetype = optimal_choice_str, group = interaction(memorability_bin, optimal_choice_str))) +
+  ggplot(aes(x = old_value_fct, y = log_rt, 
+             color = memorability_bin, linetype = response_type, 
+             group = interaction(memorability_bin, response_type))) +
   stat_summary(position = position_dodge(.2)) +
   stat_summary(geom = "line", position = position_dodge(.2)) +
   theme_classic() +
-  # facet_wrap(vars(optimal_choice_str)) +
-  labs(x = "Old Value", y = "RT", color = "Memorability", linetype = "Response")
+  labs(x = "Old Value", y = "Log(RT)", color = "Memorability", linetype = "Response")
 
 sub_rt_plot_df <- clean_df |>
-  mutate(
-    optimal_choice_str = if_else(optimal_choice == 1, "Correct", "Error")
-  ) |>
-  filter_out(is.na(optimal_choice_str)) |>
-  group_by(participant_id, memorability_bin, old_value_fct, optimal_choice_str, old_side) |>
+  filter_out(is.na(response_type)) |>
+  group_by(participant_id, memorability_bin, old_value_fct, response_type, old_side) |>
   summarize(
-    rt = mean(rt)
+    log_rt = mean(log_rt)
   )
 sub_rt_plot_df |>
-  ggplot(aes(x = old_value_fct, y = rt, 
-             color = memorability_bin, linetype = optimal_choice_str, group = interaction(memorability_bin, optimal_choice_str))) +
+  ggplot(aes(x = old_value_fct, y = log_rt, 
+             color = memorability_bin, linetype = response_type,
+             group = interaction(memorability_bin, response_type))) +
   stat_summary(position = position_dodge(.2)) +
   stat_summary(geom = "line", position = position_dodge(.2)) +
   theme_classic() +
@@ -98,27 +98,10 @@ sub_rt_plot_df |>
   labs(x = "Old Value", y = "RT", color = "Memorability", linetype = "Response")
 
 m1 <- glmer(old_chosen ~ old_value_c * memorability_bin + 
-              (1 | participant_id) + (1 | old_image_name), 
-            family = binomial, data = episodic_choice_data)
+              (old_value_c * memorability_bin | participant_id) + 
+              (1 | old_image_name) + (1 | new_image_name), 
+            family = binomial, data = clean_df)
 
-m2 <- glmer(old_chosen ~ old_value_c * memorability_bin + 
-              diag(old_value_c | participant_id) + diag(old_value_c | old_image_name), 
-            family = binomial, data = episodic_choice_data)
-
-m3 <- glmer(old_chosen ~ old_value_c * memorability_bin + 
-              diag(old_value_c + memorability_bin | participant_id) + diag(old_value_c | old_image_name), 
-            family = binomial, data = episodic_choice_data)
-
-m4 <- glmer(old_chosen ~ old_value_c * memorability_bin + 
-              diag(old_value_c * memorability_bin | participant_id) + diag(old_value_c | old_image_name), 
-            family = binomial, data = episodic_choice_data)
-
-m5 <- glmer(old_chosen ~ old_value_c * memorability_bin + 
-              (old_value_c * memorability_bin | participant_id) + (old_value_c | old_image_name), 
-            family = binomial, data = episodic_choice_data)
-summary(m5)
-
-m6 <- glmer(old_chosen ~ old_value_c * memorability_bin + 
-              (old_value_c * memorability_bin | participant_id) + (1 | old_image_name), 
-            family = binomial, data = episodic_choice_data)
-anova(m6, m5)
+rt_m1 <- lmer(log_rt ~ response_type_c * old_value_c * memorability_bin + 
+       (response_type_c * old_value_c * memorability_bin | participant_id) + (1 | old_image_name), 
+     data = clean_df)

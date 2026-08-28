@@ -32,7 +32,10 @@ clean_df <- old_trials_df |>
     right_mem_bin = ordered(right_mem_bin, levels = c("low", "high")),
     right_value_fct = factor(right_value),
     left_value_fct = factor(left_value),
+    overall_value = (left_value + right_value) - 1, # Centered
     chose_right = chosen_side == "right",
+    high_mem_image = if_else(left_is_high, left_image_name, right_image_name),
+    low_mem_image = if_else(left_is_high, right_image_name, left_image_name),
     chose_high_mem = if_else(chose_right != left_is_high, TRUE, FALSE)
   )
 
@@ -96,6 +99,13 @@ sub_rt_plot_df |>
   theme_classic() +
   facet_wrap(vars(right_value_fct)) +
   labs(x = "Memorability of Right Option", y = "RT", color = "Chosen Side")
+
+m1 <- glmer(chose_high_mem ~ overall_value + 
+        (overall_value || participant_id) + 
+        (1 | high_mem_image) + 
+        (1 | low_mem_image), 
+      family = binomial,
+      data = matched_value_clean_df)
 
 # Mixed Value -------------------------------------------------------------
 

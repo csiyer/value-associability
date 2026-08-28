@@ -28,7 +28,13 @@ clean_df <- old_trials_df |>
   left_join(binom_test_df) |>
   filter(p.value < .05) |>
   mutate(
-    memorability_bin = ordered(memorability_bin, levels = c("low", "mid", "high"))
+    memorability_bin = ordered(memorability_bin, levels = c("low", "high")),
+    response_type = if_else(optimal_choice == 1, "Correct", "Error"),
+    response_type_fct = factor(response_type, levels = c("Error", "Correct")),
+    response_type_c = if_else(optimal_choice == 1, 1, -1),
+    high_image = if_else(left_value == 1, left_image_name, right_image_name),
+    low_image = if_else(left_value == 0, left_image_name, right_image_name),
+    log_rt = log(rt)
   )
 
 sub_choice_plot_df <- clean_df |>
@@ -44,18 +50,31 @@ sub_choice_plot_df |>
   labs(y = "P(Correct)", x = "Memorability")
 
 sub_rt_plot_df <- clean_df |>
-  mutate(
-    optimal_choice_str = if_else(optimal_choice == 1, "Correct", "Error")
-  ) |>
-  filter_out(is.na(optimal_choice_str)) |>
-  group_by(participant_id, memorability_bin, optimal_choice_str) |>
+  filter_out(is.na(response_type)) |>
+  group_by(participant_id, memorability_bin, response_type) |>
   summarize(
-    rt = mean(rt)
+    log_rt = mean(log_rt)
   )
 sub_rt_plot_df |>
-  ggplot(aes(x = memorability_bin, y = rt, 
-             color = optimal_choice_str, group = optimal_choice_str)) +
+  ggplot(aes(x = memorability_bin, y = log_rt, 
+             color = response_type, group = response_type)) +
   stat_summary(position = position_dodge(.2)) +
   stat_summary(geom = "line", position = position_dodge(.2)) +
   theme_classic() +
-  labs(x = "Memorability", y = "RT", color = "Response")
+  labs(x = "Memorability", y = "Log(RT)", color = "Response")
+
+clean_df <- clean_df |> 
+  mutate(
+    high_image = if_else(left_value == 1, left_image_name, right_image_name),
+    low_image = if_else(left_value == 0, left_image_name, right_image_name)
+  )
+
+m1 <- glmer(response_type_fct ~ memorability_bin + 
+        (memorability_bin | participant_id) + 
+        (1 | high_image) + (1 | low_image), 
+      family = binomial, data = clean_df)
+m1 <- glmer(response_type_fct ~ memorability_bin + 
+              (memorability_bin | participant_id) + 
+              (1 | high_image), 
+            family = binomial, data = clean_df)
+
