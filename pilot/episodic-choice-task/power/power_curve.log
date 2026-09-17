@@ -1,0 +1,32 @@
+-- Attaching core tidyverse packages ------------------------ tidyverse 2.0.0 --
+v dplyr     1.1.4     v readr     2.1.5
+v forcats   1.0.0     v stringr   1.5.1
+v ggplot2   4.0.2     v tibble    3.2.1
+v lubridate 1.9.5     v tidyr     1.3.1
+v purrr     1.0.2     
+-- Conflicts ------------------------------------------ tidyverse_conflicts() --
+x dplyr::filter() masks stats::filter()
+x dplyr::lag()    masks stats::lag()
+i Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
+Warning messages:
+1: package 'ggplot2' was built under R version 4.4.3 
+2: package 'lubridate' was built under R version 4.4.3 
+Warning messages:
+1: package 'glmmTMB' was built under R version 4.4.3 
+2: In check_dep_version(dep_pkg = "TMB") : package version mismatch: 
+glmmTMB was built with TMB package version 1.9.19
+Current TMB package version is 1.9.20
+Please re-install glmmTMB from source or restore original 'TMB' package (see '?reinstalling' for more information)
+Full N participants: 106 N rows: 16253 
+Total time: 1220.519 s
+# A tibble: 8 x 4
+      N n_reps n_converged power
+  <dbl>  <int>       <int> <dbl>
+1    15    150         127 0.531
+2    20    150         135 0.588
+3    30    150         135 0.793
+4    40    150         137 0.9  
+5    50    150         137 0.96 
+6    60    150         136 0.987
+7    80    150         136 0.987
+8   100    150         139 1    

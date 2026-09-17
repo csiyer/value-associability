@@ -4,17 +4,18 @@ __pycache__/
 archive/
 
 # raw participant files
-episodic-choice-task/data/*/ 
+data/*/
+pilot/episodic-choice-task/data/*/
 
 # images
 stimuli/images/
 stimuli/images_ORIGINAL_HIGHRES/
 
-# pilot data and images 
-pilot/pilot-mem-choice/data/
-pilot/pilot-mem-inc-ep/data/
-pilot/pilot-stimuli/MemCat_Dataset.zip
-pilot/pilot-stimuli/airplanes/
-pilot/pilot-stimuli/highmem/
-pilot/pilot-stimuli/lowmem/
-pilot/pilot-stimuli/unique_objects/
+# pilot data and images
+pilot/ALL_PREVIOUS/pilot-mem-choice/data/
+pilot/ALL_PREVIOUS/pilot-mem-inc-ep/data/
+pilot/ALL_PREVIOUS/pilot-stimuli/MemCat_Dataset.zip
+pilot/ALL_PREVIOUS/pilot-stimuli/airplanes/
+pilot/ALL_PREVIOUS/pilot-stimuli/highmem/
+pilot/ALL_PREVIOUS/pilot-stimuli/lowmem/
+pilot/ALL_PREVIOUS/pilot-stimuli/unique_objects/

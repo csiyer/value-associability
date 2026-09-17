@@ -1,0 +1,54 @@
+-- Attaching core tidyverse packages ------------------------ tidyverse 2.0.0 --
+v dplyr     1.1.4     v readr     2.1.5
+v forcats   1.0.0     v stringr   1.5.1
+v ggplot2   4.0.2     v tibble    3.2.1
+v lubridate 1.9.5     v tidyr     1.3.1
+v purrr     1.0.2     
+-- Conflicts ------------------------------------------ tidyverse_conflicts() --
+x dplyr::filter() masks stats::filter()
+x dplyr::lag()    masks stats::lag()
+i Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
+Warning messages:
+1: package 'ggplot2' was built under R version 4.4.3 
+2: package 'lubridate' was built under R version 4.4.3 
+Warning messages:
+1: package 'glmmTMB' was built under R version 4.4.3 
+2: In check_dep_version(dep_pkg = "TMB") : package version mismatch: 
+glmmTMB was built with TMB package version 1.9.19
+Current TMB package version is 1.9.20
+Please re-install glmmTMB from source or restore original 'TMB' package (see '?reinstalling' for more information)
+Included N: 106 
+N trials: 16253  N participants: 106 
+glmmTMB model fit time: 20.57091 s
+ Family: binomial  ( logit )
+Formula:          old_chosen ~ old_value_c * memorability_bin + (old_value_c *  
+    memorability_bin || participant_id) + (old_value_c || old_image_name)
+Data: old_df
+
+      AIC       BIC    logLik -2*log(L)  df.resid 
+  19979.3   20087.1   -9975.7   19951.3     16239 
+
+Random effects:
+
+Conditional model:
+ Groups         Name                             Variance  Std.Dev. 
+ participant_id (Intercept)                      1.834e-01 4.282e-01
+                old_value_c                      4.876e-01 6.983e-01
+                memorability_binmid              1.135e-09 3.369e-05
+                memorability_binhigh             3.172e-09 5.632e-05
+                old_value_c:memorability_binmid  3.767e-07 6.138e-04
+                old_value_c:memorability_binhigh 7.858e-09 8.865e-05
+ old_image_name (Intercept)                      2.621e-02 1.619e-01
+                old_value_c                      1.252e-01 3.539e-01
+Number of obs: 16253, groups:  participant_id, 106; old_image_name, 468
+
+Conditional model:
+                                 Estimate Std. Error z value Pr(>|z|)    
+(Intercept)                       0.25741    0.05288   4.868 1.13e-06 ***
+old_value_c                       1.27206    0.09498  13.393  < 2e-16 ***
+memorability_binmid              -0.03067    0.04623  -0.663   0.5070    
+memorability_binhigh             -0.04339    0.04658  -0.932   0.3515    
+old_value_c:memorability_binmid   0.20191    0.09386   2.151   0.0315 *  
+old_value_c:memorability_binhigh  0.45151    0.09457   4.774 1.80e-06 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
