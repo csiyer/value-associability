@@ -15,6 +15,8 @@ from scipy.stats import binomtest
 SCRIPT_DIR = Path(__file__).resolve().parent
 DATA_DIR = SCRIPT_DIR.parent / "data"
 
+TARGET_N = 100  # preregistered post-exclusion sample size per task
+
 
 def subject_sig_above_chance(g, col):
     k = int(g[col].sum())
@@ -118,10 +120,10 @@ def count_participants():
     rows = [("Main", *counts_main), ("Mixed", *counts_mixed), ("Matched", *counts_matched), ("Direct", *counts_direct)]
     print("----------------------------------\n")
     print("     ===== Participant counts =====")
-    print(f" | {'Task':<8} | {'N (all)':>8} | {'N (included)':>13} |")
-    print(f" |{'-'*10}|{'-'*10}|{'-'*15}|")
+    print(f" | {'Task':<8} | {'N (all)':>8} | {'N (included)':>13} | {f'Needed (to {TARGET_N})':>16} |")
+    print(f" |{'-'*10}|{'-'*10}|{'-'*15}|{'-'*18}|")
     for task, total, included in rows:
-        print(f" | {task:<8} | {total:>8} | {included:>13} |")
+        print(f" | {task:<8} | {total:>8} | {included:>13} | {TARGET_N - included:>16} |")
 
 
 if __name__ == "__main__":
