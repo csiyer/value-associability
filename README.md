@@ -30,3 +30,10 @@ This project tests how image memorability affects value-based episodic choice, u
 3. Old-trial (or recognition, for the direct task) performance significantly above chance (binomial test)
 4. Complete data (see `scripts/count_participants.py` for per-task thresholds)
 5. Direct task only: miss rate ≤ 20% on recognition and value-report trials
+
+## Bonus
+
+Computed in the task and shown on the end screen (`final_bonus`); `extract_bonus.py` recomputes it from the raw trials and warns on any mismatch.
+
+- $0 if an AI is detected, 2+ attention checks are failed, or accuracy isn't significantly above chance (same binomial test as exclusion criterion 3)
+- Otherwise $0 at the binomial pass mark, rising linearly to $2 at 90% accuracy. Accuracy is over responded old trials that have a better card (direct task: recognition + value-report trials combined)
