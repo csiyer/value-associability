@@ -25,10 +25,22 @@ FAILED_ATTENTION_PIDS <- direct_df |>
   filter(is_attention_check) |> 
   group_by(participant_id) |> 
   summarize(correct = mean(correct)) |>
-  filter(correct < .8)
+  filter(correct < .8) |>
+  pull(participant_id)
+
+# > 20% misses across all trials, value-report prompts included (preregistered;
+# matches scripts/count_participants.py)
+HIGH_MISS_PIDS <- direct_df |>
+  filter(is_choice_trial %in% TRUE) |>
+  mutate(missed = if_else(is_value_test_trial %in% TRUE, value_test_missed, as.numeric(choice_missed))) |>
+  group_by(participant_id) |>
+  summarize(miss_rate = mean(missed)) |>
+  filter(miss_rate > .2) |>
+  pull(participant_id)
 
 old_trials_df <- direct_df |>
-  filter_out(when_any(participant_id %in% FAILED_ATTENTION_PIDS, is.na(participant_id), 
+  filter_out(when_any(participant_id %in% FAILED_ATTENTION_PIDS, participant_id %in% HIGH_MISS_PIDS,
+                      is.na(participant_id), 
                       is.na(old_trial), old_trial != 1))
 
 binom_test_df <- old_trials_df |>

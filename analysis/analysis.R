@@ -19,7 +19,8 @@ FAILED_ATTENTION_PIDS <- episodic_choice_data |>
   filter(is_attention_check) |> 
   group_by(participant_id) |> 
   summarize(correct = mean(correct)) |>
-  filter(correct < .8)
+  filter(correct < .8) |>
+  pull(participant_id)
 
 old_trials_df <- episodic_choice_data |>
   filter(participant_id %notin% FAILED_ATTENTION_PIDS, old_trial == 1)

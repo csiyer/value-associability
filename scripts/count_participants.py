@@ -87,21 +87,15 @@ def count_participants_task(path):
         INCOMPLETE_PIDS = df[df.old_trial == 1].groupby('participant_id').size().loc[lambda s: s < 70].index.tolist()
         print(f"     {len(INCOMPLETE_PIDS)} had incomplete data (< 70 old trials)")
 
-    ##### filter out high miss rates on either trial type (direct task only --
-    ##### a subset of sessions have a bug where keyboard responses on the
-    ##### value-report screen intermittently fail to register)
-    MISS_RATE_PIDS = []
-    if is_direct:
-        recog_all_df = df.query('is_recognition_trial == True')
-        recog_miss = recog_all_df.groupby('participant_id')['choice_missed'].apply(
-            lambda s: pd.to_numeric(s, errors='coerce').mean()
-        )
-        value_df = df.query('is_value_test_trial == True').copy()
-        value_miss = value_df.groupby('participant_id')['value_test_missed'].mean()
-        high_recog_miss = recog_miss[recog_miss > 0.2].index.tolist()
-        high_value_miss = value_miss[value_miss > 0.2].index.tolist()
-        MISS_RATE_PIDS = list(set(high_recog_miss + high_value_miss))
-        print(f"     {len(MISS_RATE_PIDS)} had > 20% miss rate on recognition or value-report trials")
+    ##### filter out non-response on > 20% of all response trials (preregistered);
+    ##### in the direct task, value-report prompts count as trials too
+    response_df = df.query('is_choice_trial == True').copy()
+    is_value_test = response_df.get('is_value_test_trial', pd.Series(False, index=response_df.index)) == True
+    is_missed = lambda s: s.map(lambda v: str(v).lower() in ('true', '1', '1.0'))
+    response_df['missed'] = (is_missed(response_df['value_test_missed']) & is_value_test) | (is_missed(response_df['choice_missed']) & ~is_value_test)
+    miss_rate = response_df.groupby('participant_id')['missed'].mean()
+    MISS_RATE_PIDS = miss_rate[miss_rate > 0.2].index.tolist()
+    print(f"     {len(MISS_RATE_PIDS)} had > 20% miss rate across all trials")
 
     #### final count
     total = len(df.participant_id.unique())
